@@ -3,6 +3,6 @@ module com.example.inventorysystem {
     requires javafx.fxml;
 
 
-    opens com.example.inventorysystem to javafx.fxml;
-    exports com.example.inventorysystem;
+    opens com.company.inventory to javafx.fxml;
+    exports com.company.inventory;
 }
