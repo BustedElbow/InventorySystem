@@ -1,0 +1,8 @@
+.main {
+    -fx-background-color: #F5F7FB;
+}
+
+.side_anchorpane {
+    -fx-background-color: #FFFFFF;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 4, 0, 0, 4);
+}
