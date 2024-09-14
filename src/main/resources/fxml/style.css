@@ -1,3 +1,8 @@
+@font-face {
+    font-family: 'Inter Semi Bold';
+    src: url('fonts/Inter-SemiBold.ttf');
+}
+
 .main {
     -fx-background-color: #F5F7FB;
 }
@@ -5,4 +10,12 @@
 .side_anchorpane {
     -fx-background-color: #FFFFFF;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 4, 0, 0, 4);
+}
+
+.active-button {
+    -fx-background-color: #0E1534;
+    -fx-background-radius: 0;
+    -fx-text-fill: #FFFFFF;
+    -fx-font-family: 'Inter Semi Bold';
+    -fx-font-size: 16px;
 }

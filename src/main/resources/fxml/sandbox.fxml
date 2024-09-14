@@ -1,15 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 
-<HBox fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="549.0" prefWidth="858.0" styleClass="main" stylesheets="@style.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
+<HBox fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="611.0" prefWidth="960.0" styleClass="main" stylesheets="@style.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <VBox prefHeight="549.0" prefWidth="171.0">
          <children>
-            <AnchorPane fx:id="side_anchorpane" prefHeight="551.0" prefWidth="171.0" styleClass="side_anchorpane" stylesheets="@style.css" />
+            <AnchorPane fx:id="side_anchorpane" prefHeight="650.0" prefWidth="171.0" styleClass="side_anchorpane" stylesheets="@style.css">
+               <children>
+                  <Button layoutY="141.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="171.0" styleClass="active-button" stylesheets="@style.css" text="Dashboard" textFill="WHITE">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Button>
+               </children>
+            </AnchorPane>
          </children>
       </VBox>
    </children>
