@@ -18,6 +18,7 @@ public class Main extends Application {
         stage.getIcons().add(icon);
         stage.setTitle("Inventory System");
         stage.setScene(scene);
+        stage.setResizable(false);
         stage.show();
     }
 

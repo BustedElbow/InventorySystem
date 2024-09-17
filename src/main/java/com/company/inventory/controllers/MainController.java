@@ -27,6 +27,7 @@ public class MainController {
             Parent view = FXMLLoader.load(getClass().getResource(path));
             contentPane.getChildren().clear();
             contentPane.getChildren().add(view);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
