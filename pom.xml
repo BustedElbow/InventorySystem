@@ -44,6 +44,12 @@
             <artifactId>sqlite-jdbc</artifactId>
             <version>3.46.1.0</version>
         </dependency>
+
+        <dependency>
+            <groupId>de.jensd</groupId>
+            <artifactId>fontawesomefx-fontawesome</artifactId>
+            <version>4.7.0-9.1.2</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -66,7 +72,7 @@
                         <!-- Default configuration for running with: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>com.com.inventory/com.company.inventory.Main
+                            <mainClass>com.com.inventory/com.company.inventory.App
                             </mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>
