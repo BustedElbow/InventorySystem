@@ -53,5 +53,29 @@ public class Db {
         }
     }
 
+    public void deleteNote(int id) {
+        getConnection();
+        String query = "delete from test where id = ?";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, id);
+            statement.executeUpdate();
+            logger.info("Note Deleted");
+        } catch (SQLException e) {
+            logger.info(e.toString());
+        }
+    }
 
+    public void updateNote(int id, String title, String content) {
+        getConnection();
+        String query = "update test set title = ?, content = ? where id = ?";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, title);
+            statement.setString(2, content);
+            statement.setInt(3, id);
+            statement.executeUpdate();
+            logger.info("Note updated");
+        } catch (SQLException e) {
+            logger.info(e.toString());
+        }
+    }
 }
