@@ -7,7 +7,7 @@ import javafx.scene.layout.Pane;
 
 import java.io.IOException;
 
-public class MainController {
+public class LayoutController {
 
     @FXML
     private Pane contentPane;
