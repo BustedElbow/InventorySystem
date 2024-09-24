@@ -14,12 +14,17 @@ public class MainController {
 
     @FXML
     public void initialize() {
-        loadDashboard();
+        loadTest();
     }
 
     @FXML
     private void loadDashboard() {
-        loadView("/fxml/dashboard_view.fxml");
+        loadView("/fxml/dashboard.fxml");
+    }
+
+    @FXML
+    private void loadTest() {
+        loadView("/fxml/test.fxml");
     }
 
     private void loadView(String path) {
