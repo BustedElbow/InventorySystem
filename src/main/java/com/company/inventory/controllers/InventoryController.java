@@ -18,11 +18,11 @@ public class InventoryController{
     private Button addItemBtn;
 
     @FXML
-    private void btnAddItem(ActionEvent event) throws IOException {
+    private void btnAddItem(ActionEvent event) {
         showModal();
     }
 
-    public void showModal() throws IOException {
+    public void showModal() {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/addItem.fxml"));
             Parent modalRoot = fxmlLoader.load();
