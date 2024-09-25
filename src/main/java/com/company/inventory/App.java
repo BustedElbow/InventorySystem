@@ -7,15 +7,16 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
-public class Root extends Application {
+public class App extends Application {
 
-    private Db db = new Db();
+    private SQLiteDatabase database = new SQLiteDatabase();
     @Override
     public void start(Stage stage) throws Exception{
-        db.getConnection();
+        database.initialize();
+
         Image icon = new Image(getClass().getResource("/icons/um_logo.jpg").toString());
 
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/root_layout.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/layout.fxml"));
         Scene scene = new Scene(root);
 
         stage.getIcons().add(icon);
@@ -23,8 +24,6 @@ public class Root extends Application {
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();
-
-//        db.getConnection();
     }
 
     public static void main(String[] args) {
