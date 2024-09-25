@@ -1,16 +1,23 @@
 package com.company.inventory;
 
-import java.sql.DriverManager;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 public class SQLiteDatabase {
 
-    public void initialize() {
-        String url = "jdbc:sqlite:system.db";
+    public static final String url = "jdbc:sqlite:system.db";
 
-        try(Connection conn = DriverManager.getConnection(url)) {
+    public static Connection connect() {
+        Connection conn = null;
+        try {
+            conn = DriverManager.getConnection(url);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return conn;
+    }
+
+    public void initialize() {
+        try(Connection conn = SQLiteDatabase.connect()) {
             if(conn != null) {
                 Statement stmt = conn.createStatement();
 
