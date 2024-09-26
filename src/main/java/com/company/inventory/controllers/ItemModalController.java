@@ -45,9 +45,9 @@ public class ItemModalController {
 
         System.out.println(newItem.getName() + " was added to the inventory with a ID of " + newItem.getId());
 
-        if(inventoryController != null) {
-            inventoryController.refreshList();
-        }
+        String listItem = String.format("ID: %d | Name: %s | Unit: %s | Stock: %f | Reorder Level: %f", newItem.getId(), name, unit, stock, reorder);
+        Database.addItemToList(listItem);
+        inventoryController.refreshList();
 
         Stage stage = (Stage) confirmBtn.getScene().getWindow();
         stage.close();

@@ -12,6 +12,10 @@ public class Database {
 
     private static ObservableList<String> itemList = FXCollections.observableArrayList();
 
+    static  {
+        loadItemsFromDatabase();
+    }
+
     private static void loadItemsFromDatabase() {
         String query = "SELECT * FROM items";
 
@@ -37,12 +41,15 @@ public class Database {
     }
 
     public static ObservableList<String> getItemList() {
-        loadItemsFromDatabase();
         return itemList;
     }
 
     public static void refreshItemList() {
         itemList.clear();
         loadItemsFromDatabase();
+    }
+
+    public static void addItemToList(String item) {
+        itemList.add(item);
     }
 }

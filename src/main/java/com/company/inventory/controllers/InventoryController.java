@@ -1,6 +1,7 @@
 package com.company.inventory.controllers;
 
 import com.company.inventory.models.*;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -20,10 +21,12 @@ public class InventoryController{
     @FXML private ListView<String> itemListview;
     @FXML private Button addItemBtn;
 
+    private ObservableList<String> items;
 
     @FXML
     public void initialize(){
-        itemListview.setItems(Database.getItemList());
+        items = Database.getItemList();
+        itemListview.setItems(items);
     }
 
     @FXML
@@ -54,9 +57,7 @@ public class InventoryController{
     }
 
     public void refreshList() {
-        Database.refreshItemList();
-        itemListview.getItems().clear();
-        itemListview.setItems(Database.getItemList());
+        itemListview.refresh();
     }
 
 
