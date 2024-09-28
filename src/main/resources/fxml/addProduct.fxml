@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="535.0" prefWidth="709.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.company.inventory.controllers.AddProductController">
+    <ListView fx:id="itemList" layoutX="330.0" layoutY="125.0" prefHeight="343.0" prefWidth="354.0" />
+   <TextField layoutX="49.0" layoutY="155.0" />
+   <Label layoutX="49.0" layoutY="125.0" text="Product Name" />
+   <Label layoutX="49.0" layoutY="210.0" text="Ingredients" />
+   <ListView layoutX="49.0" layoutY="245.0" prefHeight="224.0" prefWidth="263.0" />
+</AnchorPane>
