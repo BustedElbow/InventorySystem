@@ -43,6 +43,8 @@ public class ItemModalController {
         Item newItem = new Item(name, unit, stock, reorder);
         newItem.save();
 
+        Database.addItemToList(newItem);
+
         inventoryController.refreshList();
 
         Stage stage = (Stage) confirmBtn.getScene().getWindow();
