@@ -43,14 +43,13 @@ public class ItemModalController {
         Item newItem = new Item(name, unit, stock, reorder);
         newItem.save();
 
-        System.out.println(newItem.getName() + " was added to the inventory with a ID of " + newItem.getId());
-
-        String listItem = String.format("ID: %d | Name: %s | Unit: %s | Stock: %f | Reorder Level: %f", newItem.getId(), name, unit, stock, reorder);
-        Database.addItemToList(listItem);
         inventoryController.refreshList();
 
         Stage stage = (Stage) confirmBtn.getScene().getWindow();
         stage.close();
+
+        System.out.println(newItem.getName() + " was added to the inventory with a ID of " + newItem.getId());
+
     }
 
     public void setInventoryController(InventoryController inventoryController) {

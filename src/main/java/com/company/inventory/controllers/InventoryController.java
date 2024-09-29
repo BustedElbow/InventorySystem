@@ -18,14 +18,12 @@ import java.io.IOException;
 public class InventoryController{
 
 
-    @FXML private ListView<String> itemListview;
+    @FXML private ListView<Item> itemListview;
     @FXML private Button addItemBtn;
-
-    private ObservableList<String> items;
 
     @FXML
     public void initialize(){
-        items = Database.getItemList();
+        ObservableList<Item> items = Database.getItemList();
         itemListview.setItems(items);
     }
 
@@ -59,6 +57,5 @@ public class InventoryController{
     public void refreshList() {
         itemListview.refresh();
     }
-
 
 }

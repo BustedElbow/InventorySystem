@@ -10,7 +10,7 @@ import java.sql.Statement;
 
 public class Database {
 
-    private static ObservableList<String> itemList = FXCollections.observableArrayList();
+    private static ObservableList<Item> itemList = FXCollections.observableArrayList();
 
     static  {
         loadItemsFromDatabase();
@@ -30,9 +30,9 @@ public class Database {
                 double itemStock = rs.getDouble("stock_quantity");
                 double itemLevel = rs.getDouble("reorder_level");
 
-                String listItem = String.format("ID: %d | Name: %s | Unit: %s | Stock: %f | Reorder Level: %f", itemId, itemName, unitMeasure, itemStock, itemLevel);
-
-                itemList.add(listItem);
+                Item item = new Item(itemName, unitMeasure, itemStock, itemLevel);
+                item.setId(itemId);
+                itemList.add(item);
             }
 
         } catch (Exception e) {
@@ -40,16 +40,13 @@ public class Database {
         }
     }
 
-    public static ObservableList<String> getItemList() {
+    public static ObservableList<Item> getItemList() {
         return itemList;
     }
 
-    public static void refreshItemList() {
-        itemList.clear();
-        loadItemsFromDatabase();
-    }
-
-    public static void addItemToList(String item) {
+    public static void addItemToList(Item item) {
         itemList.add(item);
     }
+
+
 }

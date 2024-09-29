@@ -20,16 +20,12 @@ public class Item {
         this.reorderLevel = reorderLevel;
     }
 
-    private void setId(int id) {
+    public void setId(int id) {
         this.id = id;
     }
 
     public void setUnitMeasure(String unit) {
         this.unitMeasure = unit;
-    }
-
-    public void setStock(double stock) {
-        this.stock = stock;
     }
 
     public void setReorderLevel(double reorderLevel) {
@@ -56,6 +52,10 @@ public class Item {
         return this.reorderLevel;
     }
 
+    public void addStock(double stock) {
+        this.stock += stock;
+    }
+
     public void save() {
         String query = "INSERT INTO items(item_name, unit_measure, stock_quantity, reorder_level) VALUES(?, ?, ?, ?)";
 
@@ -66,14 +66,13 @@ public class Item {
             ps.setString(2, this.unitMeasure);
             ps.setDouble(3, this.stock);
             ps.setDouble(4, this.reorderLevel);
-            int affectedRows = ps.executeUpdate();
 
+            int affectedRows = ps.executeUpdate();
             if (affectedRows > 0) {
                 try(ResultSet rs = ps.getGeneratedKeys()) {
                     if (rs.next()) {
                         int id = rs.getInt(1);
                         setId(id);
-                        System.out.println("Item inserted successfully");
                     }
                 }
             }
@@ -81,5 +80,8 @@ public class Item {
             System.out.println(e.getMessage());
         }
 
+    }
+    public String toString() {
+        return this.name + this.unitMeasure + this.stock + this.reorderLevel;
     }
 }
