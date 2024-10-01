@@ -14,6 +14,9 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class AddProductController {
 
     @FXML private Button btnConfirm;
@@ -25,7 +28,7 @@ public class AddProductController {
     private ObservableList<Item> items;
     private ObservableList<Item> usedItems;
     private ObservableList<Item> copyItems;
-
+    private Map<Item, Double> itemQuantities = new HashMap<>();
     @FXML
     public void initialize() {
         items = Database.getItemList();
@@ -52,6 +55,7 @@ public class AddProductController {
     public void addItemToProduct(Item item) {
         if(!usedItems.contains(item)) {
             usedItems.add(item);
+            itemQuantities.put(item, 0.0);
             System.out.println(item.getName() + "added to product");
         }
     }
@@ -72,7 +76,12 @@ public class AddProductController {
     public void removeItemFromProduct(Item item) {
         if(usedItems.contains(item)) {
             usedItems.remove(item);
+            itemQuantities.remove(item);
         }
+    }
+
+    public void updateItemQuantity(Item item, double quantity) {
+        itemQuantities.put(item, quantity);
     }
 
     public void confirmAddProduct(ActionEvent actionEvent) {
@@ -83,12 +92,8 @@ public class AddProductController {
         product.save();
 
         for (Item item : usedItems) {
-
-            ProdUsedItemListCell cell =  (ProdUsedItemListCell) usedItemList.lookup(".cell");
-            if (cell != null) {
-                double neededQuantity = Double.parseDouble(cell.getQuantity().getText());
-                product.addProductIngredient(item, neededQuantity);
-            }
+            double neededQuantity = itemQuantities.get(item);
+            product.addProductIngredient(item, neededQuantity);
         }
 
         Stage stage = (Stage) btnConfirm.getScene().getWindow();

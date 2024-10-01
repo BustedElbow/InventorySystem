@@ -38,6 +38,17 @@ public class ProdUsedItemListCell extends ListCell<Item> {
         hbox.getChildren().addAll(actionPane, itemPane, quantityPane, measurePane);
 
         setGraphic(hbox);
+
+        quantity.textProperty().addListener((obs, oldText, newText) -> {
+            if (item != null) {
+                try {
+                    double newQuantity = Double.parseDouble(newText);
+                    controller.updateItemQuantity(item, newQuantity); // Update the map
+                } catch (NumberFormatException e) {
+                    controller.updateItemQuantity(item, 0.0); // Default to 0 if input is invalid
+                }
+            }
+        });
     }
 
     @Override
