@@ -1,5 +1,6 @@
 package com.company.inventory.controllers;
 
+import com.company.inventory.factory.InventoryListCell;
 import com.company.inventory.models.*;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -25,6 +26,9 @@ public class InventoryController{
     public void initialize(){
         ObservableList<Item> items = Database.getItemList();
         itemListview.setItems(items);
+
+        itemListview.getStylesheets().add(getClass().getResource("/styles/listview.css").toExternalForm());
+        itemListview.setCellFactory(param -> new InventoryListCell());
     }
 
     @FXML
@@ -36,10 +40,6 @@ public class InventoryController{
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/addItem.fxml"));
             Parent modalRoot = fxmlLoader.load();
-
-            ItemModalController modalController = fxmlLoader.getController();
-
-            modalController.setInventoryController(this);
 
             Stage modalStage = new Stage();
 

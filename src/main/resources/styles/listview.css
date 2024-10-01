@@ -1,0 +1,44 @@
+@font-face {
+    font-family: 'Inter Semi Bold';
+    src: url('../fonts/Inter-SemiBold.ttf');
+}
+
+@font-face {
+    font-family: 'Inter Bold';
+    src: url('../fonts/Inter-Bold.ttf');
+}
+
+.list-view {
+    -fx-control-inner-background: #fefefe;
+    -fx-cell-hover-color: transparent;
+    -fx-cell-focus-inner-border: transparent;
+    -fx-background-color: #fefefe;
+}
+
+.list-cell {
+    -fx-background-color: #fefefe;
+    -fx-cell-hover-color: transparent;
+    -fx-background-insets: 0;
+    -fx-padding: 5px;
+}
+
+.list-cell:odd {
+    -fx-background-color: #fefefe;
+}
+
+.list-cell:even {
+    -fx-background-color: #fefefe;
+}
+
+.list-cell:selected {
+    -fx-background-color: #fefefe;
+}
+
+.list-cell:selected .label {
+    -fx-text-fill: #1e1e1e;
+}
+
+.list-cell .label {
+    -fx-font-family: 'Inter Bold';
+    -fx-font-size: 16;
+}
