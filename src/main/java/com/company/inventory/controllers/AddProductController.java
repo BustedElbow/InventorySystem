@@ -51,6 +51,25 @@ public class AddProductController {
             });
         });
     }
+    public void confirmAddProduct(ActionEvent actionEvent) {
+        String name = productNameField.getText();
+        double price = Double.parseDouble(productPriceField.getText());
+
+        Product product = new Product(name, price);
+        product.save();
+
+        Database.addProductToList(product);
+
+        for (Item item : usedItems) {
+            double neededQuantity = itemQuantities.get(item);
+            product.addProductIngredient(item, neededQuantity);
+        }
+
+        Stage stage = (Stage) btnConfirm.getScene().getWindow();
+        stage.close();
+
+        resetList();
+    }
 
     public void addItemToProduct(Item item) {
         if(!usedItems.contains(item)) {
@@ -84,23 +103,6 @@ public class AddProductController {
         itemQuantities.put(item, quantity);
     }
 
-    public void confirmAddProduct(ActionEvent actionEvent) {
-        String name = productNameField.getText();
-        double price = Double.parseDouble(productPriceField.getText());
-
-        Product product = new Product(name, price);
-        product.save();
-
-        for (Item item : usedItems) {
-            double neededQuantity = itemQuantities.get(item);
-            product.addProductIngredient(item, neededQuantity);
-        }
-
-        Stage stage = (Stage) btnConfirm.getScene().getWindow();
-        stage.close();
-
-        resetList();
-    }
 
     public void cancel(ActionEvent actionEvent) {
         Stage stage = (Stage) btnCancel.getScene().getWindow();
