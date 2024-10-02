@@ -7,6 +7,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Product {
     private int productId;
@@ -68,9 +70,37 @@ public class Product {
             ps.setDouble(3, neededQuantity);
 
             ps.executeUpdate();
+
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
 
+    }
+
+    public List<String> getUsedItems() {
+        List<String> items = new ArrayList<>();
+        String query = "SELECT i.item_id, i.item_name, pi.needed_quantity FROM product_ingredients pi INNER JOIN items i on pi.item_id = i.item_id WHERE pi.product_id = ?";
+
+        try (Connection conn = SQLiteDatabase.connect();
+        PreparedStatement ps = conn.prepareStatement(query)) {
+            ps.setInt(1, this.productId);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                int itemId = rs.getInt("item_id");
+                String itemName = rs.getString("item_name");
+                double neededQuantity = rs.getDouble("needed_quantity");
+                items.add(itemName + neededQuantity);
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return items;
+    }
+
+    public String toString() {
+        return this.productId + this.productName + this.productPrice;
     }
 }
