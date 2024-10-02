@@ -1,5 +1,6 @@
 package com.company.inventory.controllers;
 
+import com.company.inventory.factory.ProdDetailsListCell;
 import com.company.inventory.factory.ProductListCell;
 import com.company.inventory.models.Database;
 import com.company.inventory.models.Product;
@@ -35,6 +36,8 @@ public class ProductController {
                 displayProductDetails(newSelection);
             }
         });
+
+        productDetailsList.setCellFactory(param -> new ProdDetailsListCell());
     }
 
     private void displayProductDetails(Product product) {

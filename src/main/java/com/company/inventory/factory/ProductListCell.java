@@ -1,6 +1,7 @@
 package com.company.inventory.factory;
 
 import com.company.inventory.models.Product;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
@@ -26,10 +27,11 @@ public class ProductListCell extends ListCell<Product> {
         productPane.getChildren().addAll(productId, productName);
         pricePane.getChildren().add(productPrice);
 
-        productPane.setPrefWidth(265);
-        pricePane.setPrefWidth(265);
+        productPane.setPrefWidth(259);
+        pricePane.setPrefWidth(259);
 
-        hbox.setPrefWidth(530);
+        hbox.setPadding(new Insets(4, 0 , 4, 0));
+        hbox.setPrefWidth(518);
         hbox.getChildren().addAll(productPane, pricePane);
 
         setGraphic(hbox);
