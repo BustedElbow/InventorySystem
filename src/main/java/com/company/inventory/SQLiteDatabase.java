@@ -33,7 +33,7 @@ public class SQLiteDatabase {
                 String orderSql = "CREATE TABLE IF NOT EXISTS orders(order_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, order_date DATE NOT NULL, total_amount DOUBLE NOT NULL)";
                 stmt.executeUpdate(orderSql);
 
-                String orderDetailSql = "CREATE TABLE IF NOT EXISTS order_details(order_id INTEGER NOT NULL, product_id INTEGER NOT NULL, quantity INTEGER NOT NULL, total_amount DOUBLE NOT NULL, FOREIGN KEY(order_id) REFERENCES orders(order_id), FOREIGN KEY(product_id) REFERENCES products(product_ID), PRIMARY KEY(order_id, product_id))";
+                String orderDetailSql = "CREATE TABLE IF NOT EXISTS order_details(order_id INTEGER NOT NULL, product_id INTEGER, name_at_trans TEXT NO NULL, price_at_trans DOUBLE NOT NULL, quantity INTEGER NOT NULL, total_amount DOUBLE NOT NULL, FOREIGN KEY(order_id) REFERENCES orders(order_id), FOREIGN KEY(product_id) REFERENCES products(product_ID), PRIMARY KEY(order_id, product_id))";
                 stmt.executeUpdate(orderDetailSql);
 
                 System.out.println("Tables created");

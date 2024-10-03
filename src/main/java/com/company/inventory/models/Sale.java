@@ -20,7 +20,13 @@ public class Sale {
     public int getSaleId() {
         return this.saleId;
     }
+    public LocalDate getSaleDate() {
+        return this.saleDate;
+    }
 
+    public double getTotalAmount() {
+        return this.totalAmount;
+    }
     public void setSaleId(int id) {
         this.saleId = id;
     }
@@ -47,14 +53,19 @@ public class Sale {
     public void addSaleDetail(Product product, int quantity) {
         double totalAmount = product.getProductPrice() * quantity;
 
-        String query = "INSERT INTO order_details(order_id, product_id, quantity, total_amount) VALUES (?, ?, ?, ?)";
+        String nameAtTrans = product.getProductName();
+        double priceAtTrans = product.getProductPrice();
+
+        String query = "INSERT INTO order_details(order_id, product_id, name_at_trans, price_at_trans, quantity, total_amount) VALUES (?, ?, ?, ?, ?, ?)";
         try (Connection conn = SQLiteDatabase.connect();
         PreparedStatement ps = conn.prepareStatement(query)) {
 
             ps.setInt(1, saleId);
             ps.setInt(2, product.getProductId());
-            ps.setInt(3, quantity);
-            ps.setDouble(4, totalAmount);
+            ps.setString(3, nameAtTrans);
+            ps.setDouble(4, priceAtTrans);
+            ps.setInt(5, quantity);
+            ps.setDouble(6, totalAmount);
             ps.executeUpdate();
 
             deductProductIngredientsStock(product, quantity);
