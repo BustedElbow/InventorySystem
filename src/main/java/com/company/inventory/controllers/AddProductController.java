@@ -1,7 +1,7 @@
 package com.company.inventory.controllers;
 
-import com.company.inventory.factory.ProdItemListCell;
-import com.company.inventory.factory.ProdUsedItemListCell;
+import com.company.inventory.factories.ProdItemListCell;
+import com.company.inventory.factories.ProdUsedItemListCell;
 import com.company.inventory.models.*;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -9,7 +9,6 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;

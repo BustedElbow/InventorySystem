@@ -1,4 +1,4 @@
-package com.company.inventory.factory;
+package com.company.inventory.factories;
 
 import com.company.inventory.controllers.AddProductController;
 import com.company.inventory.models.Item;

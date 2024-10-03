@@ -1,5 +1,6 @@
 package com.company.inventory;
 
+import com.company.inventory.controllers.InventoryController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -9,10 +10,10 @@ import javafx.stage.Stage;
 
 public class App extends Application {
 
-    private SQLiteDatabase database = new SQLiteDatabase();
+
     @Override
     public void start(Stage stage) throws Exception{
-        database.initialize();
+        SQLiteDatabase.initialize();
 
         Image icon = new Image(getClass().getResource("/icons/um_logo.jpg").toString());
 
@@ -27,6 +28,8 @@ public class App extends Application {
     }
 
     public static void main(String[] args) {
+
         launch(args);
+
     }
 }

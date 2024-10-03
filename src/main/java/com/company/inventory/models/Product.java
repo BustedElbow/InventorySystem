@@ -35,6 +35,14 @@ public class Product {
         this.productId = value;
     }
 
+    public void setProductName(String name) {
+        this.productName = name;
+    }
+
+    public void setProductPrice(Double price) {
+        this.productPrice = price;
+    }
+
     public void save() {
         String query = "INSERT INTO products(product_name, product_price) VALUES (?, ?)";
 
@@ -77,9 +85,9 @@ public class Product {
 
     }
 
-    public List<String> getUsedItems() {
-        List<String> items = new ArrayList<>();
-        String query = "SELECT i.item_id, i.item_name, pi.needed_quantity FROM product_ingredients pi INNER JOIN items i on pi.item_id = i.item_id WHERE pi.product_id = ?";
+    public List<ProductIngredient> getUsedItems() {
+        List<ProductIngredient> ingredients = new ArrayList<>();
+        String query = "SELECT i.item_id, i.item_name, i.unit_measure, pi.needed_quantity FROM product_ingredients pi INNER JOIN items i on pi.item_id = i.item_id INNER JOIN products p on pi.product_id = p.product_id WHERE pi.product_id = ?";
 
         try (Connection conn = SQLiteDatabase.connect();
         PreparedStatement ps = conn.prepareStatement(query)) {
@@ -87,17 +95,20 @@ public class Product {
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
-                int itemId = rs.getInt("item_id");
-                String itemName = rs.getString("item_name");
-                double neededQuantity = rs.getDouble("needed_quantity");
-                items.add(itemName + neededQuantity);
+                ProductIngredient ingredient = new ProductIngredient(
+                        rs.getInt("item_id"),
+                        rs.getString("item_name"),
+                        rs.getDouble("needed_quantity"),
+                        rs.getString("unit_measure")
+                );
+                ingredients.add(ingredient);
             }
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
 
-        return items;
+        return ingredients;
     }
 
     public String toString() {

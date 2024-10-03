@@ -7,8 +7,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane fx:controller="com.company.inventory.controllers.SalesController" prefHeight="768.0" prefWidth="1148.0" styleClass="main" stylesheets="@../styles/style.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="768.0" prefWidth="1148.0" styleClass="main" stylesheets="@../styles/style.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.company.inventory.controllers.SalesController">
    <children>
       <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="38.0" layoutY="46.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -18,7 +17,7 @@
       <Label alignment="TOP_LEFT" contentDisplay="CENTER" layoutX="102.0" layoutY="53.0" styleClass="h1" stylesheets="@../styles/style.css" text="Sales" />
       <AnchorPane layoutX="48.0" layoutY="179.0" prefHeight="551.0" prefWidth="614.0" styleClass="panel" stylesheets="@../styles/style.css">
          <children>
-            <ListView layoutX="23.0" layoutY="25.0" prefHeight="496.0" prefWidth="574.0" />
+            <ListView fx:id="saleList" layoutX="23.0" layoutY="25.0" prefHeight="496.0" prefWidth="574.0" />
          </children>
       </AnchorPane>
       <AnchorPane layoutX="699.0" layoutY="179.0" prefHeight="551.0" prefWidth="406.0" styleClass="panel" stylesheets="@../styles/style.css" />

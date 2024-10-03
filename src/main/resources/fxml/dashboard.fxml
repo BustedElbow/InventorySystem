@@ -10,44 +10,34 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1148.0" styleClass="main" stylesheets="@style.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <AnchorPane prefHeight="188.0" prefWidth="1148.0">
-         <children>
-            <Label alignment="TOP_LEFT" contentDisplay="CENTER" layoutX="92.0" layoutY="33.0" styleClass="h1" stylesheets="@style.css" text="Dashboard" />
-            <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="31.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="31.0">
-               <image>
-                  <Image url="@../icons/dashboard100-black.png" />
-               </image>
-            </ImageView>
-         </children>
-      </AnchorPane>
-      <HBox prefHeight="310.0" prefWidth="1148.0" spacing="24.0">
-         <children>
-            <Pane prefHeight="245.0" prefWidth="710.0" styleClass="panel" stylesheets="@style.css">
-               <children>
-                  <Label layoutX="29.0" layoutY="25.0" styleClass="h2" stylesheets="@style.css" text="Low Stocks" />
-               </children>
-            </Pane>
-            <Pane prefHeight="250.0" prefWidth="376.0" styleClass="panel" stylesheets="@style.css">
-               <children>
-                  <Label layoutX="27.0" layoutY="22.0" styleClass="h2" stylesheets="@style.css" text="Revenue" />
-               </children>
-            </Pane>
-         </children>
-         <padding>
-            <Insets left="32.0" right="32.0" />
-         </padding>
-      </HBox>
-      <Pane prefHeight="501.0" prefWidth="1450.0">
-         <children>
-            <Pane layoutX="33.0" layoutY="22.0" prefHeight="385.0" prefWidth="1082.0" styleClass="panel" stylesheets="@style.css">
-               <children>
-                  <Label layoutX="28.0" layoutY="29.0" styleClass="h2" stylesheets="@style.css" text="Recent Sales" />
-                  <Button layoutX="941.0" layoutY="20.0" mnemonicParsing="false" styleClass="cta" stylesheets="@style.css" text="New Sales" />
-               </children>
-            </Pane>
-         </children>
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0"
+      prefWidth="1148.0" styleClass="main" stylesheets="@../styles/style.css" xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.company.inventory.controllers.DashboardController">
+   <AnchorPane prefHeight="188.0" prefWidth="1148.0">
+      <Label alignment="TOP_LEFT" contentDisplay="CENTER" layoutX="92.0" layoutY="33.0" styleClass="h1"
+             stylesheets="@../styles/style.css" text="Dashboard"/>
+      <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="31.0" layoutY="26.0" pickOnBounds="true"
+                 preserveRatio="true" AnchorPane.leftAnchor="31.0">
+         <Image url="@../icons/dashboard100-black.png"/>
+      </ImageView>
+   </AnchorPane>
+   <HBox prefHeight="310.0" prefWidth="1148.0" spacing="24.0">
+      <padding>
+         <Insets left="32.0" right="32.0"/>
+      </padding>
+      <Pane prefHeight="245.0" prefWidth="710.0" styleClass="panel" stylesheets="@../styles/style.css">
+         <Label layoutX="29.0" layoutY="25.0" styleClass="h2" stylesheets="@../styles/style.css" text="Low Stocks"/>
       </Pane>
-   </children>
+      <Pane prefHeight="250.0" prefWidth="376.0" styleClass="panel" stylesheets="@../styles/style.css">
+         <Label layoutX="27.0" layoutY="22.0" styleClass="h2" stylesheets="@../styles/style.css" text="Revenue"/>
+      </Pane>
+   </HBox>
+   <Pane prefHeight="501.0" prefWidth="1450.0">
+      <Pane layoutX="33.0" layoutY="22.0" prefHeight="385.0" prefWidth="1082.0" styleClass="panel"
+            stylesheets="@../styles/style.css">
+         <Label layoutX="28.0" layoutY="29.0" styleClass="h2" stylesheets="@../styles/style.css" text="Recent Sales"/>
+         <Button layoutX="941.0" layoutY="20.0" mnemonicParsing="false" styleClass="cta" stylesheets="@../styles/style.css"
+                 text="New Sales"/>
+      </Pane>
+   </Pane>
 </VBox>

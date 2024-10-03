@@ -1,5 +1,6 @@
 package com.company.inventory.controllers;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -7,7 +8,6 @@ import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 
 import java.io.IOException;
@@ -34,8 +34,9 @@ public class LayoutController {
     @FXML private BorderPane borderPane;
 
     @FXML
-    public void initialize() {
-        loadTest();
+    private void initialize() {
+        loadInventory();
+        loadDashboard();
     }
 
     @FXML
@@ -59,10 +60,6 @@ public class LayoutController {
     }
 
     @FXML
-    private void loadTest() {
-        loadView("/fxml/test.fxml");
-    }
-
     private void loadView(String path) {
         try {
             Parent view = FXMLLoader.load(getClass().getResource(path));
@@ -107,7 +104,7 @@ public class LayoutController {
             icon.setFitHeight(30);
             icon.setFitWidth(30);
         } else {
-            System.err.println("Icon not found: " + iconPath);  // Log error if icon is not found
+            System.err.println("Icon not found: " + iconPath);
         }
         return icon;
     }
@@ -134,7 +131,5 @@ public class LayoutController {
         setActiveButton(sales_btn, salesIconActive);
         loadSales();
     }
-
-
 
 }

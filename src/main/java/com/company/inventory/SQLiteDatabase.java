@@ -4,7 +4,7 @@ import java.sql.*;
 
 public class SQLiteDatabase {
 
-    public static final String url = "jdbc:sqlite:system.db";
+    private static final String url = "jdbc:sqlite:system.db";
 
     public static Connection connect() {
         Connection conn = null;
@@ -16,14 +16,13 @@ public class SQLiteDatabase {
         return conn;
     }
 
-    public void initialize() {
+    public static void initialize() {
         try(Connection conn = SQLiteDatabase.connect()) {
             if(conn != null) {
                 Statement stmt = conn.createStatement();
 
                 String inventorySql = "CREATE TABLE IF NOT EXISTS items(item_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, item_name TEXT NOT NULL, unit_measure TEXT NOT NULL, stock_quantity DOUBLE NOT NULL, reorder_level DOUBLE NOT NULL)";
                 stmt.executeUpdate(inventorySql);
-
 
                 String productSql = "CREATE TABLE IF NOT EXISTS products(product_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, product_name TEXT NOT NULL, product_price DOUBLE NOT NULL)";
                 stmt.executeUpdate(productSql);
@@ -34,9 +33,8 @@ public class SQLiteDatabase {
                 String orderSql = "CREATE TABLE IF NOT EXISTS orders(order_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, order_date DATE NOT NULL, total_amount DOUBLE NOT NULL)";
                 stmt.executeUpdate(orderSql);
 
-                String orderDetailSql = "CREATE TABLE IF NOT EXISTS order_details(details_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, order_id INTEGER NOT NULL, product_id INTEGER NOT NULL, quantity INTEGER NOT NULL, total_amount DOUBLE NOT NULL, FOREIGN KEY(order_id) REFERENCES orders(order_id), FOREIGN KEY(product_id) REFERENCES products(product_ID))";
+                String orderDetailSql = "CREATE TABLE IF NOT EXISTS order_details(order_id INTEGER NOT NULL, product_id INTEGER NOT NULL, quantity INTEGER NOT NULL, total_amount DOUBLE NOT NULL, FOREIGN KEY(order_id) REFERENCES orders(order_id), FOREIGN KEY(product_id) REFERENCES products(product_ID), PRIMARY KEY(order_id, product_id))";
                 stmt.executeUpdate(orderDetailSql);
-
 
                 System.out.println("Tables created");
             }

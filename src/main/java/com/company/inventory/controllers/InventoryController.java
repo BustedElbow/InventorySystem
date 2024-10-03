@@ -21,10 +21,12 @@ public class InventoryController{
     private static InventoryController instance;
     @FXML private ListView<Item> itemListview;
     @FXML private Button addItemBtn;
+
     public InventoryController() {
         instance = this;
-    }
-    @FXML
+    };
+
+
     public void initialize(){
         refreshItemList();
 

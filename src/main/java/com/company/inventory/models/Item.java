@@ -79,7 +79,6 @@ public class Item {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-
     }
     public String toString() {
         return this.name + this.unitMeasure + this.stock + this.reorderLevel;

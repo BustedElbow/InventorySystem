@@ -11,8 +11,6 @@ import javafx.stage.Stage;
 
 public class ItemModalController {
 
-    private InventoryController inventoryController;
-
     @FXML private ChoiceBox<String> unitMeasureChoices;
     @FXML private TextField itemName;
     @FXML private TextField stockQuantity;
@@ -45,16 +43,10 @@ public class ItemModalController {
 
         Database.addItemToList(newItem);
 
-        inventoryController.refreshList();
-
         Stage stage = (Stage) confirmBtn.getScene().getWindow();
         stage.close();
 
         System.out.println(newItem.getName() + " was added to the inventory with a ID of " + newItem.getId());
 
-    }
-
-    public void setInventoryController(InventoryController inventoryController) {
-        this.inventoryController = inventoryController;
     }
 }

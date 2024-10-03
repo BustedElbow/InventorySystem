@@ -1,11 +1,11 @@
 @font-face {
     font-family: 'Inter Semi Bold';
-    src: url('fonts/Inter-SemiBold.ttf');
+    src: url('../fonts/Inter-SemiBold.ttf');
 }
 
 @font-face {
     font-family: 'Inter Bold';
-    src: url('fonts/Inter-Bold.ttf');
+    src: url('../fonts/Inter-Bold.ttf');
 }
 
 .main {
@@ -26,6 +26,7 @@
     -fx-graphic-text-gap: 12;
     -fx-border-color: #EE8850;
     -fx-border-width: 0 0 0 5;
+    -fx-cursor: hand;
 }
 
 .default-button {
@@ -38,6 +39,7 @@
     -fx-background-radius: 0;
     -fx-border-color: #1e1e1e;
     -fx-border-width: 0 0 0 5;
+    -fx-cursor: hand;
 }
 
 .h1 {
@@ -65,9 +67,74 @@
 
 .cta {
     -fx-background-radius: 8;
-    -fx-background-color: #1e1e1e;
-    -fx-text-fill: #ebebeb;
+    -fx-background-color: #ee8850;
+    -fx-text-fill: #1e1e1e;
     -fx-padding: 12 20 12 20;
     -fx-font-family: 'Inter Semi Bold';
     -fx-font-size: 16;
+    -fx-cursor: hand;
+}
+
+.listview {
+    -fx-background-color: #fefefe;
+    -fx-border: 0;
+}
+
+.tableHeader {
+    -fx-font-family: 'Inter Semi Bold';
+    -fx-font-size: 16;
+    -fx-text-fill: #929292;
+}
+
+.tableBorder {
+    -fx-border-width: 0 0 2px 0;
+    -fx-border-color: #929292;
+}
+
+.cta-2 {
+    -fx-background-radius: 8;
+    -fx-background-color: #ee8850;
+    -fx-text-fill: #1e1e1e;
+    -fx-padding: 8 12 8 12;
+    -fx-font-family: 'Inter Semi Bold';
+    -fx-font-size: 16;
+    -fx-cursor: hand;
+}
+
+.modal-header {
+    -fx-background-color: #1e1e1e;
+    -fx-background-radius: 16 16 0 0;
+}
+
+.modal-header-title {
+    -fx-text-fill: #fefefe;
+    -fx-font-family: 'Inter Semi Bold';
+    -fx-font-size: 20;
+}
+
+.text-label {
+    -fx-text-fill: #1e1e1e;
+    -fx-font-family: 'Inter Semi Bold';
+    -fx-font-size: 16;
+}
+
+.inputfield {
+    -fx-text-fill: #1e1e1e;
+    -fx-font-family: "Inter Semi Bold";
+    -fx-font-size: 16;
+    -fx-border-color: #b8b8b8;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+}
+
+.secondary-cta {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
+    -fx-border-color: #b8b8b8;
+    -fx-font-family: "Inter Semi Bold";
+    -fx-font-size: 16;
+    -fx-text-fill: #1e1e1e;
+    -fx-padding: 8 12 8 12;
+    -fx-cursor: hand;
 }
