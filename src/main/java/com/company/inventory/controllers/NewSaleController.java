@@ -1,7 +1,7 @@
 package com.company.inventory.controllers;
 
-import com.company.inventory.factory.SaleProdListCell;
-import com.company.inventory.factory.SaleSelectProdListCell;
+import com.company.inventory.factories.SaleProdListCell;
+import com.company.inventory.factories.SaleSelectProdListCell;
 import com.company.inventory.models.Database;
 import com.company.inventory.models.Product;
 import com.company.inventory.models.Sale;
@@ -73,6 +73,9 @@ public class NewSaleController {
             int quantity = productQuantities.get(product);
             sale.addSaleDetail(product, quantity);
         }
+
+        Database.addSaleToList(sale);
+        InventoryController.getInstance().refreshItemList();
 
         Stage stage = (Stage) btnConfirm.getScene().getWindow();
         stage.close();

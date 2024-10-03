@@ -1,6 +1,6 @@
 package com.company.inventory.controllers;
 
-import com.company.inventory.factory.InventoryListCell;
+import com.company.inventory.factories.InventoryListCell;
 import com.company.inventory.models.*;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -18,14 +18,15 @@ import java.io.IOException;
 
 public class InventoryController{
 
-
+    private static InventoryController instance;
     @FXML private ListView<Item> itemListview;
     @FXML private Button addItemBtn;
-
+    public InventoryController() {
+        instance = this;
+    }
     @FXML
     public void initialize(){
-        ObservableList<Item> items = Database.getItemList();
-        itemListview.setItems(items);
+        refreshItemList();
 
         itemListview.getStylesheets().add(getClass().getResource("/styles/listview.css").toExternalForm());
         itemListview.setCellFactory(param -> new InventoryListCell());
@@ -54,8 +55,14 @@ public class InventoryController{
         }
     }
 
-    public void refreshList() {
-        itemListview.refresh();
+    public void refreshItemList() {
+        Database.reloadItemsFromDatabase();
+        ObservableList<Item> items = Database.getItemList();
+        itemListview.setItems(items);
+    }
+
+    public static InventoryController getInstance() {
+        return instance;
     }
 
 }

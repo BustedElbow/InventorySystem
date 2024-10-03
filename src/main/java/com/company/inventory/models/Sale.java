@@ -1,9 +1,12 @@
 package com.company.inventory.models;
 
 import com.company.inventory.SQLiteDatabase;
+import com.company.inventory.controllers.InventoryController;
 
 import java.sql.*;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 public class Sale {
     private int saleId;
@@ -12,6 +15,14 @@ public class Sale {
     public Sale(LocalDate date, double amount) {
         this.saleDate = date;
         this.totalAmount = amount;
+    }
+
+    public int getSaleId() {
+        return this.saleId;
+    }
+
+    public void setSaleId(int id) {
+        this.saleId = id;
     }
 
     public void save() {
@@ -46,8 +57,35 @@ public class Sale {
             ps.setDouble(4, totalAmount);
             ps.executeUpdate();
 
+            deductProductIngredientsStock(product, quantity);
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    private void deductProductIngredientsStock(Product product, int quantitySold) {
+        List<ProductIngredient> ingredients = product.getUsedItems();
+        for (ProductIngredient ingredient : ingredients) {
+            int itemId = ingredient.getItemId();
+            double neededQuantity = ingredient.getNeededQuantity() * quantitySold;
+
+            String updateQuery = "UPDATE items SET stock_quantity = stock_quantity - ? WHERE item_id = ?";
+            try (Connection conn = SQLiteDatabase.connect();
+            PreparedStatement ps = conn.prepareStatement(updateQuery)) {
+
+                ps.setDouble(1, neededQuantity);
+                ps.setInt(2, itemId);
+                ps.executeUpdate();
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public String toString() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-dd-yyyy");
+        return this.saleId + this.saleDate.format(formatter) + this.totalAmount;
     }
 }

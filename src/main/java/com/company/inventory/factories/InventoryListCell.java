@@ -10,14 +10,12 @@ import javafx.scene.layout.StackPane;
 
 public class InventoryListCell extends ListCell<Item> {
     private HBox hbox = new HBox();
-    private HBox actionBox = new HBox();
+    private Label id = new Label();
     private Label name = new Label();
     private Label unit = new Label();
     private Label level = new Label();
     private Label stock = new Label();
     private Button editButton = new Button("Edit");
-    private Button restockButton = new Button("Restock");
-
     private StackPane unitPane = new StackPane();
     private StackPane stockPane = new StackPane();
     private StackPane namePane = new StackPane();
@@ -26,24 +24,25 @@ public class InventoryListCell extends ListCell<Item> {
 
     public InventoryListCell() {
 
+        editButton.setStyle("-fx-background-radius: 8; -fx-background-color: #ee8850; -fx-text-fill: #1e1e1e; -fx-padding: 8 12 8 12; -fx-font-family: 'Inter Semi Bold'; -fx-font-size: 16; -fx-cursor: hand;");
+
         namePane.setAlignment(Pos.CENTER_LEFT);
         actionPane.setAlignment(Pos.CENTER_RIGHT);
-//        unitPane.setAlignment(Pos.CENTER_LEFT);
-        actionBox.setAlignment(Pos.CENTER_RIGHT);
 
-        namePane.getChildren().add(name);
+        id.setVisible(false);
+        id.setManaged(false);
+
+        namePane.getChildren().addAll(id, name);
         stockPane.getChildren().add(stock);
         levelPane.getChildren().add(level);
         unitPane.getChildren().add(unit);
-        actionPane.getChildren().add(actionBox);
-        actionBox.getChildren().addAll(restockButton, editButton);
+        actionPane.getChildren().add(editButton);
 
         levelPane.setPrefWidth(209);
         namePane.setPrefWidth(209);
         stockPane.setPrefWidth(209);
         unitPane.setPrefWidth(209);
         actionPane.setPrefWidth(209);
-
 
         hbox.setPrefWidth(1000);
         hbox.getChildren().addAll(namePane, stockPane, levelPane, unitPane, actionPane);
@@ -57,6 +56,7 @@ public class InventoryListCell extends ListCell<Item> {
         if (empty || item == null) {
             setGraphic(null);
         } else {
+            id.setText(Integer.toString(item.getId()));
             name.setText(item.getName());
             unit.setText(String.valueOf(item.getUnitMeasure()));
             stock.setText(String.valueOf(item.getStock()));

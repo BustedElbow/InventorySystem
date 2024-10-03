@@ -6,19 +6,23 @@ import javafx.collections.ObservableList;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 
 public class Database {
 
     private static ObservableList<Item> itemList = FXCollections.observableArrayList();
     private static ObservableList<Product> productList = FXCollections.observableArrayList();
+    private static ObservableList<Sale> saleList = FXCollections.observableArrayList();
 
     static  {
         loadItemsFromDatabase();
         loadProductsFromDatabase();
+        loadOrdersFromDatabase();
     }
 
-    private static void loadItemsFromDatabase() {
+    public static void loadItemsFromDatabase() {
         String query = "SELECT * FROM items";
 
         try(Connection conn = SQLiteDatabase.connect();
@@ -42,7 +46,7 @@ public class Database {
         }
     }
 
-    private static void loadProductsFromDatabase() {
+    public static void loadProductsFromDatabase() {
         String query = "SELECT * FROM products";
 
         try(Connection conn = SQLiteDatabase.connect();
@@ -64,11 +68,36 @@ public class Database {
         }
     }
 
+    public static void loadOrdersFromDatabase() {
+        String query = "SELECT * FROM orders";
+
+        try(Connection conn = SQLiteDatabase.connect();
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery(query)) {
+
+            while (rs.next()) {
+                int orderId = rs.getInt("order_id");
+                LocalDate orderDate = rs.getDate("order_date").toLocalDate();
+                double totalAmount = rs.getDouble("total_amount");
+
+                Sale sale = new Sale(orderDate, totalAmount);
+                sale.setSaleId(orderId);
+                saleList.add(sale);
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
     public static ObservableList<Item> getItemList() {
         return itemList;
     }
     public static ObservableList<Product> getProductList() {
         return productList;
+    }
+    public static ObservableList<Sale> getSaleList() {
+        return saleList;
     }
 
     public static void addItemToList(Item item) {
@@ -76,5 +105,12 @@ public class Database {
     }
     public static void addProductToList(Product product) {
         productList.add(product);
+    }
+    public static void addSaleToList(Sale sale) {
+        saleList.add(sale);
+    }
+    public static void reloadItemsFromDatabase() {
+        itemList.clear();
+        loadItemsFromDatabase();
     }
 }

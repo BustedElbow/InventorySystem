@@ -1,11 +1,12 @@
 package com.company.inventory.factory;
 
+import com.company.inventory.models.ProductIngredient;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 
-public class ProdDetailsListCell extends ListCell<String> {
+public class ProdDetailsListCell extends ListCell<ProductIngredient> {
     private HBox hbox = new HBox();
     private StackPane itemPane = new StackPane();
     private StackPane quantityPane = new StackPane();
@@ -29,18 +30,16 @@ public class ProdDetailsListCell extends ListCell<String> {
         setGraphic(hbox);
     }
 
-    protected void updateItem(String itemDetail, boolean empty) {
-        super.updateItem(itemDetail, empty);
-        if (empty || itemDetail == null) {
+    protected void updateItem(ProductIngredient ingredient, boolean empty) {
+        super.updateItem(ingredient, empty);
+        if (empty || ingredient == null) {
             setGraphic(null);
+            setText(null);
         } else {
-            String[] details = itemDetail.split(" ");
-            if (details.length == 4) {
-                itemId.setText(details[0]);
-                itemName.setText(details[1]);
-                neededQuantity.setText(details[2]);
-                unitMeasure.setText(details[3]);
-            }
+            itemId.setText(Integer.toString(ingredient.getItemId()));
+            itemName.setText(ingredient.getItemName());
+            neededQuantity.setText(Double.toString(ingredient.getNeededQuantity()));
+            unitMeasure.setText(ingredient.getUnitMeasure());
             setGraphic(hbox);
         }
     }
