@@ -1,12 +1,20 @@
 package com.company.inventory.factories;
 
+import com.company.inventory.controllers.EditItemController;
 import com.company.inventory.models.Item;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+
+import java.io.IOException;
 
 public class InventoryListCell extends ListCell<Item> {
     private HBox hbox = new HBox();
@@ -62,7 +70,29 @@ public class InventoryListCell extends ListCell<Item> {
             stock.setText(String.valueOf(item.getStock()));
             level.setText(String.valueOf(item.getReorderLevel()));
             editButton.setOnAction(e -> {
-                System.out.println("Edit clicked for " + item.getName());
+                try {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/editItem.fxml"));
+                    Parent root = loader.load();
+
+
+                    EditItemController editItemController = loader.getController();
+
+                    // Pass the selected item to the controller
+                    editItemController.setItem(getItem());  // Pass the current item
+
+                    // Show the modal
+                    Stage stage = new Stage();
+                    stage.setTitle("Edit Item");
+                    stage.setScene(new Scene(root));
+                    stage.initModality(Modality.APPLICATION_MODAL);  // Makes it modal
+                    stage.showAndWait();  // Wait until the edit window is closed
+
+                    // After the modal closes, refresh the ListView
+                    getListView().refresh();
+
+                } catch(IOException er) {
+                    er.printStackTrace();
+                }
             });
             setGraphic(hbox);
         }
