@@ -113,4 +113,8 @@ public class Database {
         itemList.clear();
         loadItemsFromDatabase();
     }
+    public static void reloadProductsFromDatabase() {
+        productList.clear();
+        loadProductsFromDatabase();
+    }
 }

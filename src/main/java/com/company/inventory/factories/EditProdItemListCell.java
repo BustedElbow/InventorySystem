@@ -12,15 +12,14 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 
-public class ProdItemListCell extends ListCell<Item> {
+public class EditProdItemListCell extends ListCell<Item> {
     private HBox hbox = new HBox();
     private StackPane itemPane = new StackPane();
     private StackPane actionPane = new StackPane();
     private Label name = new Label();
     private Button addButton = new Button();
-    private AddProductController addController;
-    private AddProductController controller;
-    public ProdItemListCell(AddProductController controller) {
+    private EditProductController controller;
+    public EditProdItemListCell(EditProductController controller) {
         this.controller = controller;
 
         itemPane.setAlignment(Pos.CENTER_LEFT);
@@ -55,7 +54,7 @@ public class ProdItemListCell extends ListCell<Item> {
         } else {
             name.setText(item.getName());
             addButton.setOnAction(e -> {
-                controller.addItemToProduct(item);
+                controller.addItemToProduct(item, 1);
             });
             setGraphic(hbox);
         }

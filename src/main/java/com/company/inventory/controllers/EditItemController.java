@@ -58,7 +58,6 @@ public class EditItemController {
         }
     }
 
-
     public void setItem(Item item) {
         this.item = item;
         itemName.setText(item.getName());

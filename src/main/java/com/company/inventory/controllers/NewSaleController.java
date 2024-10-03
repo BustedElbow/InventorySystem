@@ -45,7 +45,6 @@ public class NewSaleController {
             selectedProducts.add(product);
             productQuantities.put(product, 1);
             updateTotalAmount();
-            availableProducts.remove(product);
         }
     }
 
@@ -54,7 +53,6 @@ public class NewSaleController {
             selectedProducts.remove(product);
             productQuantities.remove(product);
             updateTotalAmount();
-            availableProducts.add(product);
         }
     }
 

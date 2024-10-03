@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="657.0" prefWidth="453.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.company.inventory.controllers.EditItemController">
+   <AnchorPane layoutX="21.0" layoutY="19.0" prefHeight="620.0" prefWidth="412.0" styleClass="panel" stylesheets="@../styles/style.css">
+      <children>
+         <AnchorPane prefHeight="61.0" prefWidth="412.0" styleClass="modal-header" stylesheets="@../styles/style.css">
+            <children>
+               <Label layoutX="26.0" layoutY="18.0" styleClass="modal-header-title" stylesheets="@../styles/style.css" text="Edit Item" />
+            </children>
+         </AnchorPane>
+         <Button fx:id="saveBtn" layoutX="325.0" layoutY="570.0" mnemonicParsing="false" onAction="#btnSave" styleClass="cta-2" stylesheets="@../styles/style.css" text="Save" />
+         <Label layoutX="21.0" layoutY="79.0" styleClass="text-label" stylesheets="@../styles/style.css" text="Item Name" />
+         <TextField fx:id="itemName" layoutX="21.0" layoutY="112.0" prefHeight="32.0" prefWidth="367.0" styleClass="inputfield" stylesheets="@../styles/style.css" />
+         <Button fx:id="cancelBtn" layoutX="232.0" layoutY="569.0" mnemonicParsing="false" onAction="#btnCancel" styleClass="secondary-cta" stylesheets="@../styles/style.css" text="Cancel" />
+         <Label layoutX="21.0" layoutY="166.0" styleClass="text-label" stylesheets="@../styles/style.css" text="Stock" />
+         <TextField fx:id="stockQuantity" layoutX="21.0" layoutY="192.0" prefHeight="32.0" prefWidth="367.0" styleClass="inputfield" stylesheets="@../styles/style.css" />
+         <Label layoutX="21.0" layoutY="239.0" styleClass="text-label" stylesheets="@../styles/style.css" text="Reorder Level" />
+         <TextField fx:id="reorderLevel" layoutX="21.0" layoutY="268.0" prefHeight="26.0" prefWidth="367.0" styleClass="inputfield" stylesheets="@../styles/style.css" />
+         <Label layoutX="23.0" layoutY="317.0" styleClass="text-label" stylesheets="@../styles/style.css" text="Unit Measure" />
+         <ChoiceBox fx:id="unitMeasureChoices" layoutX="21.0" layoutY="346.0" prefHeight="25.0" prefWidth="367.0" styleClass="inputfield" stylesheets="@../styles/style.css" />
+         <Button fx:id="deleteBtn" layoutX="18.0" layoutY="558.0" mnemonicParsing="false" onAction="#btnDelete">
+            <graphic>
+               <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                     <Image url="@../icons/trash100-red.png" />
+                  </image>
+               </ImageView>
+            </graphic>
+         </Button>
+      </children>
+   </AnchorPane>
+</AnchorPane>

@@ -77,17 +77,14 @@ public class InventoryListCell extends ListCell<Item> {
 
                     EditItemController editItemController = loader.getController();
 
-                    // Pass the selected item to the controller
-                    editItemController.setItem(getItem());  // Pass the current item
+                    editItemController.setItem(getItem());
 
-                    // Show the modal
                     Stage stage = new Stage();
                     stage.setTitle("Edit Item");
                     stage.setScene(new Scene(root));
-                    stage.initModality(Modality.APPLICATION_MODAL);  // Makes it modal
-                    stage.showAndWait();  // Wait until the edit window is closed
+                    stage.initModality(Modality.APPLICATION_MODAL);
+                    stage.showAndWait();
 
-                    // After the modal closes, refresh the ListView
                     getListView().refresh();
 
                 } catch(IOException er) {

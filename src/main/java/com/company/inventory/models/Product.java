@@ -111,6 +111,23 @@ public class Product {
         return ingredients;
     }
 
+    public void update() {
+        String query = "UPDATE products SET product_name = ?, product_price = ? WHERE product_id = ?";
+
+        try (Connection conn = SQLiteDatabase.connect();
+             PreparedStatement ps = conn.prepareStatement(query)) {
+
+            ps.setString(1, productName);
+            ps.setDouble(2, productPrice);
+            ps.setInt(3, productId);
+
+            ps.executeUpdate();
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
     public String toString() {
         return this.productId + this.productName + this.productPrice;
     }

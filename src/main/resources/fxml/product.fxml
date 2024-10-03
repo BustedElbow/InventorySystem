@@ -24,9 +24,9 @@
       </image>
    </ImageView>
    <Label alignment="TOP_LEFT" contentDisplay="CENTER" layoutX="92.0" layoutY="43.0" styleClass="h1" stylesheets="@../styles/style.css" text="Products" />
-   <AnchorPane layoutX="31.0" layoutY="112.0" prefHeight="622.0" prefWidth="581.0" styleClass="panel" stylesheets="@../styles/style.css">
+   <AnchorPane layoutX="31.0" layoutY="112.0" prefHeight="622.0" prefWidth="612.0" styleClass="panel" stylesheets="@../styles/style.css">
       <children>
-         <ListView fx:id="productListView" layoutX="18.0" layoutY="81.0" prefHeight="525.0" prefWidth="544.0" stylesheets="@../styles/listview2.css" />
+         <ListView fx:id="productListView" layoutX="18.0" layoutY="81.0" prefHeight="525.0" prefWidth="567.0" stylesheets="@../styles/listview2.css" />
          <HBox layoutX="21.0" layoutY="14.0" prefHeight="56.0" prefWidth="531.0" styleClass="tableBorder" stylesheets="@../styles/style.css">
             <children>
                <StackPane alignment="CENTER_LEFT" prefHeight="54.0" prefWidth="283.0">
@@ -43,7 +43,7 @@
          </HBox>
       </children>
    </AnchorPane>
-   <AnchorPane layoutX="639.0" layoutY="112.0" prefHeight="622.0" prefWidth="484.0" styleClass="panel" stylesheets="@../styles/style.css">
+   <AnchorPane layoutX="661.0" layoutY="112.0" prefHeight="622.0" prefWidth="436.0" styleClass="panel" stylesheets="@../styles/style.css">
       <children>
          <ListView fx:id="productDetailsList" layoutX="27.0" layoutY="141.0" prefHeight="412.0" prefWidth="438.0" stylesheets="@../styles/listview.css" />
          <Label fx:id="productDetailsName" layoutX="30.0" layoutY="26.0" styleClass="h2" stylesheets="@../styles/style.css" text="Product Name" />
