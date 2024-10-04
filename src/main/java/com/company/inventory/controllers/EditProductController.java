@@ -3,13 +3,10 @@ package com.company.inventory.controllers;
 import com.company.inventory.SQLiteDatabase;
 import com.company.inventory.factories.EditProdItemListCell;
 import com.company.inventory.factories.EditProdUsedItemListCell;
-import com.company.inventory.factories.ProdItemListCell;
-import com.company.inventory.factories.ProdUsedItemListCell;
 import com.company.inventory.models.Database;
 import com.company.inventory.models.Item;
 import com.company.inventory.models.Product;
 import com.company.inventory.models.ProductIngredient;
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -88,10 +85,8 @@ public class EditProductController {
     public void btnDelete(ActionEvent actionEvent) {
         boolean confirmed = showConfirmationDialog("Are you sure you want to delete this product?");
         if (confirmed) {
-            // Delete the product from the database
             deleteProductFromDatabase(product.getProductId());
 
-            // Optionally, close the current window after deletion
             Stage stage = (Stage) deleteBtn.getScene().getWindow();
             stage.close();
 
@@ -214,13 +209,11 @@ public class EditProductController {
         alert.setHeaderText(null);
         alert.setContentText(message);
 
-        // Add buttons for "Yes" and "No"
         ButtonType yesButton = new ButtonType("Yes");
         ButtonType noButton = new ButtonType("No");
         alert.getButtonTypes().setAll(yesButton, noButton);
 
-        // Show the dialog and wait for the user's response
         Optional<ButtonType> result = alert.showAndWait();
-        return result.isPresent() && result.get() == yesButton; // Return true if "Yes" was clicked
+        return result.isPresent() && result.get() == yesButton;
     }
 }

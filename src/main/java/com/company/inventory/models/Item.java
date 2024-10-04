@@ -1,6 +1,9 @@
 package com.company.inventory.models;
 
 import com.company.inventory.SQLiteDatabase;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -133,6 +136,31 @@ public class Item {
         } catch (SQLException e) {
             System.out.println("Error deleting item: " + e.getMessage());
         }
+    }
+
+    public static ObservableList<Item> getLowStockItems() {
+        ObservableList<Item> lowStockItems = FXCollections.observableArrayList();
+        String query = "SELECT * FROM items WHERE stock_quantity <= reorder_level";
+
+        try (Connection conn = SQLiteDatabase.connect();
+             PreparedStatement ps = conn.prepareStatement(query);
+             ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                int id = rs.getInt("item_ID");
+                String name = rs.getString("item_name");
+                String unitMeasure = rs.getString("unit_measure");
+                double stock = rs.getDouble("stock_quantity");
+                double reorderLevel = rs.getDouble("reorder_level");
+
+                Item item = new Item(id, name, unitMeasure, stock, reorderLevel);
+                lowStockItems.add(item);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error fetching low stock items: " + e.getMessage());
+        }
+
+        return lowStockItems;
     }
     public String toString() {
         return this.name + this.unitMeasure + this.stock + this.reorderLevel;

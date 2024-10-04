@@ -1,6 +1,7 @@
 package com.company.inventory.controllers;
 
 import com.company.inventory.SQLiteDatabase;
+import com.company.inventory.factories.SaleListCell;
 import com.company.inventory.models.Database;
 import com.company.inventory.models.Sale;
 import com.company.inventory.models.SaleDetails;
@@ -37,6 +38,8 @@ public class SalesController {
     public void initialize() {
         ObservableList<Sale> sales = Database.getSaleList();
         saleList.setItems(sales);
+
+        saleList.setCellFactory(param -> new SaleListCell());
 
         saleList.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 

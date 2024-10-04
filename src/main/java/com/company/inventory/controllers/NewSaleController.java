@@ -20,6 +20,7 @@ import java.util.Map;
 
 public class NewSaleController {
 
+    @FXML private Button btnCancel;
     @FXML private Button btnConfirm;
     @FXML private ListView<Product> selectedProductList;
     @FXML private ListView<Product> availableProductList;
@@ -80,6 +81,9 @@ public class NewSaleController {
 
         Database.addSaleToList(sale);
         InventoryController.getInstance().refreshItemList();
+        DashboardController.getInstance().loadLowStockItems();
+        DashboardController.getInstance().updateRevenueLabels();
+        DashboardController.getInstance().loadRecentSalesToday();
 
         Stage stage = (Stage) btnConfirm.getScene().getWindow();
         stage.close();
@@ -91,6 +95,7 @@ public class NewSaleController {
     }
 
     public void cancel(ActionEvent event) {
-
+        Stage stage = (Stage) btnCancel.getScene().getWindow();
+        stage.close();
     }
 }

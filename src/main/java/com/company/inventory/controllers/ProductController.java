@@ -11,6 +11,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -25,6 +26,7 @@ import java.util.List;
 public class ProductController {
 
     private static ProductController instance;
+    @FXML private Button productArchive;
     @FXML private Button editBtn;
     @FXML private ListView<ProductIngredient> productDetailsList;
     @FXML private Label productDetailsName;
@@ -87,5 +89,7 @@ public class ProductController {
         productListView.setItems(products);
     }
 
-
+    public void loadArchive(ActionEvent actionEvent) {
+        LayoutController.getInstance().loadProductsArchive();
+    }
 }

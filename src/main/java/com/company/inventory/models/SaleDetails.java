@@ -15,7 +15,7 @@ public class SaleDetails {
 
     public static ObservableList<Sale> getSales() {
         ObservableList<Sale> sales = FXCollections.observableArrayList();
-        String query = "SELECT order_id, order_date, total_amount FROM orders";
+        String query = "SELECT order_id, order_date, total_amount, is_included FROM orders";
         try (Connection conn = SQLiteDatabase.connect();
              PreparedStatement ps = conn.prepareStatement(query);
              ResultSet rs = ps.executeQuery()) {

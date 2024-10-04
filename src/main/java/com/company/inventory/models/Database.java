@@ -77,8 +77,10 @@ public class Database {
 
             while (rs.next()) {
                 int orderId = rs.getInt("order_id");
-                LocalDate orderDate = rs.getDate("order_date").toLocalDate();
+                String orderDateString = rs.getString("order_date");
+                LocalDate orderDate = LocalDate.parse(orderDateString);
                 double totalAmount = rs.getDouble("total_amount");
+                boolean isExcluded = rs.getInt("is_included") == 0;
 
                 Sale sale = new Sale(orderDate, totalAmount);
                 sale.setSaleId(orderId);

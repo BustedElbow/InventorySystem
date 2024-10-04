@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public class LayoutController {
-
+    private static LayoutController instance;
     private final String dashboardIconActive = "/icons/dashboard100-accent.png";
     private final String dashboardIconDefault = "/icons/dashboard100-white.png";
 
@@ -33,6 +33,14 @@ public class LayoutController {
     @FXML private Button sales_btn;
     @FXML private BorderPane borderPane;
 
+
+    public LayoutController() {
+        instance = this;
+    }
+
+    public static LayoutController getInstance() {
+        return instance;
+    }
     @FXML
     private void initialize() {
         loadInventory();
@@ -47,14 +55,25 @@ public class LayoutController {
     }
 
     @FXML
-    private void loadProducts() {
+    public void loadProducts() {
         loadView("/fxml/product.fxml");
     }
 
     @FXML
-    private void loadInventory() {
+    public void loadProductsArchive() {
+        loadView("/fxml/productArchive.fxml");
+    }
+
+    @FXML
+    public void loadInventory() {
         loadView("/fxml/inventory.fxml");
     }
+
+    @FXML
+    public void loadInventoryLogs() { loadView("/fxml/inventoryLog.fxml");};
+
+    @FXML
+    public void loadInventoryArchive() { loadView("/fxml/inventoryArchive.fxml");};
 
     @FXML
     private void loadSales() {

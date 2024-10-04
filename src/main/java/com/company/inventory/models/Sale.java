@@ -1,7 +1,8 @@
 package com.company.inventory.models;
 
 import com.company.inventory.SQLiteDatabase;
-import com.company.inventory.controllers.InventoryController;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -36,7 +37,8 @@ public class Sale {
         try (Connection conn = SQLiteDatabase.connect();
              PreparedStatement ps = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
 
-            ps.setDate(1, Date.valueOf(saleDate));
+
+            ps.setString(1, saleDate.toString());
             ps.setDouble(2, totalAmount);
             ps.executeUpdate();
 
@@ -93,6 +95,64 @@ public class Sale {
                 e.printStackTrace();
             }
         }
+    }
+
+    public static double calculateDailyRevenue() {
+
+        String query = "SELECT SUM(total_amount) AS total FROM orders WHERE order_date = CURRENT_DATE AND is_included = 1";
+        double total = 0;
+
+        try (Connection conn = SQLiteDatabase.connect();
+             PreparedStatement ps = conn.prepareStatement(query);
+             ResultSet rs = ps.executeQuery()) {
+
+            if (rs.next()) {
+                total = rs.getDouble("total");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return total;
+    }
+
+    public static double calculateMonthlyRevenue() {
+        String query = "SELECT SUM(total_amount) AS total FROM orders WHERE strftime('%Y-%m', order_date) = strftime('%Y-%m', CURRENT_DATE) AND is_included = 1";
+        double total = 0;
+
+        try (Connection conn = SQLiteDatabase.connect();
+             PreparedStatement ps = conn.prepareStatement(query);
+             ResultSet rs = ps.executeQuery()) {
+
+            if (rs.next()) {
+                total = rs.getDouble("total");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return total;
+    }
+
+    public static ObservableList<Sale> getRecentSalesToday() {
+        ObservableList<Sale> recentSales = FXCollections.observableArrayList();
+        String query = "SELECT * FROM orders WHERE order_date = CURRENT_DATE";
+
+        try (Connection conn = SQLiteDatabase.connect();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(query)) {
+
+            while (rs.next()) {
+                int orderId = rs.getInt("order_id");
+                LocalDate orderDate = LocalDate.parse(rs.getString("order_date"));
+                double totalAmount = rs.getDouble("total_amount");
+
+                Sale sale = new Sale(orderDate, totalAmount);
+                sale.setSaleId(orderId);
+                recentSales.add(sale);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return recentSales;
     }
 
     public String toString() {

@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 
-<AnchorPane prefHeight="768.0" prefWidth="1148.0" styleClass="main" stylesheets="@../styles/style.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.company.inventory.controllers.InventoryController">
+<AnchorPane prefHeight="768.0" prefWidth="1148.0" styleClass="main" stylesheets="@../styles/style.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.company.inventory.controllers.InventoryLogController">
    <Button fx:id="addItemBtn" layoutX="989.0" layoutY="37.0" mnemonicParsing="false" onAction="#btnAddItem" styleClass="cta" stylesheets="@../styles/style.css" text="Add Item">
       <graphic>
          <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
@@ -58,7 +58,7 @@
          <ListView fx:id="itemListview" layoutX="24.0" layoutY="82.0" prefHeight="527.0" prefWidth="1045.0" styleClass="listview" stylesheets="@../styles/style.css" />
       </children>
    </AnchorPane>
-   <Button layoutX="257.0" layoutY="42.0" mnemonicParsing="false" styleClass="secondary-cta2" stylesheets="@../styles/style.css" text="Inventory" />
-   <Button layoutX="366.0" layoutY="42.0" mnemonicParsing="false" styleClass="secondary-cta" stylesheets="@../styles/style.css" text="Logs" />
+   <Button layoutX="257.0" layoutY="42.0" mnemonicParsing="false" styleClass="secondary-cta" stylesheets="@../styles/style.css" text="Inventory" />
+   <Button layoutX="366.0" layoutY="42.0" mnemonicParsing="false" styleClass="secondary-cta2" stylesheets="@../styles/style.css" text="Logs" />
    <Button layoutX="441.0" layoutY="42.0" mnemonicParsing="false" styleClass="secondary-cta" stylesheets="@../styles/style.css" text="Archive" />
 </AnchorPane>
