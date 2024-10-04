@@ -14,11 +14,14 @@ public class Database {
 
     private static ObservableList<Item> itemList = FXCollections.observableArrayList();
     private static ObservableList<Product> productList = FXCollections.observableArrayList();
+    private static ObservableList<Product> archivedProductList = FXCollections.observableArrayList(); // New list for archived products
+
     private static ObservableList<Sale> saleList = FXCollections.observableArrayList();
 
     static  {
         loadItemsFromDatabase();
         loadProductsFromDatabase();
+        loadArchivedProductsFromDatabase();
         loadOrdersFromDatabase();
     }
 
@@ -80,7 +83,6 @@ public class Database {
                 String orderDateString = rs.getString("order_date");
                 LocalDate orderDate = LocalDate.parse(orderDateString);
                 double totalAmount = rs.getDouble("total_amount");
-                boolean isExcluded = rs.getInt("is_included") == 0;
 
                 Sale sale = new Sale(orderDate, totalAmount);
                 sale.setSaleId(orderId);
@@ -92,11 +94,37 @@ public class Database {
         }
     }
 
+    public static void loadArchivedProductsFromDatabase() {
+        String query = "SELECT * FROM archive_products"; // Adjust this query as necessary
+
+        try (Connection conn = SQLiteDatabase.connect();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(query)) {
+
+            while (rs.next()) {
+                int productId = rs.getInt("product_id");
+                String productName = rs.getString("product_name");
+                double productPrice = rs.getDouble("product_price");
+
+                Product product = new Product(productName, productPrice);
+                product.setProductId(productId);
+                archivedProductList.add(product); // Add to the archived products list
+            }
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+    // Assuming you have a method to get archived products
+
     public static ObservableList<Item> getItemList() {
         return itemList;
     }
     public static ObservableList<Product> getProductList() {
         return productList;
+    }
+    public static ObservableList<Product> getArchivedProductList() {
+        return archivedProductList;
     }
     public static ObservableList<Sale> getSaleList() {
         return saleList;
@@ -118,5 +146,9 @@ public class Database {
     public static void reloadProductsFromDatabase() {
         productList.clear();
         loadProductsFromDatabase();
+    }
+    public static void reloadArchProdFromDatabase() {
+        archivedProductList.clear();
+        loadArchivedProductsFromDatabase();
     }
 }

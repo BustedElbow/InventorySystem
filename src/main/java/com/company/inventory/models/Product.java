@@ -111,6 +111,33 @@ public class Product {
         return ingredients;
     }
 
+    public List<ProductIngredient> getArcUsedItems() {
+        List<ProductIngredient> ingredients = new ArrayList<>();
+        String query = "SELECT * FROM archive_prod_ingrd pi INNER JOIN archive_products p on pi.product_id = p.product_id WHERE p.product_id = ?";
+
+        try (Connection conn = SQLiteDatabase.connect();
+             PreparedStatement ps = conn.prepareStatement(query)) {
+            ps.setInt(1, this.productId);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                ProductIngredient ingredient = new ProductIngredient(
+                        rs.getInt("item_id"),
+                        rs.getString("item_name"),
+                        rs.getDouble("needed_quantity"),
+                        rs.getString("unit_measure")
+                );
+                ingredients.add(ingredient);
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return ingredients;
+    }
+
+
     public void update() {
         String query = "UPDATE products SET product_name = ?, product_price = ? WHERE product_id = ?";
 

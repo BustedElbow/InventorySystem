@@ -46,6 +46,7 @@ public class LayoutController {
         loadInventory();
         loadProducts();
         loadSales();
+        loadProductsArchive();
         loadDashboard();
     }
 
