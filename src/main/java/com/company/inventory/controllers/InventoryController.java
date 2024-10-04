@@ -67,4 +67,11 @@ public class InventoryController{
         return instance;
     }
 
+    public void loadLog(ActionEvent actionEvent) {
+        LayoutController.getInstance().loadInventoryLogs();
+    }
+
+    public void loadArchive(ActionEvent actionEvent) {
+        LayoutController.getInstance().loadInventoryArchive();
+    }
 }

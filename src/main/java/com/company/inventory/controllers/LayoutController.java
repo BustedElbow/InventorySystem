@@ -44,6 +44,8 @@ public class LayoutController {
     @FXML
     private void initialize() {
         loadInventory();
+        loadInventoryArchive();
+        loadInventoryLogs();
         loadProducts();
         loadSales();
         loadProductsArchive();

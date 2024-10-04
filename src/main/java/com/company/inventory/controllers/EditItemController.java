@@ -55,6 +55,7 @@ public class EditItemController {
             stage.close();
 
             InventoryController.getInstance().refreshItemList();
+            InventoryArchiveController.getInstance().refreshArcItemList();
         }
     }
 

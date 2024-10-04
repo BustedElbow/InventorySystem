@@ -125,6 +125,8 @@ public class Item {
             throw new IllegalArgumentException("Cannot delete item without a valid ID.");
         }
 
+        archiveItem();
+
         String query = "DELETE FROM items WHERE item_ID = ?";
 
         try (Connection conn = SQLiteDatabase.connect();
@@ -135,6 +137,24 @@ public class Item {
             ps.executeUpdate();
         } catch (SQLException e) {
             System.out.println("Error deleting item: " + e.getMessage());
+        }
+    }
+
+    private void archiveItem() {
+        String query = "INSERT INTO archive_items(item_id, item_name, stock_quantity, reorder_level, unit_measure, archive_date) VALUES(?, ?, ?, ?, ?, CURRENT_DATE)";
+
+        try (Connection conn = SQLiteDatabase.connect();
+             PreparedStatement ps = conn.prepareStatement(query)) {
+
+            ps.setInt(1, this.id);
+            ps.setString(2, this.name);
+            ps.setDouble(3, this.stock);
+            ps.setDouble(4, this.reorderLevel);
+            ps.setString(5, this.unitMeasure);
+
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Error archiving item: " + e.getMessage());
         }
     }
 

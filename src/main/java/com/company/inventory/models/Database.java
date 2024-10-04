@@ -13,13 +13,14 @@ import java.time.LocalDate;
 public class Database {
 
     private static ObservableList<Item> itemList = FXCollections.observableArrayList();
+    private static ObservableList<Item> arcItemList = FXCollections.observableArrayList();
     private static ObservableList<Product> productList = FXCollections.observableArrayList();
-    private static ObservableList<Product> archivedProductList = FXCollections.observableArrayList(); // New list for archived products
-
+    private static ObservableList<Product> archivedProductList = FXCollections.observableArrayList();
     private static ObservableList<Sale> saleList = FXCollections.observableArrayList();
 
     static  {
         loadItemsFromDatabase();
+        loadArcItemsFromDatabase();
         loadProductsFromDatabase();
         loadArchivedProductsFromDatabase();
         loadOrdersFromDatabase();
@@ -115,11 +116,35 @@ public class Database {
             System.out.println(e.getMessage());
         }
     }
-    // Assuming you have a method to get archived products
+
+    public static void loadArcItemsFromDatabase() {
+        String query = "SELECT * FROM archive_items";
+
+        try(Connection conn = SQLiteDatabase.connect();
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(query)) {
+
+            while (rs.next()) {
+                int itemId = rs.getInt("item_id");
+                String itemName = rs.getString("item_name");
+                String unitMeasure = rs.getString("unit_measure");
+                double itemStock = rs.getDouble("stock_quantity");
+                double itemLevel = rs.getDouble("reorder_level");
+
+                Item item = new Item(itemName, unitMeasure, itemStock, itemLevel);
+                item.setId(itemId);
+                arcItemList.add(item);
+            }
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
 
     public static ObservableList<Item> getItemList() {
         return itemList;
     }
+    public static ObservableList<Item> getArcItemList() { return  arcItemList;}
     public static ObservableList<Product> getProductList() {
         return productList;
     }
@@ -150,5 +175,10 @@ public class Database {
     public static void reloadArchProdFromDatabase() {
         archivedProductList.clear();
         loadArchivedProductsFromDatabase();
+    }
+
+    public static void reloadArcItemsFromDatabase() {
+        arcItemList.clear();
+        loadArcItemsFromDatabase();
     }
 }
