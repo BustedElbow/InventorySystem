@@ -14,6 +14,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class SaleListCell extends ListCell<Sale> {
@@ -70,7 +71,7 @@ public class SaleListCell extends ListCell<Sale> {
             orderIdLabel.setText("Order ID: " + sale.getSaleId());
             totalPriceLabel.setText(String.format("Total: %.2f", sale.getTotalAmount()));
 
-            LocalDate saleDate = sale.getSaleDate();
+            LocalDateTime saleDate = sale.getSaleDate();
 
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd, yyyy");
             String formattedDate = saleDate.format(formatter);

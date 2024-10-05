@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,10 +22,14 @@ public class SaleDetails {
              ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
-                Sale sale = new Sale(
-                        rs.getDate("order_date").toLocalDate(),
-                        rs.getDouble("total_amount")
-                );
+                // Get the order_date as a string from the ResultSet
+                String orderDateTimeString = rs.getString("order_date");
+
+                // Parse the date and time into a LocalDateTime
+                LocalDateTime orderDateTime = LocalDateTime.parse(orderDateTimeString);
+
+                // Create the Sale object with LocalDateTime instead of LocalDate
+                Sale sale = new Sale(orderDateTime, rs.getDouble("total_amount"));
                 sale.setSaleId(rs.getInt("order_id"));
                 sales.add(sale);
             }

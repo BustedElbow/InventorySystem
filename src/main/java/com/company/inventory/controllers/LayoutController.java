@@ -1,6 +1,5 @@
 package com.company.inventory.controllers;
 
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,22 +16,17 @@ public class LayoutController {
     private static LayoutController instance;
     private final String dashboardIconActive = "/icons/dashboard100-accent.png";
     private final String dashboardIconDefault = "/icons/dashboard100-white.png";
-
     private final String productIconActive = "/icons/goods100-accent.png";
     private final String productIconDefault = "/icons/goods100-white.png";
-
     private final String inventoryIconActive = "/icons/boxes100-accent.png";
     private final String inventoryIconDefault = "/icons/boxes100-white.png";
-
     private final String salesIconActive = "/icons/receipt100-accent.png";
     private final String salesIconDefault = "/icons/receipt100-white.png";
-
     @FXML private Button dashboard_btn;
     @FXML private Button products_btn;
     @FXML private Button inventory_btn;
     @FXML private Button sales_btn;
     @FXML private BorderPane borderPane;
-
 
     public LayoutController() {
         instance = this;
@@ -155,5 +149,4 @@ public class LayoutController {
         setActiveButton(sales_btn, salesIconActive);
         loadSales();
     }
-
 }

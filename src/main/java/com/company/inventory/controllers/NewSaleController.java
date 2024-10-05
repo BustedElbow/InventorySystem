@@ -15,6 +15,7 @@ import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -71,7 +72,7 @@ public class NewSaleController {
     }
 
     public void confirmNewSale(ActionEvent event) {
-        Sale sale = new Sale(LocalDate.now(), totalAmount);
+        Sale sale = new Sale(LocalDateTime.now(), totalAmount);
         sale.save();
 
         for (Product product : selectedProducts) {
@@ -84,6 +85,7 @@ public class NewSaleController {
         DashboardController.getInstance().loadLowStockItems();
         DashboardController.getInstance().updateRevenueLabels();
         DashboardController.getInstance().loadRecentSalesToday();
+        InventoryLogController.getInstance().refreshLogItemList();
 
         Stage stage = (Stage) btnConfirm.getScene().getWindow();
         stage.close();

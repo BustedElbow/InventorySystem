@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class Database {
 
@@ -17,6 +18,8 @@ public class Database {
     private static ObservableList<Product> productList = FXCollections.observableArrayList();
     private static ObservableList<Product> archivedProductList = FXCollections.observableArrayList();
     private static ObservableList<Sale> saleList = FXCollections.observableArrayList();
+    private static ObservableList<InventoryLog> logs = FXCollections.observableArrayList();
+
 
     static  {
         loadItemsFromDatabase();
@@ -24,6 +27,7 @@ public class Database {
         loadProductsFromDatabase();
         loadArchivedProductsFromDatabase();
         loadOrdersFromDatabase();
+        loadInventoryLogs();
     }
 
     public static void loadItemsFromDatabase() {
@@ -82,10 +86,10 @@ public class Database {
             while (rs.next()) {
                 int orderId = rs.getInt("order_id");
                 String orderDateString = rs.getString("order_date");
-                LocalDate orderDate = LocalDate.parse(orderDateString);
+                LocalDateTime orderDateTime = LocalDateTime.parse(orderDateString);
                 double totalAmount = rs.getDouble("total_amount");
 
-                Sale sale = new Sale(orderDate, totalAmount);
+                Sale sale = new Sale(orderDateTime, totalAmount);
                 sale.setSaleId(orderId);
                 saleList.add(sale);
             }
@@ -141,6 +145,31 @@ public class Database {
         }
     }
 
+    public static void loadInventoryLogs() {
+        String query = "SELECT i.item_name, l.change_amount, l.previous_quantity, l.new_quantity, l.change_type, l.reference_id, l.timestamp " +
+                "FROM inventory_log l JOIN items i ON l.item_id = i.item_id";
+
+        try (Connection conn = SQLiteDatabase.connect();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(query)) {
+
+            while (rs.next()) {
+                String itemName = rs.getString("item_name");
+                double changeAmount = rs.getDouble("change_amount");
+                double previousQuantity = rs.getDouble("previous_quantity");
+                double newQuantity = rs.getDouble("new_quantity");
+                String changeType = rs.getString("change_type");
+                Integer referenceId = rs.getInt("reference_id");
+                String timestamp = rs.getString("timestamp");
+
+                InventoryLog log = new InventoryLog(itemName, changeAmount, previousQuantity, newQuantity, changeType, referenceId, timestamp);
+                logs.add(log);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static ObservableList<Item> getItemList() {
         return itemList;
     }
@@ -153,6 +182,9 @@ public class Database {
     }
     public static ObservableList<Sale> getSaleList() {
         return saleList;
+    }
+    public static ObservableList<InventoryLog> getInventoryLogs() {
+        return logs;
     }
 
     public static void addItemToList(Item item) {
@@ -180,5 +212,10 @@ public class Database {
     public static void reloadArcItemsFromDatabase() {
         arcItemList.clear();
         loadArcItemsFromDatabase();
+    }
+
+    public static void reloadInventoryLogsFromDatabase() {
+        logs.clear();
+        loadInventoryLogs();
     }
 }

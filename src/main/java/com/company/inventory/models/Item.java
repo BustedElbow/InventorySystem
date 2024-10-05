@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 
 public class Item {
     private int id;
@@ -141,7 +142,7 @@ public class Item {
     }
 
     private void archiveItem() {
-        String query = "INSERT INTO archive_items(item_id, item_name, stock_quantity, reorder_level, unit_measure, archive_date) VALUES(?, ?, ?, ?, ?, CURRENT_DATE)";
+        String query = "INSERT INTO archive_items(item_id, item_name, stock_quantity, reorder_level, unit_measure, archive_date) VALUES(?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = SQLiteDatabase.connect();
              PreparedStatement ps = conn.prepareStatement(query)) {
@@ -151,6 +152,7 @@ public class Item {
             ps.setDouble(3, this.stock);
             ps.setDouble(4, this.reorderLevel);
             ps.setString(5, this.unitMeasure);
+            ps.setString(6, LocalDateTime.now().toString());
 
             ps.executeUpdate();
         } catch (SQLException e) {

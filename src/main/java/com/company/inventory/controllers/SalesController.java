@@ -82,4 +82,6 @@ public class SalesController {
         saleListDetails.setItems(orderDetails);
     }
 
+    public void filterDateList(ActionEvent actionEvent) {
+    }
 }

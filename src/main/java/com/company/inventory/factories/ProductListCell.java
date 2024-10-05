@@ -36,11 +36,11 @@ public class ProductListCell extends ListCell<Product> {
         productPane.getChildren().addAll(productId, productName);
         pricePane.getChildren().add(productPrice);
 
-        productPane.setPrefWidth(230);
-        pricePane.setPrefWidth(230);
+        productPane.setPrefWidth(250);
+        pricePane.setPrefWidth(250);
 
         hbox.setPadding(new Insets(4, 0 , 4, 0));
-        hbox.setPrefWidth(518);
+        hbox.setPrefWidth(503);
         hbox.getChildren().addAll(productPane, pricePane,editButton);
 
         setGraphic(hbox);

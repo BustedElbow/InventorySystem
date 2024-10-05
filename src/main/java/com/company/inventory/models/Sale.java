@@ -6,23 +6,24 @@ import javafx.collections.ObservableList;
 
 import java.sql.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class Sale {
     private int saleId;
-    private LocalDate saleDate;
+    private LocalDateTime saleDateTime;
     private double totalAmount;
-    public Sale(LocalDate date, double amount) {
-        this.saleDate = date;
+    public Sale(LocalDateTime dateTime, double amount) {
+        this.saleDateTime = dateTime;
         this.totalAmount = amount;
     }
 
     public int getSaleId() {
         return this.saleId;
     }
-    public LocalDate getSaleDate() {
-        return this.saleDate;
+    public LocalDateTime getSaleDate() {
+        return this.saleDateTime;
     }
 
     public double getTotalAmount() {
@@ -38,7 +39,7 @@ public class Sale {
              PreparedStatement ps = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
 
 
-            ps.setString(1, saleDate.toString());
+            ps.setString(1, LocalDateTime.now().toString());
             ps.setDouble(2, totalAmount);
             ps.executeUpdate();
 
@@ -83,6 +84,8 @@ public class Sale {
             int itemId = ingredient.getItemId();
             double neededQuantity = ingredient.getNeededQuantity() * quantitySold;
 
+            double previousQuantity = getItemQuantity(itemId);
+
             String updateQuery = "UPDATE items SET stock_quantity = stock_quantity - ? WHERE item_id = ?";
             try (Connection conn = SQLiteDatabase.connect();
             PreparedStatement ps = conn.prepareStatement(updateQuery)) {
@@ -91,15 +94,58 @@ public class Sale {
                 ps.setInt(2, itemId);
                 ps.executeUpdate();
 
+                double newQuantity = previousQuantity - neededQuantity;
+
+                logInventoryChange(itemId, -neededQuantity, previousQuantity, newQuantity, "Sale", null);
+
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
     }
 
+    private void logInventoryChange(int itemId, double changeAmount, double previousQuantity, double newQuantity, String changeType, Integer referenceId) {
+        String logQuery = "INSERT INTO inventory_log(item_id, change_amount, previous_quantity, new_quantity, change_type, reference_id, timestamp) VALUES (?, ?, ?, ?, ?, ?, ?)";
+
+        try (Connection conn = SQLiteDatabase.connect()) {
+
+            try (PreparedStatement ps = conn.prepareStatement(logQuery)) {
+                ps.setInt(1, itemId);
+                ps.setDouble(2, changeAmount);
+                ps.setDouble(3, previousQuantity);
+                ps.setDouble(4, newQuantity);
+                ps.setString(5, changeType);
+                ps.setObject(6, referenceId); // Can be null if not applicable
+                ps.setString(7, LocalDateTime.now().toString()); // Timestamp
+                ps.executeUpdate();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private double getItemQuantity(int itemId) {
+        String query = "SELECT stock_quantity FROM items WHERE item_id = ?";
+        double quantity = 0;
+
+        try (Connection conn = SQLiteDatabase.connect();
+             PreparedStatement ps = conn.prepareStatement(query)) {
+
+            ps.setInt(1, itemId);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    quantity = rs.getDouble("stock_quantity");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return quantity;
+    }
+
     public static double calculateDailyRevenue() {
 
-        String query = "SELECT SUM(total_amount) AS total FROM orders WHERE order_date = CURRENT_DATE AND is_included = 1";
+        String query = "SELECT SUM(total_amount) AS total FROM orders WHERE DATE(order_date) = CURRENT_DATE AND is_included = 1";
         double total = 0;
 
         try (Connection conn = SQLiteDatabase.connect();
@@ -134,7 +180,7 @@ public class Sale {
 
     public static ObservableList<Sale> getRecentSalesToday() {
         ObservableList<Sale> recentSales = FXCollections.observableArrayList();
-        String query = "SELECT * FROM orders WHERE order_date = CURRENT_DATE";
+        String query = "SELECT * FROM orders WHERE DATE(order_date) = CURRENT_DATE";
 
         try (Connection conn = SQLiteDatabase.connect();
              Statement stmt = conn.createStatement();
@@ -142,10 +188,10 @@ public class Sale {
 
             while (rs.next()) {
                 int orderId = rs.getInt("order_id");
-                LocalDate orderDate = LocalDate.parse(rs.getString("order_date"));
+                LocalDateTime orderDateTime = LocalDateTime.parse(rs.getString("order_date"));
                 double totalAmount = rs.getDouble("total_amount");
 
-                Sale sale = new Sale(orderDate, totalAmount);
+                Sale sale = new Sale(orderDateTime, totalAmount);
                 sale.setSaleId(orderId);
                 recentSales.add(sale);
             }
@@ -157,6 +203,6 @@ public class Sale {
 
     public String toString() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-dd-yyyy");
-        return this.saleId + this.saleDate.format(formatter) + this.totalAmount;
+        return this.saleId + this.saleDateTime.format(formatter) + this.totalAmount;
     }
 }

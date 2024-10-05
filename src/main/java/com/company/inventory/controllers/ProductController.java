@@ -56,7 +56,7 @@ public class ProductController {
         productDetailsList.getItems().clear();
 
         productDetailsName.setText(product.getProductName());
-        productDetailsPrice.setText(Double.toString(product.getProductPrice()));
+        productDetailsPrice.setText("Php " + product.getProductPrice());
 
         List<ProductIngredient> ingredients = product.getUsedItems();
         ObservableList<ProductIngredient> usedItemObs = FXCollections.observableArrayList(ingredients);

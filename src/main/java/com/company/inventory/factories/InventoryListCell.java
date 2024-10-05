@@ -18,12 +18,14 @@ import java.io.IOException;
 
 public class InventoryListCell extends ListCell<Item> {
     private HBox hbox = new HBox();
+    private HBox actionBox = new HBox();
     private Label id = new Label();
     private Label name = new Label();
     private Label unit = new Label();
     private Label level = new Label();
     private Label stock = new Label();
     private Button editButton = new Button("Edit");
+    private Button restockButton = new Button("Restock");
     private StackPane unitPane = new StackPane();
     private StackPane stockPane = new StackPane();
     private StackPane namePane = new StackPane();
@@ -36,15 +38,18 @@ public class InventoryListCell extends ListCell<Item> {
 
         namePane.setAlignment(Pos.CENTER_LEFT);
         actionPane.setAlignment(Pos.CENTER_RIGHT);
+        actionBox.setAlignment(Pos.CENTER_RIGHT);
 
         id.setVisible(false);
         id.setManaged(false);
+
+        actionBox.getChildren().addAll(restockButton, editButton);
 
         namePane.getChildren().addAll(id, name);
         stockPane.getChildren().add(stock);
         levelPane.getChildren().add(level);
         unitPane.getChildren().add(unit);
-        actionPane.getChildren().add(editButton);
+        actionPane.getChildren().addAll(actionBox);
 
         levelPane.setPrefWidth(209);
         namePane.setPrefWidth(209);
@@ -90,6 +95,9 @@ public class InventoryListCell extends ListCell<Item> {
                 } catch(IOException er) {
                     er.printStackTrace();
                 }
+            });
+            restockButton.setOnAction(e -> {
+                System.out.println("Restock for " + item.getName());
             });
             setGraphic(hbox);
         }

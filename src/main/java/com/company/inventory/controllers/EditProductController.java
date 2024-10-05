@@ -18,6 +18,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -196,6 +197,8 @@ public class EditProductController {
 
         archiveProductAndIngredients(productId);
 
+        deleteIngredientsFromDatabase(productId);
+
         String query = "DELETE FROM products WHERE product_id = ?";
         try (Connection conn = SQLiteDatabase.connect();
              PreparedStatement pstmt = conn.prepareStatement(query)) {
@@ -205,16 +208,27 @@ public class EditProductController {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
 
-
+    private void deleteIngredientsFromDatabase(int productId) {
+        String query = "DELETE FROM product_ingredients WHERE product_id = ?";
+        try (Connection conn = SQLiteDatabase.connect();
+             PreparedStatement pstmt = conn.prepareStatement(query)) {
+            pstmt.setInt(1, productId);
+            pstmt.executeUpdate(); // Delete all ingredients for the product
+            System.out.println("All ingredients for product ID " + productId + " have been deleted.");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     private void archiveProductAndIngredients(int productId) {
-        String archiveProductQuery = "INSERT INTO archive_products(product_id, product_name, product_price, archive_date) SELECT product_id, product_name, product_price, CURRENT_DATE FROM products WHERE product_id = ?";
+        String archiveProductQuery = "INSERT INTO archive_products(product_id, product_name, product_price, archive_date) SELECT product_id, product_name, product_price, ? FROM products WHERE product_id = ?";
 
         try (Connection conn = SQLiteDatabase.connect();
              PreparedStatement pstmt = conn.prepareStatement(archiveProductQuery)) {
-            pstmt.setInt(1, productId);
+            pstmt.setString(1, LocalDateTime.now().toString());
+            pstmt.setInt(2, productId);
             pstmt.executeUpdate(); // Archive the product
             System.out.println("Product with ID " + productId + " has been archived.");
         } catch (SQLException e) {
@@ -222,13 +236,14 @@ public class EditProductController {
         }
 
         String archiveIngredientQuery = "INSERT INTO archive_prod_ingrd(product_id, item_id, item_name, needed_quantity, unit_measure, archive_date) " +
-                "SELECT pi.product_id, pi.item_id, i.item_name, pi.needed_quantity, i.unit_measure, CURRENT_DATE " +
+                "SELECT pi.product_id, pi.item_id, i.item_name, pi.needed_quantity, i.unit_measure, ? " +
                 "FROM product_ingredients pi INNER JOIN items i ON pi.item_id = i.item_id " +
                 "WHERE pi.product_id = ?";
 
         try (Connection conn = SQLiteDatabase.connect();
              PreparedStatement pstmt = conn.prepareStatement(archiveIngredientQuery)) {
-            pstmt.setInt(1, productId);
+            pstmt.setString(1, LocalDateTime.now().toString());
+            pstmt.setInt(2, productId);
             pstmt.executeUpdate(); // Archive the product ingredients
             System.out.println("Ingredients for product ID " + productId + " have been archived.");
         } catch (SQLException e) {

@@ -41,13 +41,6 @@ public class DashSaleListCell extends ListCell<Sale> {
         hbox = new HBox(10, orderIdLabel, orderDateLabel, totalPriceLabel, excludeButton, includeButton);
         setGraphic(hbox);
 
-//        viewItemsButton.setOnAction(event -> {
-//            Sale sale = getItem();
-//            if (sale != null) {
-//                showPurchasedItemsModal(sale.getSaleId());
-//            }
-//        });
-
         excludeButton.setOnAction(event -> {
             Sale sale = getItem();
             if (sale != null) {
@@ -103,27 +96,13 @@ public class DashSaleListCell extends ListCell<Sale> {
             pstmt.setInt(1, saleId);
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
-                return rs.getInt("is_included") == 1; // If 1, it is included, otherwise not
+                return rs.getInt("is_included") == 1;
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return true; // Default to included if there's an error
+        return true;
     }
-
-//    private void showPurchasedItemsModal(int saleId) {
-//        try {
-//            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/purchasedItems.fxml"));
-//            Parent modalRoot = fxmlLoader.load();
-//            Stage modalStage = new Stage();
-//            modalStage.setTitle("Purchased Items for Sale ID: " + saleId);
-//            modalStage.initModality(Modality.APPLICATION_MODAL);
-//            modalStage.setScene(new Scene(modalRoot));
-//            modalStage.showAndWait();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
 
     private void setIncludedToZero(int saleId) {
         String query = "UPDATE orders SET is_included = 0 WHERE order_id = ?";

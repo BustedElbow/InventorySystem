@@ -1,12 +1,11 @@
 package com.company.inventory.models;
 
 import com.company.inventory.SQLiteDatabase;
-import org.sqlite.SQLiteConnection;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +13,7 @@ public class Product {
     private int productId;
     private String productName;
     private double productPrice;
+    private LocalDateTime archiveDateTime;
     public Product(String name, double price) {
         this.productName = name;
         this.productPrice = price;
@@ -29,6 +29,9 @@ public class Product {
 
     public double getProductPrice() {
         return this.productPrice;
+    }
+    public LocalDateTime getArchiveDate() {
+        return archiveDateTime;
     }
 
     public void setProductId(int value) {

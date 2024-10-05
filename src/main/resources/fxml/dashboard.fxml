@@ -6,35 +6,118 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1148.0" styleClass="main" stylesheets="@../styles/style.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.company.inventory.controllers.DashboardController">
    <children>
-      <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="41.0" layoutY="36.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="28.0" layoutY="36.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../icons/dashboard100-black.png" />
          </image>
       </ImageView>
-      <Label alignment="TOP_LEFT" contentDisplay="CENTER" layoutX="102.0" layoutY="43.0" styleClass="h1" stylesheets="@../styles/style.css" text="Dashboard" />
+      <Label alignment="TOP_LEFT" contentDisplay="CENTER" layoutX="92.0" layoutY="43.0" styleClass="h1" stylesheets="@../styles/style.css" text="Dashboard" />
       <AnchorPane layoutX="35.0" layoutY="111.0" prefHeight="267.0" prefWidth="726.0" styleClass="panel" stylesheets="@../styles/style.css">
          <children>
             <Label layoutX="27.0" layoutY="20.0" styleClass="h2" stylesheets="@../styles/style.css" text="Low Stocks" />
-            <ListView fx:id="listLowStock" layoutX="27.0" layoutY="59.0" prefHeight="187.0" prefWidth="676.0" />
+            <ListView fx:id="listLowStock" layoutX="27.0" layoutY="98.0" prefHeight="148.0" prefWidth="676.0" stylesheets="@../styles/listview2.css" />
+            <HBox layoutX="27.0" layoutY="45.0" prefHeight="44.0" prefWidth="676.0" styleClass="tableBorder" stylesheets="@../styles/style.css">
+               <children>
+                  <StackPane alignment="CENTER_LEFT" prefHeight="44.0" prefWidth="372.0">
+                     <children>
+                        <Label styleClass="tableHeader" stylesheets="@../styles/style.css" text="Item Name" />
+                     </children>
+                  </StackPane>
+                  <StackPane alignment="CENTER_RIGHT" prefHeight="44.0" prefWidth="371.0">
+                     <children>
+                        <Label styleClass="tableHeader" stylesheets="@../styles/style.css" text="Remaining Quantity" />
+                     </children>
+                  </StackPane>
+               </children>
+            </HBox>
          </children>
       </AnchorPane>
       <AnchorPane layoutX="787.0" layoutY="111.0" prefHeight="267.0" prefWidth="327.0" styleClass="panel" stylesheets="@../styles/style.css">
          <children>
             <Label layoutX="32.0" layoutY="27.0" styleClass="h2" stylesheets="@../styles/style.css" text="Revenue" />
-            <Label layoutX="32.0" layoutY="73.0" text="This day" />
-            <Label fx:id="revenueThisDay" layoutX="32.0" layoutY="100.0" text="Php 00.0" />
-            <Label layoutX="29.0" layoutY="168.0" text="This month" />
-            <Label fx:id="revenueThisMonth" layoutX="31.0" layoutY="196.0" text="Php 00.0" />
+            <Label layoutX="61.0" layoutY="73.0" styleClass="tableHeader" stylesheets="@../styles/style.css" text="This day" />
+            <Label layoutX="61.0" layoutY="168.0" styleClass="tableHeader" stylesheets="@../styles/style.css" text="This month" />
+            <HBox layoutX="32.0" layoutY="98.0" prefHeight="36.0" prefWidth="200.0">
+               <children>
+                  <StackPane alignment="CENTER_LEFT" prefHeight="36.0" prefWidth="82.0">
+                     <children>
+                        <Label styleClass="text-label2" stylesheets="@../styles/style.css" text="Php" />
+                     </children>
+                  </StackPane>
+                  <StackPane alignment="CENTER_LEFT" prefHeight="36.0" prefWidth="180.0">
+                     <children>
+                        <Label fx:id="revenueThisDay" styleClass="text-label2" stylesheets="@../styles/style.css" text="00.00" />
+                     </children>
+                  </StackPane>
+               </children>
+            </HBox>
+            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="28.0" layoutY="68.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../icons/today100-gray.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="28.0" layoutY="163.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../icons/month100-gray.png" />
+               </image>
+            </ImageView>
+            <HBox layoutX="32.0" layoutY="199.0" prefHeight="36.0" prefWidth="200.0">
+               <children>
+                  <StackPane alignment="CENTER_LEFT" prefHeight="36.0" prefWidth="50.0">
+                     <children>
+                        <Label styleClass="text-label2" stylesheets="@../styles/style.css" text="Php" />
+                     </children>
+                  </StackPane>
+                  <StackPane alignment="CENTER_LEFT" prefHeight="36.0" prefWidth="148.0">
+                     <children>
+                        <Label fx:id="revenueThisMonth" styleClass="text-label2" stylesheets="@../styles/style.css" text="00.00" />
+                     </children>
+                  </StackPane>
+               </children>
+            </HBox>
          </children>
       </AnchorPane>
       <AnchorPane layoutX="38.0" layoutY="403.0" prefHeight="343.0" prefWidth="1081.0" styleClass="panel" stylesheets="@../styles/style.css">
          <children>
-            <Label layoutX="31.0" layoutY="31.0" styleClass="h2" stylesheets="@../styles/style.css" text="Recent Sales" />
-            <Button layoutX="933.0" layoutY="22.0" mnemonicParsing="false" onAction="#btnNewSale" styleClass="cta" stylesheets="@../styles/style.css" text="New Sales" />
-            <ListView fx:id="listDashSales" layoutX="31.0" layoutY="105.0" prefHeight="224.0" prefWidth="1028.0" stylesheets="@../styles/listview2.css" />
+            <Label layoutX="23.0" layoutY="24.0" styleClass="h2" stylesheets="@../styles/style.css" text="Recent Sales" />
+            <Button layoutX="912.0" layoutY="15.0" mnemonicParsing="false" onAction="#btnNewSale" prefHeight="48.0" prefWidth="148.0" styleClass="cta-2" stylesheets="@../styles/style.css" text="New Sales">
+               <graphic>
+                  <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../icons/add100-black.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
+            <ListView fx:id="listDashSales" layoutX="23.0" layoutY="120.0" prefHeight="209.0" prefWidth="1043.0" stylesheets="@../styles/listview2.css" />
+            <HBox layoutX="23.0" layoutY="66.0" prefHeight="42.0" prefWidth="1037.0" styleClass="tableBorder" stylesheets="@../styles/style.css">
+               <children>
+                  <StackPane alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="219.0">
+                     <children>
+                        <Label styleClass="tableHeader" stylesheets="@../styles/style.css" text="Order ID" />
+                     </children>
+                  </StackPane>
+                  <StackPane prefHeight="40.0" prefWidth="281.0">
+                     <children>
+                        <Label styleClass="tableHeader" stylesheets="@../styles/style.css" text="Time" />
+                     </children>
+                  </StackPane>
+                  <StackPane prefHeight="40.0" prefWidth="247.0">
+                     <children>
+                        <Label styleClass="tableHeader" stylesheets="@../styles/style.css" text="Total Amount" />
+                     </children>
+                  </StackPane>
+                  <StackPane alignment="CENTER_RIGHT" prefHeight="40.0" prefWidth="301.0">
+                     <children>
+                        <Label styleClass="tableHeader" stylesheets="@../styles/style.css" text="Actions" />
+                     </children>
+                  </StackPane>
+               </children>
+            </HBox>
          </children>
       </AnchorPane>
    </children>

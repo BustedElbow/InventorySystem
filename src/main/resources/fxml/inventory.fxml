@@ -59,6 +59,6 @@
       </children>
    </AnchorPane>
    <Button layoutX="257.0" layoutY="42.0" mnemonicParsing="false" styleClass="secondary-cta2" stylesheets="@../styles/style.css" text="Inventory" />
-   <Button layoutX="366.0" layoutY="42.0" mnemonicParsing="false" styleClass="secondary-cta" stylesheets="@../styles/style.css" text="Logs" />
-   <Button layoutX="441.0" layoutY="42.0" mnemonicParsing="false" styleClass="secondary-cta" stylesheets="@../styles/style.css" text="Archive" />
+   <Button layoutX="366.0" layoutY="42.0" mnemonicParsing="false" onAction="#loadLog" styleClass="secondary-cta" stylesheets="@../styles/style.css" text="Logs" />
+   <Button layoutX="441.0" layoutY="42.0" mnemonicParsing="false" onAction="#loadArchive" styleClass="secondary-cta" stylesheets="@../styles/style.css" text="Archive" />
 </AnchorPane>
