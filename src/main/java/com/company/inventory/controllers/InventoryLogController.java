@@ -41,4 +41,6 @@ public class InventoryLogController {
         LayoutController.getInstance().loadInventoryArchive();
     }
 
+    public void filterDateList(ActionEvent actionEvent) {
+    }
 }

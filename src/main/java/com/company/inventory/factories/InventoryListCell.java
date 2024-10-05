@@ -1,6 +1,7 @@
 package com.company.inventory.factories;
 
 import com.company.inventory.controllers.EditItemController;
+import com.company.inventory.controllers.RestockController;
 import com.company.inventory.models.Item;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
@@ -18,7 +19,7 @@ import java.io.IOException;
 
 public class InventoryListCell extends ListCell<Item> {
     private HBox hbox = new HBox();
-    private HBox actionBox = new HBox();
+    private HBox actionBox = new HBox(10);
     private Label id = new Label();
     private Label name = new Label();
     private Label unit = new Label();
@@ -35,6 +36,7 @@ public class InventoryListCell extends ListCell<Item> {
     public InventoryListCell() {
 
         editButton.setStyle("-fx-background-radius: 8; -fx-background-color: #ee8850; -fx-text-fill: #1e1e1e; -fx-padding: 8 12 8 12; -fx-font-family: 'Inter Semi Bold'; -fx-font-size: 16; -fx-cursor: hand;");
+        restockButton.setStyle("-fx-background-radius: 8; -fx-background-color: #ee8850; -fx-text-fill: #1e1e1e; -fx-padding: 8 12 8 12; -fx-font-family: 'Inter Semi Bold'; -fx-font-size: 16; -fx-cursor: hand;");
 
         namePane.setAlignment(Pos.CENTER_LEFT);
         actionPane.setAlignment(Pos.CENTER_RIGHT);
@@ -97,7 +99,24 @@ public class InventoryListCell extends ListCell<Item> {
                 }
             });
             restockButton.setOnAction(e -> {
-                System.out.println("Restock for " + item.getName());
+                try {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/restock.fxml"));
+                    Parent root = loader.load();
+
+
+                    RestockController restockController = loader.getController();
+                    restockController.setItem(getItem());
+
+                    Stage stage = new Stage();
+                    stage.setTitle("Add Stock");
+                    stage.setScene(new Scene(root));
+                    stage.initModality(Modality.APPLICATION_MODAL);
+                    stage.showAndWait();
+
+                    getListView().refresh();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
             });
             setGraphic(hbox);
         }

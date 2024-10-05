@@ -44,6 +44,7 @@ public class SQLiteDatabase {
                 String inventoryLogSql = "CREATE TABLE IF NOT EXISTS inventory_log ("
                         + "log_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,"
                         + "item_id INTEGER NOT NULL,"
+                        + "item_name TEXT NOT NULL,"
                         + "change_amount REAL NOT NULL,"
                         + "previous_quantity REAL NOT NULL,"
                         + "new_quantity REAL NOT NULL,"

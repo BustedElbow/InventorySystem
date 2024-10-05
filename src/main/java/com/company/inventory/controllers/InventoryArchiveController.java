@@ -1,5 +1,6 @@
 package com.company.inventory.controllers;
 
+import com.company.inventory.factories.InvArchListCell;
 import com.company.inventory.factories.InventoryListCell;
 import com.company.inventory.models.Database;
 import com.company.inventory.models.Item;
@@ -31,7 +32,7 @@ public class InventoryArchiveController {
         refreshArcItemList();
 
         itemListview.getStylesheets().add(getClass().getResource("/styles/listview.css").toExternalForm());
-        itemListview.setCellFactory(param -> new InventoryListCell());
+        itemListview.setCellFactory(param -> new InvArchListCell());
     }
 
     @FXML

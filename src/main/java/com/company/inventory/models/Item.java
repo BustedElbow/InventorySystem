@@ -70,10 +70,6 @@ public class Item {
         return this.reorderLevel;
     }
 
-    public void addStock(double stock) {
-        this.stock += stock;
-    }
-
     public void save() {
         String query = "INSERT INTO items(item_name, unit_measure, stock_quantity, reorder_level) VALUES(?, ?, ?, ?)";
 
@@ -105,6 +101,9 @@ public class Item {
         }
 
         String query = "UPDATE items SET item_name = ?, unit_measure = ?, stock_quantity = ?, reorder_level = ? WHERE item_ID = ?";
+        double previousStock = this.stock; // Store previous stock for logging
+        double previousReorderLevel = this.reorderLevel; // Store previous reorder level for logging
+
 
         try (Connection conn = SQLiteDatabase.connect();
              PreparedStatement ps = conn.prepareStatement(query)) {
@@ -113,11 +112,40 @@ public class Item {
             ps.setString(2, this.unitMeasure);
             ps.setDouble(3, this.stock);
             ps.setDouble(4, this.reorderLevel);
-            ps.setInt(5, this.id);  // Set the ID to update the correct record
+            ps.setInt(5, this.id);
 
             ps.executeUpdate();
+
+            InventoryLog log = new InventoryLog(this.id, this.name, 0, previousStock, this.stock, "UPDATE", null);
+            log.logInventoryChange();
         } catch (SQLException e) {
             System.out.println("Error updating item: " + e.getMessage());
+        }
+    }
+
+    public void restock(double restock) {
+        if (this.id <= 0) {
+            throw new IllegalArgumentException("Cannot restock item without a valid ID.");
+        }
+
+        double previousStock = this.stock; // Store previous stock for logging
+        this.stock += restock;
+
+        String query = "UPDATE items SET stock_quantity = ? WHERE item_ID = ?";
+
+        try (Connection conn = SQLiteDatabase.connect();
+             PreparedStatement ps = conn.prepareStatement(query)) {
+
+            ps.setDouble(1, this.stock);
+            ps.setInt(2, this.id);
+
+            ps.executeUpdate();
+
+
+            InventoryLog log = new InventoryLog(this.id, this.name, +restock, previousStock, this.stock, "RESTOCK", null);
+            log.logInventoryChange();
+        } catch (SQLException e) {
+            System.out.println("Error restocking item: " + e.getMessage());
         }
     }
 
@@ -136,6 +164,9 @@ public class Item {
             ps.setInt(1, this.id);
 
             ps.executeUpdate();
+
+            InventoryLog log = new InventoryLog(this.id, this.name, -this.stock, this.stock, 0, "DELETED", null);
+            log.logInventoryChange();
         } catch (SQLException e) {
             System.out.println("Error deleting item: " + e.getMessage());
         }

@@ -146,14 +146,15 @@ public class Database {
     }
 
     public static void loadInventoryLogs() {
-        String query = "SELECT i.item_name, l.change_amount, l.previous_quantity, l.new_quantity, l.change_type, l.reference_id, l.timestamp " +
-                "FROM inventory_log l JOIN items i ON l.item_id = i.item_id";
+        String query = "SELECT item_id, item_name, change_amount, previous_quantity, new_quantity, change_type, reference_id, timestamp " +
+                "FROM inventory_log";
 
         try (Connection conn = SQLiteDatabase.connect();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(query)) {
 
             while (rs.next()) {
+                int itemId= rs.getInt("item_id");
                 String itemName = rs.getString("item_name");
                 double changeAmount = rs.getDouble("change_amount");
                 double previousQuantity = rs.getDouble("previous_quantity");
@@ -162,7 +163,7 @@ public class Database {
                 Integer referenceId = rs.getInt("reference_id");
                 String timestamp = rs.getString("timestamp");
 
-                InventoryLog log = new InventoryLog(itemName, changeAmount, previousQuantity, newQuantity, changeType, referenceId, timestamp);
+                InventoryLog log = new InventoryLog(itemId,itemName, changeAmount, previousQuantity, newQuantity, changeType, referenceId, timestamp);
                 logs.add(log);
             }
         } catch (SQLException e) {

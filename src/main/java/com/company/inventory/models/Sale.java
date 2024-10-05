@@ -82,6 +82,7 @@ public class Sale {
         List<ProductIngredient> ingredients = product.getUsedItems();
         for (ProductIngredient ingredient : ingredients) {
             int itemId = ingredient.getItemId();
+            String itemName = ingredient.getItemName();
             double neededQuantity = ingredient.getNeededQuantity() * quantitySold;
 
             double previousQuantity = getItemQuantity(itemId);
@@ -96,7 +97,8 @@ public class Sale {
 
                 double newQuantity = previousQuantity - neededQuantity;
 
-                logInventoryChange(itemId, -neededQuantity, previousQuantity, newQuantity, "Sale", null);
+                InventoryLog log = new InventoryLog(itemId, itemName, -neededQuantity, previousQuantity, newQuantity, "SALE", saleId);
+                log.logInventoryChange();
 
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -104,25 +106,6 @@ public class Sale {
         }
     }
 
-    private void logInventoryChange(int itemId, double changeAmount, double previousQuantity, double newQuantity, String changeType, Integer referenceId) {
-        String logQuery = "INSERT INTO inventory_log(item_id, change_amount, previous_quantity, new_quantity, change_type, reference_id, timestamp) VALUES (?, ?, ?, ?, ?, ?, ?)";
-
-        try (Connection conn = SQLiteDatabase.connect()) {
-
-            try (PreparedStatement ps = conn.prepareStatement(logQuery)) {
-                ps.setInt(1, itemId);
-                ps.setDouble(2, changeAmount);
-                ps.setDouble(3, previousQuantity);
-                ps.setDouble(4, newQuantity);
-                ps.setString(5, changeType);
-                ps.setObject(6, referenceId); // Can be null if not applicable
-                ps.setString(7, LocalDateTime.now().toString()); // Timestamp
-                ps.executeUpdate();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
 
     private double getItemQuantity(int itemId) {
         String query = "SELECT stock_quantity FROM items WHERE item_id = ?";

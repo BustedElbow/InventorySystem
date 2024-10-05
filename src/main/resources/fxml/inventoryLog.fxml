@@ -53,4 +53,13 @@
    <Button layoutX="257.0" layoutY="42.0" mnemonicParsing="false" onAction="#loadInventory" styleClass="secondary-cta" stylesheets="@../styles/style.css" text="Inventory" />
    <Button layoutX="366.0" layoutY="42.0" mnemonicParsing="false" styleClass="secondary-cta2" stylesheets="@../styles/style.css" text="Logs" />
    <Button layoutX="441.0" layoutY="42.0" mnemonicParsing="false" onAction="#loadArchive" styleClass="secondary-cta" stylesheets="@../styles/style.css" text="Archive" />
+   <Button layoutX="1071.0" layoutY="35.0" mnemonicParsing="false" onAction="#filterDateList" prefHeight="50.0" prefWidth="50.0" styleClass="secondary-cta" stylesheets="@../styles/style.css">
+      <graphic>
+         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@../icons/filter100-gray.png" />
+            </image>
+         </ImageView>
+      </graphic>
+   </Button>
 </AnchorPane>
