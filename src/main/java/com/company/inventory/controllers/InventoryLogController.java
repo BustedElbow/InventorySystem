@@ -7,12 +7,19 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.ListView;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+
+import java.io.IOException;
 
 public class InventoryLogController {
     private static InventoryLogController instance;
     @FXML
-    private ListView<InventoryLog> logListView;
+    public ListView<InventoryLog> logListView;
 
     public InventoryLogController() {
         instance = this;
@@ -42,5 +49,24 @@ public class InventoryLogController {
     }
 
     public void filterDateList(ActionEvent actionEvent) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/filterLog.fxml"));
+            Parent modalRoot = fxmlLoader.load();
+
+            Stage modalStage = new Stage();
+
+            modalStage.setResizable(false);
+            modalStage.setTitle("Date Filter");
+            modalStage.initModality(Modality.APPLICATION_MODAL);
+            modalStage.setScene(new Scene(modalRoot));
+            modalStage.showAndWait();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void refreshLogListView() {
+        logListView.refresh();
     }
 }

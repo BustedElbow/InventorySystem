@@ -1,6 +1,5 @@
 package com.company.inventory.controllers;
 
-import com.company.inventory.SQLiteDatabase;
 import com.company.inventory.factories.SaleListCell;
 import com.company.inventory.models.Database;
 import com.company.inventory.models.Sale;
@@ -19,21 +18,20 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class SalesController {
 
-
+    private static SalesController instance;
     @FXML private Label orderIdLabel;
     @FXML private Label dateLabel;
     @FXML private Label totalPriceLabel;
     @FXML private ListView<String> saleListDetails;
-    @FXML private ListView<Sale> saleList;
+    @FXML public ListView<Sale> saleList;
+
+    public SalesController() {
+        instance = this;
+    }
 
     public void initialize() {
         ObservableList<Sale> sales = Database.getSaleList();
@@ -49,6 +47,10 @@ public class SalesController {
             }
         });
 
+    }
+
+    public static SalesController getInstance() {
+        return instance;
     }
     public void btnNewSale(ActionEvent event) {
         showModal();
@@ -83,5 +85,24 @@ public class SalesController {
     }
 
     public void filterDateList(ActionEvent actionEvent) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/filterSales.fxml"));
+            Parent modalRoot = fxmlLoader.load();
+
+            Stage modalStage = new Stage();
+
+            modalStage.setResizable(false);
+            modalStage.setTitle("Filter Date");
+            modalStage.initModality(Modality.APPLICATION_MODAL);
+            modalStage.setScene(new Scene(modalRoot));
+            modalStage.showAndWait();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void refreshSaleList() {
+        saleList.refresh();
     }
 }

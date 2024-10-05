@@ -5,7 +5,7 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="608.0" prefWidth="953.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.company.inventory.controllers.NewSaleController">
+<AnchorPane prefHeight="608.0" prefWidth="953.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.company.inventory.controllers.NewSaleController">
    <AnchorPane layoutX="14.0" layoutY="14.0" prefHeight="582.0" prefWidth="407.0" styleClass="panel" stylesheets="@../styles/style.css">
       <children>
          <ListView fx:id="availableProductList" layoutX="14.0" layoutY="76.0" prefHeight="484.0" prefWidth="381.0" stylesheets="@../styles/listview.css" />

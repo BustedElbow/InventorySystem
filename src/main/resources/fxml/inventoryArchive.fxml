@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 
-<AnchorPane prefHeight="768.0" prefWidth="1148.0" styleClass="main" stylesheets="@../styles/style.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.company.inventory.controllers.InventoryArchiveController">
+<AnchorPane prefHeight="768.0" prefWidth="1148.0" styleClass="main" stylesheets="@../styles/style.css" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.company.inventory.controllers.InventoryArchiveController">
    <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="28.0" layoutY="36.0" pickOnBounds="true" preserveRatio="true">
       <image>
          <Image url="@../icons/boxes100-black.png" />

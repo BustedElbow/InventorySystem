@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="318.0" prefWidth="456.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.company.inventory.controllers.FilterSalesController">
+   <AnchorPane layoutX="21.0" layoutY="19.0" prefHeight="279.0" prefWidth="407.0" styleClass="panel" stylesheets="@../styles/style.css">
+      <children>
+         <AnchorPane prefHeight="61.0" prefWidth="412.0" styleClass="modal-header" stylesheets="@../styles/style.css">
+            <children>
+               <Label layoutX="26.0" layoutY="18.0" styleClass="modal-header-title" stylesheets="@../styles/style.css" text="Date Filter" />
+            </children>
+         </AnchorPane>
+         <Button fx:id="confirmBtn" layoutX="294.0" layoutY="212.0" mnemonicParsing="false" onAction="#confirmFilter" styleClass="cta-2" stylesheets="@../styles/style.css" text="Confirm" />
+         <Button fx:id="cancelBtn" layoutX="199.0" layoutY="211.0" mnemonicParsing="false" onAction="#btnCancel" styleClass="secondary-cta" stylesheets="@../styles/style.css" text="Cancel" />
+         <ChoiceBox fx:id="yearChoice" layoutX="266.0" layoutY="121.0" prefHeight="25.0" prefWidth="107.0" />
+         <ChoiceBox fx:id="monthChoice" layoutX="21.0" layoutY="121.0" prefHeight="25.0" prefWidth="119.0" />
+         <ChoiceBox fx:id="dayChoice" layoutX="159.0" layoutY="121.0" prefHeight="25.0" prefWidth="80.0" />
+      </children>
+   </AnchorPane>
+</AnchorPane>
