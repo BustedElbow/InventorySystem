@@ -2,8 +2,10 @@ package com.company.inventory.controllers;
 
 
 import com.company.inventory.factories.DashSaleListCell;
+import com.company.inventory.factories.LowStockListCell;
 import com.company.inventory.models.Item;
 import com.company.inventory.models.Sale;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -11,7 +13,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.image.ImageView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -20,6 +24,8 @@ import java.io.IOException;
 public class DashboardController {
 
     private static DashboardController instance;
+    @FXML private Label goodStockLabel;
+    @FXML private ImageView alertImage;
     @FXML private ListView<Sale> listDashSales;
     @FXML private ListView<Item> listLowStock;
     @FXML private Label revenueThisDay;
@@ -42,6 +48,7 @@ public class DashboardController {
         loadRecentSalesToday();
 
         listDashSales.setCellFactory(param -> new DashSaleListCell());
+        listLowStock.setCellFactory(param -> new LowStockListCell());
     }
 
     public void showModal() {
@@ -65,6 +72,14 @@ public class DashboardController {
     public void loadLowStockItems() {
         ObservableList<Item> lowStockItems = Item.getLowStockItems();
         listLowStock.setItems(lowStockItems);
+
+        if (lowStockItems.isEmpty()) {
+            alertImage.setVisible(false);
+            goodStockLabel.setVisible(true);
+        } else {
+            alertImage.setVisible(true);
+            goodStockLabel.setVisible(false);
+        }
     }
 
     public void updateRevenueLabels() {
@@ -75,6 +90,7 @@ public class DashboardController {
     public void loadRecentSalesToday() {
         listDashSales.getItems().clear();
         ObservableList<Sale> recentSales = Sale.getRecentSalesToday();
-        listDashSales.setItems(recentSales); // Populate the ListView
+        FXCollections.reverse(recentSales);
+        listDashSales.setItems(recentSales);
     }
 }

@@ -2,9 +2,12 @@ package com.company.inventory.controllers;
 
 import com.company.inventory.models.Database;
 import com.company.inventory.models.InventoryLog;
+import com.company.inventory.models.Sale;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.stage.Stage;
@@ -41,14 +44,44 @@ public class FilterLogController {
 
     @FXML
     public void confirmFilter(ActionEvent actionEvent) {
-        String selectedYear = yearChoice.getSelectionModel().getSelectedItem().toString();
-        String selectedMonth = monthChoice.getSelectionModel().getSelectedItem().toString();
-        String selectedDay = dayChoice.getSelectionModel().getSelectedItem().toString();
+        String selectedYear = yearChoice.getSelectionModel().getSelectedItem() != null
+                ? yearChoice.getSelectionModel().getSelectedItem().toString()
+                : null;
+        String selectedMonth = monthChoice.getSelectionModel().getSelectedItem() != null
+                ? monthChoice.getSelectionModel().getSelectedItem().toString()
+                : null;
+        String selectedDay = dayChoice.getSelectionModel().getSelectedItem() != null
+                ? dayChoice.getSelectionModel().getSelectedItem().toString()
+                : null;
 
-        ObservableList<InventoryLog> filteredLogs = Database.filterLogsByDate(selectedYear, selectedMonth, selectedDay);
+        // Check selections and filter accordingly
+        ObservableList<InventoryLog> filteredLogs;
+        try {
+            if (selectedYear != null && selectedMonth == null && selectedDay == null) {
+                // Filter by year only
+                filteredLogs = Database.filterLogsByYear(selectedYear);
+            } else if (selectedYear != null && selectedMonth != null && selectedDay == null) {
+                // Filter by year and month
+                filteredLogs = Database.filterLogsByYearAndMonth(selectedYear, selectedMonth);
+            } else if (selectedYear != null && selectedMonth != null && selectedDay != null) {
+                // Filter by year, month, and day
+                filteredLogs = Database.filterLogsByDate(selectedYear, selectedMonth, selectedDay);
+            } else {
+                showErrorDialog("Please select at least a year to filter sales.");
+                return;
+            }
 
-        InventoryLogController.getInstance().logListView.setItems(filteredLogs);
-        InventoryLogController.getInstance().refreshLogListView();
+            // Check if any sales are returned
+            if (filteredLogs.isEmpty()) {
+                showErrorDialog("No sales found for the selected criteria.");
+            } else {
+                FXCollections.reverse(filteredLogs);
+                InventoryLogController.getInstance().logListView.setItems(filteredLogs);
+                InventoryLogController.getInstance().refreshLogListView();
+            }
+        } catch (Exception e) {
+            showErrorDialog("An error occurred while filtering sales: " + e.getMessage());
+        }
 
         Stage stage = (Stage) confirmBtn.getScene().getWindow();
         stage.close();
@@ -57,5 +90,13 @@ public class FilterLogController {
     public void btnCancel(ActionEvent actionEvent) {
         Stage stage = (Stage) cancelBtn.getScene().getWindow();
         stage.close();
+    }
+
+    private void showErrorDialog(String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }

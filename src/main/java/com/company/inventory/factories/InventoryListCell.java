@@ -10,6 +10,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Modality;
@@ -25,7 +27,7 @@ public class InventoryListCell extends ListCell<Item> {
     private Label unit = new Label();
     private Label level = new Label();
     private Label stock = new Label();
-    private Button editButton = new Button("Edit");
+    private Button editButton = new Button();
     private Button restockButton = new Button("Restock");
     private StackPane unitPane = new StackPane();
     private StackPane stockPane = new StackPane();
@@ -35,7 +37,15 @@ public class InventoryListCell extends ListCell<Item> {
 
     public InventoryListCell() {
 
-        editButton.setStyle("-fx-background-radius: 8; -fx-background-color: #ee8850; -fx-text-fill: #1e1e1e; -fx-padding: 8 12 8 12; -fx-font-family: 'Inter Semi Bold'; -fx-font-size: 16; -fx-cursor: hand;");
+        Image image = new Image(getClass().getResource("/icons/edit100-black.png").toString());
+        ImageView editImg = new ImageView(image);
+
+        editImg.setFitHeight(27);
+        editImg.setFitWidth(27);
+
+        editButton.setGraphic(editImg);
+
+        editButton.setStyle("-fx-background-radius: 8; -fx-background-color: #ee8850; -fx-text-fill: #1e1e1e; -fx-padding: 4 4 4 4; -fx-font-family: 'Inter Semi Bold'; -fx-font-size: 16; -fx-cursor: hand;");
         restockButton.setStyle("-fx-background-radius: 8; -fx-background-color: #ee8850; -fx-text-fill: #1e1e1e; -fx-padding: 8 12 8 12; -fx-font-family: 'Inter Semi Bold'; -fx-font-size: 16; -fx-cursor: hand;");
 
         namePane.setAlignment(Pos.CENTER_LEFT);

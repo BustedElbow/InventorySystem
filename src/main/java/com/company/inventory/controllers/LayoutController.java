@@ -37,11 +37,11 @@ public class LayoutController {
     }
     @FXML
     private void initialize() {
+        loadSales();
         loadInventory();
         loadInventoryArchive();
         loadInventoryLogs();
         loadProducts();
-        loadSales();
         loadProductsArchive();
         loadDashboard();
     }

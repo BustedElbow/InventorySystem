@@ -34,8 +34,7 @@ public class SalesController {
     }
 
     public void initialize() {
-        ObservableList<Sale> sales = Database.getSaleList();
-        saleList.setItems(sales);
+        refreshSalesItemList();
 
         saleList.setCellFactory(param -> new SaleListCell());
 
@@ -47,6 +46,14 @@ public class SalesController {
             }
         });
 
+    }
+
+    public void refreshSalesItemList() {
+        saleList.getItems().clear();
+        Database.reloadSalesFromDatabase();
+        ObservableList<Sale> sales = Database.getSaleList();
+        FXCollections.reverse(sales);
+        saleList.setItems(sales);
     }
 
     public static SalesController getInstance() {

@@ -67,8 +67,33 @@ public class EditProductController {
     }
 
     public void saveBtn(ActionEvent actionEvent) {
-        product.setProductName(productNameField.getText());
-        product.setProductPrice(Double.parseDouble(productPriceField.getText()));
+        String productName = productNameField.getText();
+        String productPriceText = productPriceField.getText();
+
+        // Check if product name is empty
+        if (productName.isEmpty()) {
+            showErrorDialog("Product name cannot be empty.");
+            return;
+        }
+
+        // Check if product price is empty
+        if (productPriceText.isEmpty()) {
+            showErrorDialog("Product price cannot be empty.");
+            return;
+        }
+
+        // Check if product price is formatted properly
+        double productPrice;
+        try {
+            productPrice = Double.parseDouble(productPriceText);
+        } catch (NumberFormatException e) {
+            showErrorDialog("Product price must be a valid number.");
+            return;
+        }
+
+        // Set product details
+        product.setProductName(productName);
+        product.setProductPrice(productPrice);
 
         product.update();
 
@@ -76,6 +101,14 @@ public class EditProductController {
 
         Stage stage = (Stage) btnSave.getScene().getWindow();
         stage.close();
+    }
+
+    private void showErrorDialog(String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 
     public void cancel(ActionEvent actionEvent) {

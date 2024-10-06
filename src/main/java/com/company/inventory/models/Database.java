@@ -255,6 +255,65 @@ public class Database {
         return filteredLogs;
     }
 
+    public static ObservableList<InventoryLog> filterLogsByYear(String year) {
+        ObservableList<InventoryLog> filteredLogs = FXCollections.observableArrayList();
+        String query = "SELECT * FROM inventory_log WHERE strftime('%Y', timestamp) = ?";
+
+        try (Connection conn = SQLiteDatabase.connect();
+             PreparedStatement pstmt = conn.prepareStatement(query)) {
+
+            pstmt.setString(1, year);
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                int itemId = rs.getInt("item_id");
+                String itemName = rs.getString("item_name");
+                double changeAmount = rs.getDouble("change_amount");
+                double previousQuantity = rs.getDouble("previous_quantity");
+                double newQuantity = rs.getDouble("new_quantity");
+                String changeType = rs.getString("change_type");
+                Integer referenceId = rs.getInt("reference_id");
+                String timestamp = rs.getString("timestamp");
+
+                InventoryLog log = new InventoryLog(itemId, itemName, changeAmount, previousQuantity, newQuantity, changeType, referenceId, timestamp);
+                filteredLogs.add(log);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return filteredLogs;
+    }
+
+    public static ObservableList<InventoryLog> filterLogsByYearAndMonth(String year, String month) {
+        ObservableList<InventoryLog> filteredLogs = FXCollections.observableArrayList();
+        String query = "SELECT * FROM inventory_log WHERE strftime('%Y', timestamp) = ? AND strftime('%m', timestamp) = ?";
+
+        try (Connection conn = SQLiteDatabase.connect();
+             PreparedStatement pstmt = conn.prepareStatement(query)) {
+
+            pstmt.setString(1, year);
+            pstmt.setString(2, month);
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                int itemId = rs.getInt("item_id");
+                String itemName = rs.getString("item_name");
+                double changeAmount = rs.getDouble("change_amount");
+                double previousQuantity = rs.getDouble("previous_quantity");
+                double newQuantity = rs.getDouble("new_quantity");
+                String changeType = rs.getString("change_type");
+                Integer referenceId = rs.getInt("reference_id");
+                String timestamp = rs.getString("timestamp");
+
+                InventoryLog log = new InventoryLog(itemId, itemName, changeAmount, previousQuantity, newQuantity, changeType, referenceId, timestamp);
+                filteredLogs.add(log);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return filteredLogs;
+    }
+
 
     public static ObservableList<String> getDistinctYearsSales() {
         ObservableList<String> years = FXCollections.observableArrayList();
@@ -340,6 +399,59 @@ public class Database {
         return filteredSales;
     }
 
+    public static ObservableList<Sale> filterSalesByYear(String year) {
+        ObservableList<Sale> filteredSales = FXCollections.observableArrayList();
+        String query = "SELECT * FROM orders WHERE strftime('%Y', order_date) = ?";
+
+        try (Connection conn = SQLiteDatabase.connect();
+             PreparedStatement pstmt = conn.prepareStatement(query)) {
+
+            pstmt.setString(1, year);
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                int orderId = rs.getInt("order_id");
+                String orderDateString = rs.getString("order_date");
+                LocalDateTime orderDateTime = LocalDateTime.parse(orderDateString);
+                double totalAmount = rs.getDouble("total_amount");
+
+                Sale sale = new Sale(orderDateTime, totalAmount);
+                sale.setSaleId(orderId);
+                filteredSales.add(sale);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return filteredSales;
+    }
+
+    public static ObservableList<Sale> filterSalesByYearAndMonth(String year, String month) {
+        ObservableList<Sale> filteredSales = FXCollections.observableArrayList();
+        String query = "SELECT * FROM orders WHERE strftime('%Y', order_date) = ? AND strftime('%m', order_date) = ?";
+
+        try (Connection conn = SQLiteDatabase.connect();
+             PreparedStatement pstmt = conn.prepareStatement(query)) {
+
+            pstmt.setString(1, year);
+            pstmt.setString(2, month);
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                int orderId = rs.getInt("order_id");
+                String orderDateString = rs.getString("order_date");
+                LocalDateTime orderDateTime = LocalDateTime.parse(orderDateString);
+                double totalAmount = rs.getDouble("total_amount");
+
+                Sale sale = new Sale(orderDateTime, totalAmount);
+                sale.setSaleId(orderId);
+                filteredSales.add(sale);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return filteredSales;
+    }
+
     public static ObservableList<Item> getItemList() {
         return itemList;
     }
@@ -373,6 +485,11 @@ public class Database {
     public static void reloadProductsFromDatabase() {
         productList.clear();
         loadProductsFromDatabase();
+    }
+
+    public static void reloadSalesFromDatabase() {
+        saleList.clear();
+        loadOrdersFromDatabase();
     }
     public static void reloadArchProdFromDatabase() {
         archivedProductList.clear();

@@ -123,6 +123,33 @@ public class Item {
         }
     }
 
+    public static Item getItemById(int itemId) {
+        String query = "SELECT item_id, item_name, unit_measure, stock_quantity, reorder_level FROM items WHERE item_id = ?";
+        Item item = null;
+
+        try (Connection conn = SQLiteDatabase.connect();
+             PreparedStatement ps = conn.prepareStatement(query)) {
+
+            ps.setInt(1, itemId);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                item = new Item(
+                        rs.getInt("item_id"),
+                        rs.getString("item_name"),
+                        rs.getString("unit_measure"),
+                        rs.getDouble("stock_quantity"),
+                        rs.getDouble("reorder_level")
+                );
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return item;  // Return the Item object or null if not found
+    }
+
     public void restock(double restock) {
         if (this.id <= 0) {
             throw new IllegalArgumentException("Cannot restock item without a valid ID.");

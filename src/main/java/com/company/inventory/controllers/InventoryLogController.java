@@ -15,6 +15,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Collection;
 
 public class InventoryLogController {
     private static InventoryLogController instance;
@@ -31,6 +32,8 @@ public class InventoryLogController {
     public void refreshLogItemList() {
         Database.reloadInventoryLogsFromDatabase();
         ObservableList<InventoryLog> logs = Database.getInventoryLogs();
+
+        FXCollections.reverse(logs);
         logListView.setItems(logs);
     }
 

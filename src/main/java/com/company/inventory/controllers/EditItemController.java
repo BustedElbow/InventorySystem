@@ -25,15 +25,65 @@ public class EditItemController {
     }
 
     public void btnSave(ActionEvent actionEvent) {
-        item.setName(itemName.getText());
-        item.setStock(Double.parseDouble(stockQuantity.getText()));
-        item.setReorderLevel(Double.parseDouble(reorderLevel.getText()));
-        item.setUnitMeasure(unitMeasureChoices.getValue().toString());
+        String name = itemName.getText();
+        String stockText = stockQuantity.getText();
+        String reorderText = reorderLevel.getText();
+        String unitMeasure = unitMeasureChoices.getValue();
+
+        // Check if item name is empty
+        if (name.isEmpty()) {
+            showErrorDialog("Item name cannot be empty.");
+            return;
+        }
+
+        // Check if stock quantity is empty
+        if (stockText.isEmpty()) {
+            showErrorDialog("Stock quantity cannot be empty.");
+            return;
+        }
+
+        // Check if reorder level is empty
+        if (reorderText.isEmpty()) {
+            showErrorDialog("Reorder level cannot be empty.");
+            return;
+        }
+
+        // Check if stock quantity is a valid double
+        double stock;
+        try {
+            stock = Double.parseDouble(stockText);
+        } catch (NumberFormatException e) {
+            showErrorDialog("Stock quantity must be a valid number.");
+            return;
+        }
+
+        // Check if reorder level is a valid double
+        double reorderLevelValue;
+        try {
+            reorderLevelValue = Double.parseDouble(reorderText);
+        } catch (NumberFormatException e) {
+            showErrorDialog("Reorder level must be a valid number.");
+            return;
+        }
+
+        // Set item details
+        item.setName(name);
+        item.setStock(stock);
+        item.setReorderLevel(reorderLevelValue);
+        item.setUnitMeasure(unitMeasure);
 
         item.update();
 
         Stage stage = (Stage) saveBtn.getScene().getWindow();
         stage.close();
+    }
+
+    private void showErrorDialog(String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 
     public void btnCancel(ActionEvent actionEvent) {

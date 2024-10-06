@@ -8,6 +8,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
@@ -51,12 +52,32 @@ public class AddProductController {
         });
     }
     public void confirmAddProduct(ActionEvent actionEvent) {
-        String name = productNameField.getText();
-        double price = Double.parseDouble(productPriceField.getText());
+        String name = productNameField.getText().trim(); // Trim whitespace
+        String priceText = productPriceField.getText().trim(); // Trim whitespace
 
+        // Check for empty fields
+        if (name.isEmpty()) {
+            showError("Product name cannot be empty.");
+            return; // Early exit if name is empty
+        }
+
+        if (priceText.isEmpty()) {
+            showError("Product price cannot be empty.");
+            return; // Early exit if price is empty
+        }
+
+        // Parse price and handle potential number format exceptions
+        double price;
+        try {
+            price = Double.parseDouble(priceText);
+        } catch (NumberFormatException e) {
+            showError("Please enter a valid price.");
+            return; // Early exit if price is not a valid number
+        }
+
+        // Create the product if all checks pass
         Product product = new Product(name, price);
         product.save();
-
         Database.addProductToList(product);
 
         for (Item item : usedItems) {
@@ -68,6 +89,14 @@ public class AddProductController {
         stage.close();
 
         resetList();
+    }
+
+    private void showError(String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Input Error");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 
     public void addItemToProduct(Item item) {
