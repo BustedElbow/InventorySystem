@@ -84,16 +84,19 @@ public class InventoryListCell extends ListCell<Item> {
             id.setText(Integer.toString(item.getId()));
             name.setText(item.getName());
             unit.setText(String.valueOf(item.getUnitMeasure()));
-            stock.setText(String.valueOf(item.getStock()));
+            if (item.getStock() <= 0) {
+                stock.setText("Out of Stock");
+                stock.setStyle("-fx-background-color: #f84545; -fx-font-family: 'Inter Semi Bold'; -fx-text-fill: #fefefe; -fx-padding: 4 4 4 4; -fx-background-radius: 4;");
+            } else {
+                stock.setText(Double.toString(item.getStock()));
+            }
             level.setText(String.valueOf(item.getReorderLevel()));
             editButton.setOnAction(e -> {
                 try {
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/editItem.fxml"));
                     Parent root = loader.load();
 
-
                     EditItemController editItemController = loader.getController();
-
                     editItemController.setItem(getItem());
 
                     Stage stage = new Stage();
@@ -112,7 +115,6 @@ public class InventoryListCell extends ListCell<Item> {
                 try {
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/restock.fxml"));
                     Parent root = loader.load();
-
 
                     RestockController restockController = loader.getController();
                     restockController.setItem(getItem());

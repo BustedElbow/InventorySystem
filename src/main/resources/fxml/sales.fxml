@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 
-<AnchorPane prefHeight="768.0" prefWidth="1148.0" styleClass="main" stylesheets="@../styles/style.css" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.company.inventory.controllers.SalesController">
+<AnchorPane prefHeight="768.0" prefWidth="1148.0" styleClass="main" stylesheets="@../styles/style.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.company.inventory.controllers.SalesController">
    <children>
       <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="28.0" layoutY="36.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -48,9 +48,9 @@
       </AnchorPane>
       <AnchorPane layoutX="712.0" layoutY="114.0" prefHeight="627.0" prefWidth="406.0" styleClass="panel" stylesheets="@../styles/style.css">
          <children>
-            <ListView fx:id="saleListDetails" layoutX="26.0" layoutY="118.0" prefHeight="427.0" prefWidth="361.0" />
-            <Label fx:id="orderIdLabel" layoutX="167.0" layoutY="22.0" styleClass="text-label" stylesheets="@../styles/style.css" text="ID" />
-            <Label fx:id="dateLabel" layoutX="161.0" layoutY="56.0" styleClass="text-label" stylesheets="@../styles/style.css" text="Date" />
+            <ListView fx:id="saleListDetails" layoutX="26.0" layoutY="118.0" prefHeight="427.0" prefWidth="361.0" stylesheets="@../styles/listview2-alt.css" />
+            <Label fx:id="orderIdLabel" layoutX="81.0" layoutY="24.0" styleClass="h2" stylesheets="@../styles/style.css" text="ID" />
+            <Label fx:id="dateLabel" layoutX="26.0" layoutY="58.0" styleClass="text-label" stylesheets="@../styles/style.css" text="Date" />
             <HBox layoutX="186.0" layoutY="552.0" prefHeight="36.0" prefWidth="194.0">
                <children>
                   <StackPane alignment="CENTER_LEFT" prefHeight="36.0" prefWidth="89.0">
@@ -66,6 +66,7 @@
                </children>
             </HBox>
             <Label layoutX="26.0" layoutY="92.0" styleClass="tableHeader" stylesheets="@../styles/style.css" text="Products Sold" />
+            <Label layoutX="26.0" layoutY="24.0" styleClass="h2" stylesheets="@../styles/style.css" text="Sale" />
          </children></AnchorPane>
       <Button fx:id="newSaleBtn" layoutX="906.0" layoutY="32.0" mnemonicParsing="false" onAction="#btnNewSale" styleClass="cta" stylesheets="@../styles/style.css" text="New Sale">
          <graphic>

@@ -1,5 +1,6 @@
 package com.company.inventory.controllers;
 
+import com.company.inventory.factories.SaleDetailsListCell;
 import com.company.inventory.factories.SaleListCell;
 import com.company.inventory.models.Database;
 import com.company.inventory.models.Sale;
@@ -18,6 +19,8 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class SalesController {
@@ -26,7 +29,7 @@ public class SalesController {
     @FXML private Label orderIdLabel;
     @FXML private Label dateLabel;
     @FXML private Label totalPriceLabel;
-    @FXML private ListView<String> saleListDetails;
+    @FXML private ListView<SaleDetails> saleListDetails;
     @FXML public ListView<Sale> saleList;
 
     public SalesController() {
@@ -37,6 +40,8 @@ public class SalesController {
         refreshSalesItemList();
 
         saleList.setCellFactory(param -> new SaleListCell());
+
+        saleListDetails.setCellFactory(param -> new SaleDetailsListCell());
 
         saleList.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 
@@ -82,12 +87,14 @@ public class SalesController {
     }
 
     private void displaySaleDetails(Sale sale) {
-        orderIdLabel.setText("Order ID: " + sale.getSaleId());
-        dateLabel.setText("Date: " + sale.getSaleDate());
-        totalPriceLabel.setText("Total Price: " + sale.getTotalAmount());
+        orderIdLabel.setText(Integer.toString(sale.getSaleId()));
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd, yyyy HH:mm");
+        String formattedDate = sale.getSaleDate().format(formatter);
+        dateLabel.setText(formattedDate);
+        totalPriceLabel.setText(Double.toString(sale.getTotalAmount()));
 
-        List<String> productDetails = SaleDetails.loadOrderDetails(sale.getSaleId());
-        ObservableList<String> orderDetails = FXCollections.observableArrayList(productDetails);
+        List<SaleDetails> productDetails = SaleDetails.loadOrderDetails(sale.getSaleId());
+        ObservableList<SaleDetails> orderDetails = FXCollections.observableArrayList(productDetails);
         saleListDetails.setItems(orderDetails);
     }
 

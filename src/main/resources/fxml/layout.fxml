@@ -6,16 +6,25 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1368.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.company.inventory.controllers.LayoutController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1368.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.company.inventory.controllers.LayoutController">
    <BorderPane fx:id="borderPane" prefHeight="768.0" prefWidth="1368.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <left>
          <VBox prefHeight="768.0" prefWidth="218.0" styleClass="sidebar" stylesheets="@../styles/style.css" BorderPane.alignment="CENTER">
-            <ImageView fitHeight="69.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+            <StackPane prefHeight="122.0" prefWidth="218.0">
+               <children>
+                  <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../icons/sheeeshcken.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </StackPane>
             <VBox prefHeight="210.0" prefWidth="227.0">
                <VBox.margin>
-                  <Insets top="76.0" />
+                  <Insets top="45.0" />
                </VBox.margin>
                <Button fx:id="dashboard_btn" alignment="BASELINE_LEFT" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#btnDashboard" styleClass="active-button" stylesheets="@../styles/style.css" text="Dashboard">
                   <graphic>

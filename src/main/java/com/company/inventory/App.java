@@ -16,13 +16,13 @@ public class App extends Application {
     public void start(Stage stage) throws Exception{
         SQLiteDatabase.initialize();
 
-        Image icon = new Image(getClass().getResource("/icons/um_logo.jpg").toString());
+        Image icon = new Image(getClass().getResource("/icons/sheeeshcken.png").toString());
 
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/layout.fxml"));
         Scene scene = new Scene(root);
 
         stage.getIcons().add(icon);
-        stage.setTitle("Inventory System");
+        stage.setTitle("Sheeesh'cken Inventory System");
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();

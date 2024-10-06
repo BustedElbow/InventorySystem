@@ -39,6 +39,9 @@ public class InventoryLog {
     }
 
     // Getters
+    public int getItemId() {
+        return itemId;
+    }
     public String getItemName() { return itemName; }
     public double getChangeAmount() { return changeAmount; }
     public double getPreviousQuantity() { return previousQuantity; }

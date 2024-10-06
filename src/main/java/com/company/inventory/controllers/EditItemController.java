@@ -102,8 +102,8 @@ public class EditItemController {
     public void btnDelete(ActionEvent actionEvent) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Confirm Deletion");
-        alert.setHeaderText("Delete Item");
-        alert.setContentText("Are you sure you want to delete this item: " + item.getName() + "?");
+        alert.setHeaderText("Are you sure you want to delete this item?");
+        alert.setContentText("Item Name: " + item.getName());
 
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {

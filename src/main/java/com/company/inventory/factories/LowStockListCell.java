@@ -42,8 +42,15 @@ public class LowStockListCell extends ListCell<Item> {
             setGraphic(null);
         } else {
             itemName.setText(item.getName());
-            remainingQuantity.setText(Double.toString(item.getStock()));
-            unitMeasure.setText(item.getUnitMeasure());
+            if (item.getStock() <= 0) {
+                remainingQuantity.setText("Out of Stock");
+                remainingQuantity.setStyle("-fx-background-color: #f84545; -fx-font-family: 'Inter Semi Bold'; -fx-text-fill: #fefefe; -fx-padding: 4 4 4 4; -fx-background-radius: 4;");
+                unitMeasure.setVisible(false);
+                unitMeasure.setManaged(false);
+            } else {
+                remainingQuantity.setText(Double.toString(item.getStock()));
+                unitMeasure.setText(item.getUnitMeasure());
+            }
 
             setGraphic(hbox);
         }

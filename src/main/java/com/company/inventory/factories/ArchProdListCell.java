@@ -12,6 +12,8 @@ import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Modality;
@@ -25,30 +27,42 @@ import java.sql.SQLException;
 
 public class ArchProdListCell extends ListCell<Product> {
     private HBox hbox = new HBox();
+    private HBox infoBox = new HBox(5);
     private StackPane productPane = new StackPane();
     private StackPane pricePane = new StackPane();
     private Label productId = new Label();
     private Label productName = new Label();
     private Label productPrice = new Label();
-    private Button restoreButton = new Button("<");
+    private Button restoreButton = new Button();
 
 
     public ArchProdListCell() {
 
+        Image image = new Image(getClass().getResource("/icons/restore100-black.png").toString());
+        ImageView restoreImg = new ImageView(image);
+
+        restoreImg.setFitHeight(20);
+        restoreImg.setFitWidth(20);
+
+        restoreButton.setGraphic(restoreImg);
+        restoreButton.setStyle("-fx-background-radius: 4; -fx-background-color: #fefefe; -fx-padding: 4 4 4 4; -fx-cursor: hand; -fx-border-radius: 4; -fx-border-color: #929292");
+
         productPane.setAlignment(Pos.CENTER_LEFT);
         pricePane.setAlignment(Pos.CENTER_RIGHT);
+        infoBox.setAlignment(Pos.CENTER_RIGHT);
 
         productId.setVisible(false);
         productId.setManaged(false);
 
         productPane.getChildren().addAll(productId, productName);
-        pricePane.getChildren().addAll(productPrice, restoreButton);
+        pricePane.getChildren().addAll(infoBox);
+        infoBox.getChildren().addAll(productPrice, restoreButton);
 
-        productPane.setPrefWidth(230);
-        pricePane.setPrefWidth(230);
+        productPane.setPrefWidth(250);
+        pricePane.setPrefWidth(250);
 
-        hbox.setPadding(new Insets(4, 0 , 4, 0));
-        hbox.setPrefWidth(518);
+//        hbox.setPadding(new Insets(4, 0 , 4, 0));
+        hbox.setPrefWidth(503);
         hbox.getChildren().addAll(productPane, pricePane);
 
         restoreButton.setOnAction(e -> {
@@ -79,7 +93,7 @@ public class ArchProdListCell extends ListCell<Product> {
         } else {
             productName.setText(product.getProductName());
             productId.setText(Integer.toString(product.getProductId()));
-            productPrice.setText(Double.toString(product.getProductPrice()));
+            productPrice.setText("Php " + product.getProductPrice());
 
             setGraphic(hbox);
         }

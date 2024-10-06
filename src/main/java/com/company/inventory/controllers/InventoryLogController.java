@@ -1,5 +1,6 @@
 package com.company.inventory.controllers;
 
+import com.company.inventory.factories.InventoryLogListCell;
 import com.company.inventory.models.Database;
 import com.company.inventory.models.InventoryLog;
 import com.company.inventory.models.Item;
@@ -27,6 +28,7 @@ public class InventoryLogController {
     }
     public void initialize() {
         refreshLogItemList();
+        logListView.setCellFactory(param -> new InventoryLogListCell());
     }
 
     public void refreshLogItemList() {

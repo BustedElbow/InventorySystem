@@ -9,6 +9,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import com.company.inventory.models.Item;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Modality;
@@ -30,7 +32,7 @@ public class InvArchListCell extends ListCell<Item> {
     private Label unit = new Label();
     private Label level = new Label();
     private Label stock = new Label();
-    private Button restoreButton = new Button("<");
+    private Button restoreButton = new Button();
     private StackPane unitPane = new StackPane();
     private StackPane stockPane = new StackPane();
     private StackPane namePane = new StackPane();
@@ -45,7 +47,14 @@ public class InvArchListCell extends ListCell<Item> {
 
     public InvArchListCell() {
 
-        restoreButton.setStyle("-fx-background-radius: 8; -fx-background-color: #ee8850; -fx-text-fill: #1e1e1e; -fx-padding: 8 12 8 12; -fx-font-family: 'Inter Semi Bold'; -fx-font-size: 16; -fx-cursor: hand;");
+        Image image = new Image(getClass().getResource("/icons/restore100-black.png").toString());
+        ImageView restoreImg = new ImageView(image);
+
+        restoreImg.setFitHeight(27);
+        restoreImg.setFitWidth(27);
+
+        restoreButton.setGraphic(restoreImg);
+        restoreButton.setStyle("-fx-background-radius: 8; -fx-background-color: #ee8850; -fx-text-fill: #1e1e1e; -fx-padding: 4 4 4 4; -fx-font-family: 'Inter Semi Bold'; -fx-font-size: 16; -fx-cursor: hand;");
 
         namePane.setAlignment(Pos.CENTER_LEFT);
         actionPane.setAlignment(Pos.CENTER_RIGHT);
