@@ -52,6 +52,10 @@ public class EditItemController {
         double stock;
         try {
             stock = Double.parseDouble(stockText);
+            if (stock < 0) {
+                showErrorDialog("Stock quantity cannot be a negative number.");
+                return;
+            }
         } catch (NumberFormatException e) {
             showErrorDialog("Stock quantity must be a valid number.");
             return;
@@ -61,6 +65,10 @@ public class EditItemController {
         double reorderLevelValue;
         try {
             reorderLevelValue = Double.parseDouble(reorderText);
+            if (reorderLevelValue < 0) {
+                showErrorDialog("Reorder level cannot be a negative number.");
+                return;
+            }
         } catch (NumberFormatException e) {
             showErrorDialog("Reorder level must be a valid number.");
             return;

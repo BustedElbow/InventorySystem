@@ -1,5 +1,7 @@
 package com.company.inventory.models;
 
+import java.util.Objects;
+
 public class ProductIngredient {
 
     private int itemId;
@@ -23,5 +25,6 @@ public class ProductIngredient {
     public String getItemName() { return itemName; }
     public double getNeededQuantity() { return neededQuantity; }
     public String getUnitMeasure() { return unitMeasure; }
+
 }
 

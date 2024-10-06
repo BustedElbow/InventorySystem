@@ -88,8 +88,8 @@ public class ProdUsedItemListCell extends ListCell<Item> {
             });
             name.setText(item.getName());
             measure.setText(item.getUnitMeasure());
+            quantity.setText(Double.toString(1));
             setGraphic(hbox);
         }
     }
-
 }

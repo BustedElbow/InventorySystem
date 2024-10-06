@@ -91,6 +91,15 @@ public class EditProductController {
             return;
         }
 
+        for (ProductIngredient ingredient : usedItems) {
+            double neededQuantity = itemQuantities.get(ingredient);
+            if (neededQuantity <= 0) {
+                showErrorDialog("Quantity for item " + ingredient.getItemName() + " must be greater than 0.");
+                return; // Early exit if any item's quantity is 0 or negative
+            }
+        }
+
+
         // Set product details
         product.setProductName(productName);
         product.setProductPrice(productPrice);
@@ -130,8 +139,16 @@ public class EditProductController {
     }
 
     public void addItemToProduct(Item item, double quantity) {
-        if (!usedItems.contains(item)) {
+        boolean itemExists = usedItems.stream()
+                .anyMatch(existingItem -> {
+                    if (existingItem instanceof ProductIngredient) {
+                        ProductIngredient existingIngredient = (ProductIngredient) existingItem;
+                        return existingIngredient.getItemId() == item.getId();
+                    }
+                    return false;
+                });
 
+        if (!itemExists) {
             ProductIngredient productIngredient = new ProductIngredient(
                     item.getId(),
                     item.getName(),
@@ -142,6 +159,9 @@ public class EditProductController {
             usedItems.add(productIngredient);
             itemQuantities.put(productIngredient, quantity);
             System.out.println(item.getName() + " added to product");
+        } else {
+            System.out.println(item.getName() + " is already in the product");
+            // Optionally, you could update the quantity of the existing item here
         }
     }
 

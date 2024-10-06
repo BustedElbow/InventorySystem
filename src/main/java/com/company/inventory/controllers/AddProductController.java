@@ -75,6 +75,15 @@ public class AddProductController {
             return; // Early exit if price is not a valid number
         }
 
+        for (Item item : usedItems) {
+            double neededQuantity = itemQuantities.get(item);
+            if (neededQuantity <= 0) {
+                showError("Quantity for item " + item.getName() + " must be greater than 0.");
+                return; // Early exit if any item's quantity is 0 or negative
+            }
+        }
+
+
         // Create the product if all checks pass
         Product product = new Product(name, price);
         product.save();
@@ -99,24 +108,11 @@ public class AddProductController {
         alert.showAndWait();
     }
 
-    public void addItemToProduct(Item item) {
+    public void addItemToProduct(Item item, double quantity) {
         if(!usedItems.contains(item)) {
             usedItems.add(item);
-            itemQuantities.put(item, 0.0);
+            itemQuantities.put(item, quantity);
             System.out.println(item.getName() + "added to product");
-        }
-    }
-
-    public void removeItemFromList(Item item) {
-        if(items.contains(item)) {
-            items.remove(item);
-            System.out.println(item.getName() + " removed from list");
-        }
-    }
-
-    public void addItemToList(Item item) {
-        if(!items.contains(item)) {
-            items.add(item);
         }
     }
 
@@ -130,7 +126,6 @@ public class AddProductController {
     public void updateItemQuantity(Item item, double quantity) {
         itemQuantities.put(item, quantity);
     }
-
 
     public void cancel(ActionEvent actionEvent) {
         Stage stage = (Stage) btnCancel.getScene().getWindow();

@@ -55,7 +55,7 @@ public class ProdItemListCell extends ListCell<Item> {
         } else {
             name.setText(item.getName());
             addButton.setOnAction(e -> {
-                controller.addItemToProduct(item);
+                controller.addItemToProduct(item, 1);
             });
             setGraphic(hbox);
         }
