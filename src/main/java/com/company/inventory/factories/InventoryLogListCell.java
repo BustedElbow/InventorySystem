@@ -23,10 +23,7 @@ public class InventoryLogListCell extends ListCell<InventoryLog> {
 
     private Label itemId = new Label();
     private Label itemName = new Label();
-    private Label changeQuantity = new Label();
     private Label currentQuantity = new Label();
-    private Label previousQuantity = new Label();
-    private Label referenceId = new Label();
     private Label referenceStatus = new Label();
     private Label dateLabel = new Label();
 
@@ -40,8 +37,8 @@ public class InventoryLogListCell extends ListCell<InventoryLog> {
         stackPane4.setAlignment(Pos.CENTER_RIGHT);
 
         hbox1.getChildren().addAll(itemId, itemName);
-        hbox2.getChildren().addAll(previousQuantity, changeQuantity, currentQuantity);
-        hbox3.getChildren().addAll(referenceId,referenceStatus);
+        hbox2.getChildren().add(currentQuantity);
+        hbox3.getChildren().add(referenceStatus);
 
         stackPane1.setPrefWidth(261.25);
         stackPane2.setPrefWidth(261.25);
@@ -61,32 +58,13 @@ public class InventoryLogListCell extends ListCell<InventoryLog> {
         } else {
             itemId.setText("ID " + log.getItemId() + " - ");
             itemName.setText(log.getItemName());
-            changeQuantity.setText(Double.toString(log.getChangeAmount()));
-            previousQuantity.setText(Double.toString(log.getPreviousQuantity()));
-            currentQuantity.setText(" = " +log.getNewQuantity());
-            referenceId.setText("");
+            currentQuantity.setText(Double.toString(log.getNewQuantity()));
             referenceStatus.setText(log.getChangeType());
-
-            if (log.getChangeAmount() < 0) {
-                changeQuantity.setStyle("-fx-text-fill: #f84545;");
-            } else if (log.getChangeAmount() > 0) {
-                changeQuantity.setStyle("-fx-text-fill: green");
-                changeQuantity.setText("+" + log.getChangeAmount());
-            } else {
-                changeQuantity.setStyle("-fx-text-fill: #929292");
-            }
-
-            if (log.getReferenceId() == null) {
-                referenceId.setStyle("-fx-text-fill: #929292");
-            }
 
             if (log.getChangeType().equals("DELETED")) {
                 referenceStatus.setStyle("-fx-text-fill: #f84545");
             } else if (log.getChangeType().equals("RESTORED")) {
                 referenceStatus.setStyle("-fx-text-fill: green");
-            } else if (log.getChangeType().equals("SALE")) {
-                referenceId.setText("OrderID " + log.getReferenceId());
-                referenceStatus.setText("");
             } else {
                 referenceStatus.setStyle("-fx-text-fill: #1e1e1e");
             }

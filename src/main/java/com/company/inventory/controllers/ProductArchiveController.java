@@ -19,9 +19,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.NumberFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Locale;
 
 public class ProductArchiveController {
     private static ProductArchiveController instance;
@@ -52,10 +54,12 @@ public class ProductArchiveController {
     }
 
     private void displayArchivedProductDetails(Product product) {
+        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(Locale.getDefault());
+
         archProdDetailsList.getItems().clear();
 
         productDetailsName.setText(product.getProductName());
-        productDetailsPrice.setText("Php " + product.getProductPrice());
+        productDetailsPrice.setText(currencyFormat.format(product.getProductPrice()));
 
         LocalDateTime archiveDateTime = fetchArchiveDateTime(product.getProductId());
         if (archiveDateTime != null) {

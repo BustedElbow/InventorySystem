@@ -20,11 +20,12 @@ import javafx.scene.control.ListView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import java.io.IOException;
+import java.text.NumberFormat;
 import java.util.List;
+import java.util.Locale;
 
 
 public class ProductController {
-
     private static ProductController instance;
     @FXML private Button productArchive;
     @FXML private Button editBtn;
@@ -53,10 +54,12 @@ public class ProductController {
     }
 
     private void displayProductDetails(Product product) {
+        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(Locale.getDefault());
+
         productDetailsList.getItems().clear();
 
         productDetailsName.setText(product.getProductName());
-        productDetailsPrice.setText("Php " + product.getProductPrice());
+        productDetailsPrice.setText(currencyFormat.format(product.getProductPrice()));
 
         List<ProductIngredient> ingredients = product.getUsedItems();
         ObservableList<ProductIngredient> usedItemObs = FXCollections.observableArrayList(ingredients);

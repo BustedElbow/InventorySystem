@@ -60,5 +60,4 @@ public class ProdItemListCell extends ListCell<Item> {
             setGraphic(hbox);
         }
     }
-
 }

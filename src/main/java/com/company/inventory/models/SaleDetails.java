@@ -13,11 +13,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SaleDetails {
-
     private String productName;
     private int productQuantity;
     private double productPrice;
-
     public SaleDetails(String productName, int productQuantity, double productPrice) {
         this.productName = productName;
         this.productQuantity = productQuantity;
@@ -26,11 +24,9 @@ public class SaleDetails {
     public String getProductName() {
         return productName;
     }
-
     public int getProductQuantity() {
         return productQuantity;
     }
-
     public double getProductPrice() {
         return productPrice;
     }
@@ -52,7 +48,6 @@ public class SaleDetails {
                 // Create the Sale object with LocalDateTime instead of LocalDate
                 Sale sale = new Sale(orderDateTime, rs.getDouble("total_amount"));
                 sale.setSaleId(rs.getInt("order_id"));
-
 
                 sales.add(sale);
             }

@@ -93,5 +93,4 @@ public class ItemModalController {
         alert.setContentText(message);
         alert.showAndWait();
     }
-
 }

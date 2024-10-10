@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+
+<AnchorPane prefHeight="537.0" prefWidth="593.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.company.inventory.controllers.DashStockSumController">
+   <AnchorPane layoutX="21.0" layoutY="19.0" prefHeight="505.0" prefWidth="551.0" styleClass="panel" stylesheets="@../styles/style.css">
+      <children>
+         <AnchorPane prefHeight="61.0" prefWidth="551.0" styleClass="modal-header" stylesheets="@../styles/style.css">
+            <children>
+               <Label layoutX="26.0" layoutY="18.0" styleClass="modal-header-title" stylesheets="@../styles/style.css" text="Stock Summary" />
+            </children>
+         </AnchorPane>
+         <ListView fx:id="quickStockSummaryLIst" layoutX="21.0" layoutY="124.0" prefHeight="362.0" prefWidth="511.0" />
+         <HBox layoutX="21.0" layoutY="69.0" prefHeight="44.0" prefWidth="511.0" styleClass="tableBorder" stylesheets="@../styles/style.css">
+            <children>
+               <StackPane alignment="CENTER_LEFT" prefHeight="44.0" prefWidth="372.0">
+                  <children>
+                     <Label styleClass="tableHeader" stylesheets="@../styles/style.css" text="Item Name" />
+                  </children>
+               </StackPane>
+               <StackPane alignment="CENTER_RIGHT" prefHeight="44.0" prefWidth="371.0">
+                  <children>
+                     <Label styleClass="tableHeader" stylesheets="@../styles/style.css" text="Remaining Quantity" />
+                  </children>
+               </StackPane>
+            </children>
+         </HBox>
+      </children>
+   </AnchorPane>
+</AnchorPane>

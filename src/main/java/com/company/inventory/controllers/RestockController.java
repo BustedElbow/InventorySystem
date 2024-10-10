@@ -19,7 +19,7 @@ public class RestockController {
 
     public void setItem(Item item) {
         this.item = item;
-        stockQuantityLabel.setText("Current Stock: " + item.getStock());
+        stockQuantityLabel.setText("Current Stock: " + item.getStock() + " " + item.getUnitMeasure());
     }
 
     public void addStock(ActionEvent actionEvent) {

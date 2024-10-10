@@ -97,7 +97,7 @@ public class Sale {
 
                 double newQuantity = previousQuantity - neededQuantity;
 
-                InventoryLog log = new InventoryLog(itemId, itemName, -neededQuantity, previousQuantity, newQuantity, "SALE", saleId);
+                InventoryLog log = new InventoryLog(itemId, itemName, -neededQuantity, previousQuantity, newQuantity, "SOLD", saleId);
                 log.logInventoryChange();
 
             } catch (SQLException e) {
@@ -163,7 +163,7 @@ public class Sale {
 
     public static ObservableList<Sale> getRecentSalesToday() {
         ObservableList<Sale> recentSales = FXCollections.observableArrayList();
-        String query = "SELECT * FROM orders WHERE DATE(order_date) = CURRENT_DATE";
+        String query = "SELECT * FROM orders WHERE DATE(order_date) = DATE('now', 'localtime')";
 
         try (Connection conn = SQLiteDatabase.connect();
              Statement stmt = conn.createStatement();

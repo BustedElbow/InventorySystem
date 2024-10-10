@@ -18,12 +18,10 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class InventoryArchiveController {
-
     private static InventoryArchiveController instance;
     @FXML
     private ListView<Item> itemListview;
     @FXML private Button addItemBtn;
-
     public InventoryArchiveController() {
         instance = this;
     };

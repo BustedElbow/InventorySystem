@@ -38,7 +38,7 @@
                <Label layoutX="12.0" layoutY="18.0" styleClass="modal-header-title" stylesheets="@../styles/style.css" text="Edit Product" />
             </children>
          </AnchorPane>
-         <Button fx:id="deleteBtn" layoutX="23.0" layoutY="530.0" mnemonicParsing="false" onAction="#btnDelete">
+         <Button fx:id="deleteBtn" layoutX="23.0" layoutY="530.0" mnemonicParsing="false" onAction="#btnDelete" styleClass="cta-clear" stylesheets="@../styles/style.css">
             <graphic>
                <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                   <image>

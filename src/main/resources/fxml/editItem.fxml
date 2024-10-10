@@ -26,7 +26,7 @@
          <TextField fx:id="reorderLevel" layoutX="21.0" layoutY="268.0" prefHeight="26.0" prefWidth="367.0" styleClass="inputfield" stylesheets="@../styles/style.css" />
          <Label layoutX="23.0" layoutY="317.0" styleClass="text-label" stylesheets="@../styles/style.css" text="Unit Measure" />
          <ChoiceBox fx:id="unitMeasureChoices" layoutX="21.0" layoutY="346.0" prefHeight="25.0" prefWidth="367.0" styleClass="inputfield" stylesheets="@../styles/style.css" />
-         <Button fx:id="deleteBtn" layoutX="18.0" layoutY="558.0" mnemonicParsing="false" onAction="#btnDelete">
+         <Button fx:id="deleteBtn" layoutX="20.0" layoutY="564.0" mnemonicParsing="false" onAction="#btnDelete" styleClass="cta-clear" stylesheets="@../styles/style.css">
             <graphic>
                <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                   <image>

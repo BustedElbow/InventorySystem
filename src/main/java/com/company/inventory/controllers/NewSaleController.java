@@ -143,7 +143,6 @@ public class NewSaleController {
         if (!sufficient) {
             showError(errorMessage.toString()); // Show detailed error message
         }
-
         return sufficient;
     }
 
@@ -154,5 +153,4 @@ public class NewSaleController {
         alert.setContentText(message);
         alert.showAndWait();
     }
-
 }

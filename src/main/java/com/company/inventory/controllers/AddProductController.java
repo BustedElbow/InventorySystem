@@ -18,7 +18,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class AddProductController {
-
     @FXML private Button btnConfirm;
     @FXML private TextField productPriceField;
     @FXML private TextField productNameField;
@@ -139,5 +138,4 @@ public class AddProductController {
         items.addAll(copyItems);
         usedItems.clear();
     }
-
 }

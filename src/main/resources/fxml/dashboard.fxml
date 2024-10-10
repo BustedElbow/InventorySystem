@@ -21,7 +21,7 @@
          <children>
             <Label layoutX="27.0" layoutY="20.0" styleClass="h2" stylesheets="@../styles/style.css" text="Low Stocks" />
             <ListView fx:id="listLowStock" layoutX="27.0" layoutY="98.0" prefHeight="148.0" prefWidth="676.0" stylesheets="@../styles/listview2-alt.css" />
-            <HBox layoutX="27.0" layoutY="45.0" prefHeight="44.0" prefWidth="676.0" styleClass="tableBorder" stylesheets="@../styles/style.css">
+            <HBox layoutX="27.0" layoutY="54.0" prefHeight="44.0" prefWidth="676.0" styleClass="tableBorder" stylesheets="@../styles/style.css">
                <children>
                   <StackPane alignment="CENTER_LEFT" prefHeight="44.0" prefWidth="372.0">
                      <children>
@@ -41,23 +41,26 @@
                </image>
             </ImageView>
             <Label fx:id="goodStockLabel" layoutX="267.0" layoutY="152.0" styleClass="tableHeader" stylesheets="@../styles/style.css" text="Nice! All stocks are good" />
+            <Button fx:id="quickSummary" layoutX="664.0" layoutY="15.0" mnemonicParsing="false" onAction="#quickViewStocks" prefHeight="36.0" prefWidth="39.0" styleClass="cta-3" stylesheets="@../styles/style.css">
+               <graphic>
+                  <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../icons/summary100-black.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
          </children>
       </AnchorPane>
       <AnchorPane layoutX="787.0" layoutY="111.0" prefHeight="267.0" prefWidth="327.0" styleClass="panel" stylesheets="@../styles/style.css">
          <children>
-            <Label layoutX="32.0" layoutY="27.0" styleClass="h2" stylesheets="@../styles/style.css" text="Revenue" />
+            <Label layoutX="32.0" layoutY="27.0" styleClass="h2" stylesheets="@../styles/style.css" text="Sales" />
             <Label layoutX="61.0" layoutY="73.0" styleClass="tableHeader" stylesheets="@../styles/style.css" text="This day" />
             <Label layoutX="61.0" layoutY="168.0" styleClass="tableHeader" stylesheets="@../styles/style.css" text="This month" />
             <HBox layoutX="32.0" layoutY="98.0" prefHeight="36.0" prefWidth="200.0">
                <children>
-                  <StackPane alignment="CENTER_LEFT" prefHeight="36.0" prefWidth="82.0">
-                     <children>
-                        <Label styleClass="text-label2" stylesheets="@../styles/style.css" text="Php" />
-                     </children>
-                  </StackPane>
                   <StackPane alignment="CENTER_LEFT" prefHeight="36.0" prefWidth="180.0">
                      <children>
-                        <Label fx:id="revenueThisDay" styleClass="text-label2" stylesheets="@../styles/style.css" text="00.00" />
+                        <Label fx:id="revenueThisDay" styleClass="text-label2" stylesheets="@../styles/style.css" text="₱00.00" />
                      </children>
                   </StackPane>
                </children>
@@ -74,14 +77,9 @@
             </ImageView>
             <HBox layoutX="32.0" layoutY="199.0" prefHeight="36.0" prefWidth="200.0">
                <children>
-                  <StackPane alignment="CENTER_LEFT" prefHeight="36.0" prefWidth="50.0">
-                     <children>
-                        <Label styleClass="text-label2" stylesheets="@../styles/style.css" text="Php" />
-                     </children>
-                  </StackPane>
                   <StackPane alignment="CENTER_LEFT" prefHeight="36.0" prefWidth="148.0">
                      <children>
-                        <Label fx:id="revenueThisMonth" styleClass="text-label2" stylesheets="@../styles/style.css" text="00.00" />
+                        <Label fx:id="revenueThisMonth" styleClass="text-label2" stylesheets="@../styles/style.css" text="₱00.00" />
                      </children>
                   </StackPane>
                </children>
@@ -91,7 +89,7 @@
       <AnchorPane layoutX="38.0" layoutY="403.0" prefHeight="343.0" prefWidth="1081.0" styleClass="panel" stylesheets="@../styles/style.css">
          <children>
             <Label layoutX="23.0" layoutY="24.0" styleClass="h2" stylesheets="@../styles/style.css" text="Recent Sales" />
-            <Button layoutX="912.0" layoutY="15.0" mnemonicParsing="false" onAction="#btnNewSale" prefHeight="48.0" prefWidth="148.0" styleClass="cta-2" stylesheets="@../styles/style.css" text="New Sales">
+            <Button layoutX="912.0" layoutY="15.0" mnemonicParsing="false" onAction="#btnNewSale" prefHeight="48.0" prefWidth="148.0" styleClass="cta-2" stylesheets="@../styles/style.css" text="New Sale">
                <graphic>
                   <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                      <image>

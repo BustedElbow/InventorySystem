@@ -25,6 +25,5 @@ public class ProductIngredient {
     public String getItemName() { return itemName; }
     public double getNeededQuantity() { return neededQuantity; }
     public String getUnitMeasure() { return unitMeasure; }
-
 }
 

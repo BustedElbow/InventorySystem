@@ -59,5 +59,4 @@ public class SaleProdListCell extends ListCell<Product> {
             setGraphic(hbox);
         }
     }
-
 }

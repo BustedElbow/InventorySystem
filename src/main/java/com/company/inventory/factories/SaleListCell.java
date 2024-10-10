@@ -17,9 +17,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 public class SaleListCell extends ListCell<Sale> {
     private HBox hbox;
@@ -110,8 +112,10 @@ public class SaleListCell extends ListCell<Sale> {
         if (empty || sale == null) {
             setGraphic(null);
         } else {
+            NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(Locale.getDefault());
+
             orderIdLabel.setText("ID " + sale.getSaleId());
-            totalPriceLabel.setText(String.format("Php %.2f", sale.getTotalAmount()));
+            totalPriceLabel.setText(currencyFormat.format(sale.getTotalAmount()));
 
             LocalDateTime saleDate = sale.getSaleDate();
 

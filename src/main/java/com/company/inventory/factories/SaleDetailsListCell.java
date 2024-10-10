@@ -7,6 +7,9 @@ import javafx.scene.control.ListCell;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 
+import java.text.NumberFormat;
+import java.util.Locale;
+
 public class SaleDetailsListCell extends ListCell<SaleDetails> {
     private HBox hbox = new HBox();
     private HBox infoBox = new HBox(5);
@@ -46,9 +49,11 @@ public class SaleDetailsListCell extends ListCell<SaleDetails> {
             setGraphic(null);
             setText(null);
         } else {
+            NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(Locale.getDefault());
+
             productName.setText(product.getProductName());
             neededQuantity.setText(product.getProductQuantity() + " x ");
-            productPrice.setText("Php " + product.getProductPrice());
+            productPrice.setText(currencyFormat.format(product.getProductPrice()));
             setGraphic(hbox);
         }
     }

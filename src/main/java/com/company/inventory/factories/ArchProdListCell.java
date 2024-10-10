@@ -24,6 +24,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.NumberFormat;
+import java.util.Locale;
 
 public class ArchProdListCell extends ListCell<Product> {
     private HBox hbox = new HBox();
@@ -91,9 +93,10 @@ public class ArchProdListCell extends ListCell<Product> {
         if(empty || product == null) {
             setGraphic(null);
         } else {
+            NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(Locale.getDefault());
             productName.setText(product.getProductName());
             productId.setText(Integer.toString(product.getProductId()));
-            productPrice.setText("Php " + product.getProductPrice());
+            productPrice.setText(currencyFormat.format(product.getProductPrice()));
 
             setGraphic(hbox);
         }

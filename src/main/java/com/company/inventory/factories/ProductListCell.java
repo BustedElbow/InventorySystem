@@ -17,6 +17,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 
 import java.io.IOException;
+import java.text.NumberFormat;
+import java.util.Locale;
 
 public class ProductListCell extends ListCell<Product> {
     private HBox hbox = new HBox();
@@ -54,7 +56,6 @@ public class ProductListCell extends ListCell<Product> {
         productPane.setPrefWidth(250);
         pricePane.setPrefWidth(250);
 
-//        hbox.setPadding(new Insets(2, 0 , 2, 0));
         hbox.setPrefWidth(503);
         hbox.getChildren().addAll(productPane, pricePane);
 
@@ -67,9 +68,11 @@ public class ProductListCell extends ListCell<Product> {
         if(empty || product == null) {
             setGraphic(null);
         } else {
+            NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(Locale.getDefault());
+
             productName.setText(product.getProductName());
             productId.setText(Integer.toString(product.getProductId()));
-            productPrice.setText("Php " + product.getProductPrice());
+            productPrice.setText(currencyFormat.format(product.getProductPrice()));
             editButton.setOnAction(e -> {
                 try {
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/editProduct.fxml"));

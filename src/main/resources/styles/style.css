@@ -75,6 +75,26 @@
     -fx-cursor: hand;
 }
 
+.cta-3 {
+    -fx-background-radius: 8;
+    -fx-background-color: #ee8850;
+    -fx-text-fill: #1e1e1e;
+    -fx-padding: 4 8 4 8;
+    -fx-font-family: 'Inter Semi Bold';
+    -fx-font-size: 16;
+    -fx-cursor: hand;
+}
+
+.cta-clear {
+    -fx-background-radius: 8;
+    -fx-background-color: transparent;
+    -fx-text-fill: #1e1e1e;
+    -fx-padding: 4 4 4 4;
+    -fx-font-family: 'Inter Semi Bold';
+    -fx-font-size: 16;
+    -fx-cursor: hand;
+}
+
 .listview {
     -fx-background-color: #fefefe;
     -fx-border: 0;
@@ -155,3 +175,4 @@
     -fx-padding: 8 12 8 12;
     -fx-cursor: hand;
 }
+
