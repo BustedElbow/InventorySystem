@@ -121,4 +121,23 @@ public class DashboardController {
     public void quickViewStocks(ActionEvent actionEvent) {
         showStockSummary();
     }
+
+
+    public void generateReport(ActionEvent actionEvent) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/reportFilter.fxml"));
+            Parent modalRoot = fxmlLoader.load();
+
+            Stage modalStage = new Stage();
+
+            modalStage.setResizable(false);
+            modalStage.setTitle("Generate Report");
+            modalStage.initModality(Modality.APPLICATION_MODAL);
+            modalStage.setScene(new Scene(modalRoot));
+            modalStage.showAndWait();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

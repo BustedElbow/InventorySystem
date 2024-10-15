@@ -15,7 +15,10 @@
          </AnchorPane>
          <Button fx:id="confirmBtn" layoutX="221.0" layoutY="192.0" mnemonicParsing="false" onAction="#confirmFilter" styleClass="cta-2" stylesheets="@../styles/style.css" text="Confirm" />
          <Button fx:id="cancelBtn" layoutX="132.0" layoutY="191.0" mnemonicParsing="false" onAction="#btnCancel" styleClass="secondary-cta" stylesheets="@../styles/style.css" text="Cancel" />
-         <DatePicker fx:id="datePicker" layoutX="19.0" layoutY="102.0" prefHeight="38.0" prefWidth="289.0" />
+         <DatePicker fx:id="datePickerFrom" layoutX="20.0" layoutY="112.0" prefHeight="38.0" prefWidth="130.0" />
+         <Label layoutX="20.0" layoutY="85.0" styleClass="text-label2" stylesheets="@../styles/style.css" text="From" />
+         <DatePicker fx:id="datePickerTo" layoutX="178.0" layoutY="112.0" prefHeight="38.0" prefWidth="130.0" />
+         <Label layoutX="174.0" layoutY="84.0" styleClass="text-label2" stylesheets="@../styles/style.css" text="To" />
       </children>
    </AnchorPane>
 </AnchorPane>

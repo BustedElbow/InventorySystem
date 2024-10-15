@@ -14,7 +14,7 @@
                <Label layoutX="26.0" layoutY="18.0" styleClass="modal-header-title" stylesheets="@../styles/style.css" text="Stock Summary" />
             </children>
          </AnchorPane>
-         <ListView fx:id="quickStockSummaryLIst" layoutX="21.0" layoutY="124.0" prefHeight="362.0" prefWidth="511.0" />
+         <ListView fx:id="quickStockSummaryLIst" layoutX="24.0" layoutY="129.0" prefHeight="362.0" prefWidth="511.0" />
          <HBox layoutX="21.0" layoutY="69.0" prefHeight="44.0" prefWidth="511.0" styleClass="tableBorder" stylesheets="@../styles/style.css">
             <children>
                <StackPane alignment="CENTER_LEFT" prefHeight="44.0" prefWidth="372.0">

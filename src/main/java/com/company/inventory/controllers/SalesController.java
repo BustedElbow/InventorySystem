@@ -47,12 +47,14 @@ public class SalesController {
     @FXML private Label totalPriceLabel;
     @FXML private ListView<SaleDetails> saleListDetails;
     @FXML public ListView<Sale> saleList;
+    private NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(Locale.getDefault());
 
     public SalesController() {
         instance = this;
     }
 
     public void initialize() {
+
         refreshSalesItemList();
 
         saleList.setCellFactory(param -> new SaleListCell());
@@ -107,7 +109,7 @@ public class SalesController {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd, yyyy HH:mm");
         String formattedDate = sale.getSaleDate().format(formatter);
         dateLabel.setText(formattedDate);
-        totalPriceLabel.setText(Double.toString(sale.getTotalAmount()));
+        totalPriceLabel.setText(currencyFormat.format(sale.getTotalAmount()));
 
         List<SaleDetails> productDetails = SaleDetails.loadOrderDetails(sale.getSaleId());
         ObservableList<SaleDetails> orderDetails = FXCollections.observableArrayList(productDetails);
@@ -136,63 +138,57 @@ public class SalesController {
         saleList.refresh();
     }
 
-    public void generateSalesReport(ActionEvent actionEvent) {
-        LocalDate today = LocalDate.now(); // or a selected date
-        generateSalesReportPDF(today);
-    }
-    public void generateSalesReportPDF(LocalDate date) {
-        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(Locale.getDefault());
-        String dest = "SalesReport_" + date.toString() + ".pdf";
+//    public void generateSalesReport(ActionEvent actionEvent) {
+//        LocalDate today = LocalDate.now(); // or a selected date
+//        generateSalesReportPDF(today);
+//    }
 
-        try {
-            PdfWriter writer = new PdfWriter(dest);
-            PdfDocument pdfDoc = new PdfDocument(writer);
-            Document document = new Document(pdfDoc);
-
-            // Load a Unicode font that supports the peso sign
-            String fontPath = getClass().getResource("/fonts/Inter-SemiBold.ttf").toExternalForm();
-            PdfFont font = PdfFontFactory.createFont();
-
-            // Title
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM dd, yyyy");
-            document.add(new Paragraph("Sales Report for " + date.format(formatter)).setFont(font));
-
-            // Get sales summary
-            ObservableList<ProductSaleSummary> salesSummary = Database.getSalesSummaryForDay(date);
-
-            // Create a table with four columns
-            Table table = new Table(4);
-            table.setWidth(UnitValue.createPercentValue(100));
-
-            // Add headers
-            table.addHeaderCell(new Cell().add(new Paragraph("Product Name").setFont(font)));
-            table.addHeaderCell(new Cell().add(new Paragraph("Price").setFont(font)));
-            table.addHeaderCell(new Cell().add(new Paragraph("Total Quantity").setFont(font)));
-            table.addHeaderCell(new Cell().add(new Paragraph("Total Price").setFont(font)));
-
-            double grandTotal = 0.0;
-            String pesoSign = "₱"; // Unicode peso sign
-
-            for (ProductSaleSummary summary : salesSummary) {
-                table.addCell(new Cell().add(new Paragraph(summary.getProductName()).setFont(font)));
-                table.addCell(new Cell().add(new Paragraph(pesoSign + " " + currencyFormat.format(summary.getProductPrice())).setFont(font)));
-                table.addCell(new Cell().add(new Paragraph(Integer.toString(summary.getTotalQuantity())).setFont(font)));
-                table.addCell(new Cell().add(new Paragraph(pesoSign + " " + currencyFormat.format(summary.getTotalPrice())).setFont(font)));
-
-                grandTotal += summary.getTotalPrice();
-            }
-
-            // Add the table to the document
-            document.add(table);
-
-            // Add a grand total row
-            document.add(new Paragraph("Total Sales: " + pesoSign + " " + currencyFormat.format(grandTotal)).setFont(font));
-
-            document.close();
-            System.out.println("PDF created successfully!");
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+//    public void generateSalesReportPDF(LocalDate date) {
+//        String dest = "SalesReport_" + date.toString() + ".pdf";
+//
+//        try {
+//            PdfWriter writer = new PdfWriter(dest);
+//            PdfDocument pdfDoc = new PdfDocument(writer);
+//            Document document = new Document(pdfDoc);
+//
+//            // Load a Unicode font that supports the peso sign
+//            String fontPath = getClass().getResource("/fonts/Inter-SemiBold.ttf").toExternalForm();
+//            PdfFont font = PdfFontFactory.createFont();
+//
+//            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM dd, yyyy");
+//            document.add(new Paragraph("Sales Report for " + date.format(formatter)).setFont(font));
+//
+//            ObservableList<ProductSaleSummary> salesSummary = Database.getSalesSummaryForDay(date);
+//
+//            Table table = new Table(4);
+//            table.setWidth(UnitValue.createPercentValue(100));
+//
+//            table.addHeaderCell(new Cell().add(new Paragraph("Product Name").setFont(font)));
+//            table.addHeaderCell(new Cell().add(new Paragraph("Price").setFont(font)));
+//            table.addHeaderCell(new Cell().add(new Paragraph("Total Quantity").setFont(font)));
+//            table.addHeaderCell(new Cell().add(new Paragraph("Total Price").setFont(font)));
+//
+//            double grandTotal = 0.0;
+//            String pesoSign = "₱"; // Unicode peso sign
+//
+//            for (ProductSaleSummary summary : salesSummary) {
+//                table.addCell(new Cell().add(new Paragraph(summary.getProductName()).setFont(font)));
+//                table.addCell(new Cell().add(new Paragraph(pesoSign + " " + currencyFormat.format(summary.getProductPrice())).setFont(font)));
+//                table.addCell(new Cell().add(new Paragraph(Integer.toString(summary.getTotalQuantity())).setFont(font)));
+//                table.addCell(new Cell().add(new Paragraph(pesoSign + " " + currencyFormat.format(summary.getTotalPrice())).setFont(font)));
+//
+//                grandTotal += summary.getTotalPrice();
+//            }
+//
+//            document.add(table);
+//
+//            document.add(new Paragraph("Total Sales: " + pesoSign + " " + currencyFormat.format(grandTotal)).setFont(font));
+//
+//            document.close();
+//            System.out.println("PDF created successfully!");
+//
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//}
 }

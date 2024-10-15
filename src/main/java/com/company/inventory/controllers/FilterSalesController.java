@@ -1,6 +1,7 @@
 package com.company.inventory.controllers;
 
 import com.company.inventory.models.Database;
+import com.company.inventory.models.InventoryLog;
 import com.company.inventory.models.Sale;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -15,35 +16,34 @@ import javafx.stage.Stage;
 import java.time.LocalDate;
 
 public class FilterSalesController {
+    @FXML private DatePicker datePickerFrom;
+    @FXML private DatePicker datePickerTo;
     @FXML private DatePicker datePicker;
     @FXML private Button confirmBtn;
     @FXML private Button cancelBtn;
 
     @FXML
-    public void initialize() {
-        datePicker.setValue(LocalDate.now());
-    }
-
-    @FXML
     public void confirmFilter(ActionEvent actionEvent) {
-        LocalDate selectedDate = datePicker.getValue();
+        LocalDate dateFrom = datePickerFrom.getValue();
+        LocalDate dateTo = datePickerTo.getValue();
 
-        if (selectedDate == null) {
-            showErrorDialog("Please select a date to filter sales.");
+        // Ensure both date pickers have values
+        if (dateFrom == null || dateTo == null) {
+            showErrorDialog("Please select both 'From' and 'To' dates to filter sales.");
+            return;
+        }
+
+        if (dateTo.isBefore(dateFrom)) {
+            showErrorDialog("'To' date cannot be earlier than 'From' date.");
             return;
         }
 
         ObservableList<Sale> filteredSales;
         try {
-
-            String selectedYear = String.valueOf(selectedDate.getYear());
-            String selectedMonth = String.valueOf(selectedDate.getMonthValue());
-            String selectedDay = String.valueOf(selectedDate.getDayOfMonth());
-
-            filteredSales = Database.filterSalesByDate(selectedYear, selectedMonth, selectedDay);
+            filteredSales = Database.filterSalesByDateRange(dateFrom, dateTo);
 
             if (filteredSales.isEmpty()) {
-                showErrorDialog("No sales found for the selected date.");
+                showErrorDialog("No sales found for the selected date range.");
             } else {
                 FXCollections.reverse(filteredSales);
                 SalesController.getInstance().saleList.setItems(filteredSales);

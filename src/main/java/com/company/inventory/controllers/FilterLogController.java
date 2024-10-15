@@ -16,36 +16,33 @@ import javafx.stage.Stage;
 import java.time.LocalDate;
 
 public class FilterLogController {
-    @FXML private DatePicker datePicker;
+    @FXML private DatePicker datePickerTo;
+    @FXML private DatePicker datePickerFrom;
     @FXML private Button confirmBtn;
     @FXML private Button cancelBtn;
 
     @FXML
-    public void initialize() {
-        datePicker.setValue(LocalDate.now());
-    }
-
-    @FXML
     public void confirmFilter(ActionEvent actionEvent) {
-        LocalDate selectedDate = datePicker.getValue();
+        LocalDate dateFrom = datePickerFrom.getValue();
+        LocalDate dateTo = datePickerTo.getValue();
 
-        if (selectedDate == null) {
-            showErrorDialog("Please a select a date to filter inventory logs.");
+        // Ensure both date pickers have values
+        if (dateFrom == null || dateTo == null) {
+            showErrorDialog("Please select both 'From' and 'To' dates to filter inventory logs.");
+            return;
+        }
+
+        if (dateTo.isBefore(dateFrom)) {
+            showErrorDialog("'To' date cannot be earlier than 'From' date.");
             return;
         }
 
         ObservableList<InventoryLog> filteredLogs;
         try {
-
-            String selectedYear = String.valueOf(selectedDate.getYear());
-            String selectedMonth = String.format("%02d", selectedDate.getMonthValue());
-            String selectedDay = String.format("%02d", selectedDate.getDayOfMonth());
-
-
-            filteredLogs = Database.filterLogsByDate(selectedYear, selectedMonth, selectedDay);
+            filteredLogs = Database.filterLogsByDateRange(dateFrom, dateTo);
 
             if (filteredLogs.isEmpty()) {
-                showErrorDialog("No inventory logs found for the selected criteria.");
+                showErrorDialog("No inventory logs found for the selected date range.");
             } else {
                 FXCollections.reverse(filteredLogs);
                 InventoryLogController.getInstance().logListView.setItems(filteredLogs);

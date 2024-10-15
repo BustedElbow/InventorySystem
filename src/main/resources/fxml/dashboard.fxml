@@ -124,5 +124,14 @@
             </HBox>
          </children>
       </AnchorPane>
+      <Button fx:id="saleInventoryReport" layoutX="918.0" layoutY="37.0" mnemonicParsing="false" onAction="#generateReport" styleClass="cta" stylesheets="@../styles/style.css" text="Generate Report">
+         <graphic>
+            <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../icons/report100-black.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
    </children>
 </AnchorPane>

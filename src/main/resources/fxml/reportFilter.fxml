@@ -5,15 +5,15 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="286.0" prefWidth="370.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.company.inventory.controllers.FilterLogController">
+<AnchorPane prefHeight="286.0" prefWidth="370.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.company.inventory.controllers.ReportFilterController">
    <AnchorPane layoutX="21.0" layoutY="19.0" prefHeight="251.0" prefWidth="329.0" styleClass="panel" stylesheets="@../styles/style.css">
       <children>
          <AnchorPane prefHeight="61.0" prefWidth="329.0" styleClass="modal-header" stylesheets="@../styles/style.css">
             <children>
-               <Label layoutX="26.0" layoutY="18.0" styleClass="modal-header-title" stylesheets="@../styles/style.css" text="Filter by Date" />
+               <Label layoutX="26.0" layoutY="18.0" styleClass="modal-header-title" stylesheets="@../styles/style.css" text="Generate Report" />
             </children>
          </AnchorPane>
-         <Button fx:id="confirmBtn" layoutX="221.0" layoutY="194.0" mnemonicParsing="false" onAction="#confirmFilter" styleClass="cta-2" stylesheets="@../styles/style.css" text="Confirm" />
+         <Button fx:id="confirmBtn" layoutX="221.0" layoutY="194.0" mnemonicParsing="false" onAction="#confirmFilter" styleClass="cta-2" stylesheets="@../styles/style.css" text="Generate" />
          <Button fx:id="cancelBtn" layoutX="133.0" layoutY="193.0" mnemonicParsing="false" onAction="#btnCancel" styleClass="secondary-cta" stylesheets="@../styles/style.css" text="Cancel" />
          <DatePicker fx:id="datePickerFrom" layoutX="20.0" layoutY="113.0" prefHeight="38.0" prefWidth="130.0" />
          <Label layoutX="20.0" layoutY="87.0" styleClass="text-label2" stylesheets="@../styles/style.css" text="From" />

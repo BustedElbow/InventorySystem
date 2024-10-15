@@ -7,6 +7,7 @@ import javafx.collections.ObservableList;
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Database {
 
@@ -168,17 +169,16 @@ public class Database {
         }
     }
 
-    public static ObservableList<InventoryLog> filterLogsByDate(String year, String month, String day) {
+    public static ObservableList<InventoryLog> filterLogsByDateRange(LocalDate fromDate, LocalDate toDate) {
         ObservableList<InventoryLog> filteredLogs = FXCollections.observableArrayList();
         String query = "SELECT item_id, item_name, change_amount, previous_quantity, new_quantity, change_type, reference_id, timestamp " +
-                "FROM inventory_log WHERE strftime('%Y', timestamp) = ? AND strftime('%m', timestamp) = ? AND strftime('%d', timestamp) = ?";
+                "FROM inventory_log WHERE DATE(timestamp) BETWEEN ? AND ?";
 
         try (Connection conn = SQLiteDatabase.connect();
              PreparedStatement pstmt = conn.prepareStatement(query)) {
 
-            pstmt.setString(1, year);
-            pstmt.setString(2, month);
-            pstmt.setString(3, day);
+            pstmt.setString(1, fromDate.toString());
+            pstmt.setString(2, toDate.toString());
             ResultSet rs = pstmt.executeQuery();
 
             while (rs.next()) {
@@ -200,16 +200,15 @@ public class Database {
         return filteredLogs;
     }
 
-    public static ObservableList<Sale> filterSalesByDate(String year, String month, String day) {
+    public static ObservableList<Sale> filterSalesByDateRange(LocalDate fromDate, LocalDate toDate) {
         ObservableList<Sale> filteredSales = FXCollections.observableArrayList();
-        String query = "SELECT * FROM orders WHERE strftime('%Y', order_date) = ? AND strftime('%m', order_date) = ? AND strftime('%d', order_date) = ?";
+        String query = "SELECT * FROM orders WHERE DATE(order_date) BETWEEN ? AND ?";
 
         try (Connection conn = SQLiteDatabase.connect();
              PreparedStatement pstmt = conn.prepareStatement(query)) {
 
-            pstmt.setString(1, year);
-            pstmt.setString(2, month);
-            pstmt.setString(3, day);
+            pstmt.setString(1, fromDate.toString());
+            pstmt.setString(2, toDate.toString());
             ResultSet rs = pstmt.executeQuery();
 
             while (rs.next()) {
@@ -234,13 +233,13 @@ public class Database {
                 "SUM(od.quantity * od.price_at_trans) AS total_price " +
                 "FROM orders o " +
                 "JOIN order_details od ON o.order_id = od.order_id " +
-                "WHERE DATE(o.order_date) = ? " +
-                "GROUP BY od.name_at_trans, od.price_at_trans"; // Group by order details
+                "WHERE DATE(o.order_date) = ? AND o.is_included = 1 " +
+                "GROUP BY od.name_at_trans, od.price_at_trans";
 
         try (Connection conn = SQLiteDatabase.connect();
              PreparedStatement pstmt = conn.prepareStatement(query)) {
 
-            pstmt.setString(1, date.toString()); // Format LocalDate to string
+            pstmt.setString(1, date.toString());
 
             ResultSet rs = pstmt.executeQuery();
 
@@ -257,6 +256,71 @@ public class Database {
             e.printStackTrace();
         }
         return summaryList;
+    }
+
+    public static ObservableList<ProductSaleSummary> getSalesDetailsForDateRange(LocalDate fromDate, LocalDate toDate) {
+        ObservableList<ProductSaleSummary> salesDetails = FXCollections.observableArrayList();
+        String query = "SELECT od.name_at_trans, od.price_at_trans, SUM(od.quantity) AS total_quantity_sold, SUM(od.total_amount) AS total_price " +
+                "FROM orders o JOIN order_details od ON o.order_id = od.order_id " +
+                "WHERE DATE(o.order_date) BETWEEN ? AND ? AND o.is_included = 1 " +
+                "GROUP BY od.name_at_trans, od.price_at_trans;";
+
+        try (Connection conn = SQLiteDatabase.connect();
+             PreparedStatement pstmt = conn.prepareStatement(query)) {
+
+            pstmt.setString(1, fromDate.toString());
+            pstmt.setString(2, toDate.toString());
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                String productName = rs.getString("name_at_trans");
+                double priceAtTrans = rs.getDouble("price_at_trans");
+                int totalQuantitySold = rs.getInt("total_quantity_sold");
+                double totalPrice = rs.getDouble("total_price");
+
+                ProductSaleSummary summary = new ProductSaleSummary(productName, priceAtTrans, totalQuantitySold, totalPrice);
+                salesDetails.add(summary);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return salesDetails;
+    }
+
+    public static ObservableList<InventoryUsageSummary> getInventoryUsageForDateRange(LocalDate fromDate, LocalDate toDate) {
+        ObservableList<InventoryUsageSummary> inventorySummaries = FXCollections.observableArrayList();
+
+        // Update the SQL query to use the correct format for timestamp filtering
+        String query = "SELECT il.item_name, i.unit_measure, " +
+                "SUM(CASE WHEN il.change_type IN ('SOLD') THEN il.change_amount ELSE 0 END) AS total_quantity_used, " +
+                "MAX(il.new_quantity) AS current_stock " +
+                "FROM inventory_log il " +
+                "JOIN items i ON il.item_id = i.item_id " +
+                "WHERE il.timestamp >= ? AND il.timestamp < ? " +
+                "GROUP BY il.item_name, i.unit_measure";
+
+        try (Connection conn = SQLiteDatabase.connect();
+             PreparedStatement pstmt = conn.prepareStatement(query)) {
+            pstmt.setString(1, fromDate.atStartOfDay().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
+            pstmt.setString(2, toDate.plusDays(1).atStartOfDay().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
+
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                String itemName = rs.getString("item_name");
+                double totalQuantityUsed = rs.getDouble("total_quantity_used");
+                double currentStock = rs.getDouble("current_stock");
+                String unitMeasure = rs.getString("unit_measure");
+
+                inventorySummaries.add(new InventoryUsageSummary(itemName, totalQuantityUsed, currentStock, unitMeasure));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        // Debugging output
+        System.out.println("Fetched Inventory Summaries: " + inventorySummaries);
+
+        return inventorySummaries;
     }
 
 

@@ -1,10 +1,14 @@
 package com.company.inventory.models;
 
 import com.company.inventory.SQLiteDatabase;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class InventoryLog {
@@ -70,6 +74,7 @@ public class InventoryLog {
             e.printStackTrace();
         }
     }
+
     @Override
     public String toString() {
         return String.format("ID, %d, Item: %s, Change: %.2f, Prev: %.2f, New: %.2f, Type: %s, Ref: %s, Time: %s",

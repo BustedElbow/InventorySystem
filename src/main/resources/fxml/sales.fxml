@@ -52,7 +52,7 @@
             <Label layoutX="26.0" layoutY="92.0" styleClass="tableHeader" stylesheets="@../styles/style.css" text="Products Sold" />
             <Label layoutX="26.0" layoutY="24.0" styleClass="h2" stylesheets="@../styles/style.css" text="Sale" />
          </children></AnchorPane>
-      <Button fx:id="newSaleBtn" layoutX="733.0" layoutY="32.0" mnemonicParsing="false" onAction="#btnNewSale" styleClass="cta" stylesheets="@../styles/style.css" text="New Sale">
+      <Button fx:id="newSaleBtn" layoutX="907.0" layoutY="32.0" mnemonicParsing="false" onAction="#btnNewSale" styleClass="cta" stylesheets="@../styles/style.css" text="New Sale">
          <graphic>
             <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -66,15 +66,6 @@
             <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../icons/filter100-gray.png" />
-               </image>
-            </ImageView>
-         </graphic>
-      </Button>
-      <Button fx:id="salesReport" layoutX="884.0" layoutY="32.0" mnemonicParsing="false" onAction="#generateSalesReport" styleClass="cta" stylesheets="@../styles/style.css" text="Sales Report">
-         <graphic>
-            <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../icons/report100-black.png" />
                </image>
             </ImageView>
          </graphic>
